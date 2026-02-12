@@ -1620,6 +1620,14 @@ body {
   background: #FEFCBF;
 }
 
+#daily-mission-overlay {
+  z-index: 9999;
+}
+
+#daily-mission-overlay.hidden {
+  display: none;
+}
+
 /* ========================================
    デイリーミッション — 達成オーバーレイ
    ======================================== */

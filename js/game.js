@@ -950,21 +950,19 @@ function trackDailyMissionAttempt() {
   if (mission.claimed) return;
   mission.attempts++;
   saveDailyMission(mission);
-  if (mission.attempts >= 5) {
+  if (mission.attempts >= 5 && !mission.claimed) {
+    mission.claimed = true;
+    saveDailyMission(mission);
+    addXP(50);
+    debugLog('デイリーミッションたっせい！ +50 XP');
     setTimeout(function () {
-      var m = loadDailyMission();
-      if (m.claimed) return;
-      m.claimed = true;
-      saveDailyMission(m);
-      addXP(50);
-      debugLog('デイリーミッションたっせい！ +50 XP');
-      document.getElementById('daily-mission-overlay').style.display = 'flex';
+      document.getElementById('daily-mission-overlay').classList.remove('hidden');
     }, 1000);
   }
 }
 
 function closeDailyMissionOverlay() {
-  document.getElementById('daily-mission-overlay').style.display = 'none';
+  document.getElementById('daily-mission-overlay').classList.add('hidden');
 }
 
 // ========================================
