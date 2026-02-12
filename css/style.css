@@ -833,6 +833,7 @@ body {
 /* --- 問題表示エリア --- */
 
 .question-box {
+  position: relative;
   background: #fff;
   border-radius: 16px;
   padding: 18px 20px;
@@ -843,6 +844,15 @@ body {
   align-items: center;
   justify-content: center;
   gap: 10px;
+}
+
+.review-badge {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #D69E2E;
 }
 
 .question-num {

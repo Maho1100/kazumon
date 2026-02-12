@@ -212,6 +212,17 @@ function addMistake(a, b, wrongAnswer) {
   saveMistakeLog(log);
 }
 
+function removeMistake(a, b) {
+  var log = loadMistakeLog();
+  var filtered = [];
+  for (var i = 0; i < log.length; i++) {
+    if (!(log[i].a === a && log[i].b === b)) {
+      filtered.push(log[i]);
+    }
+  }
+  saveMistakeLog(filtered);
+}
+
 function calcNextReview(count) {
   var now = Date.now();
   if (count <= 1) {

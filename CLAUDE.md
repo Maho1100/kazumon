@@ -379,3 +379,32 @@ UIでアイテムのレア度を表示するときは、英語ラベル（common
 - `game.js` — `generateStreakRewardItem(milestone)`、`maybeShowStreakReward()`、`closeStreakReward()`、イベントリスナー追加
 - `index.html` — `#streak-reward-overlay` DOM追加
 - `css/style.css` — `.streak-reward-*` スタイル追加
+
+## 間隔反復（復習20%）
+
+間違えた問題を自動で再出題し、学習効果を高める仕組み。
+
+### 基本動作
+- 問題生成時に 20%の確率で `getReviewProblems()` から復習問題を出す
+- `nextReview <= now` の問題のみが出題対象
+- 復習問題には問題ボックス右上に「🔁 ふくしゅう」バッジを表示
+
+### 復習間隔（calcNextReview）
+| ミス回数 | 次回復習 |
+|---------|---------|
+| 1回目 | 2分後 |
+| 2回目 | 翌日（24時間後） |
+| 3回目以降 | 3日後 |
+
+### 正解時の動作
+- 復習問題を正解 → `removeMistake(a, b)` で localStorage の mistakeLog から削除
+- 通常問題を正解 → 何もしない（削除しない）
+
+### 不正解時の動作
+- `addMistake(a, b, wrongAnswer)` で count++ と nextReview 更新（既存処理）
+
+### 変更ファイル
+- `data.js` — `removeMistake(a, b)` 追加
+- `game.js` — `showProblem()` にバッジ表示切り替え追加、`onCorrectAnswer()` に復習正解時の削除追加
+- `index.html` — `#review-badge` DOM追加
+- `css/style.css` — `.review-badge` スタイル追加、`.question-box` に `position: relative` 追加

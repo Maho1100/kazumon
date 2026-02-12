@@ -440,6 +440,12 @@ function showProblem() {
     dom.choiceBtns[i].className = 'choice-btn';
   }
 
+  // 復習バッジ
+  var badge = document.getElementById('review-badge');
+  if (badge) {
+    badge.style.display = p.isReview ? 'block' : 'none';
+  }
+
   gameState.isAnswering = true;
   gameState.isAnimating = false;
 
@@ -448,7 +454,7 @@ function showProblem() {
     startTimer(gameState.floorConfig.timeLimit);
   }
 
-  debugLog('もんだい:', p.a, '+', p.b, '=', p.answer, '(せんたくし:', p.choices.join(', ') + ')');
+  debugLog('もんだい:', p.a, '+', p.b, '=', p.answer, (p.isReview ? '[ふくしゅう]' : ''), '(せんたくし:', p.choices.join(', ') + ')');
 }
 
 // --- 回答処理 ---
@@ -487,6 +493,13 @@ function onCorrectAnswer(clickedBtn) {
   gameState.combo++;
   if (gameState.combo > gameState.maxCombo) {
     gameState.maxCombo = gameState.combo;
+  }
+
+  // 復習問題を正解 → mistakeLog から削除
+  var p = gameState.currentProblem;
+  if (p.isReview) {
+    removeMistake(p.a, p.b);
+    debugLog('ふくしゅうせいかい → さくじょ:', p.a, '+', p.b);
   }
 
   // コンボ演出音（5の倍数で特別な音）
