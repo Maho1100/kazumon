@@ -250,6 +250,7 @@ function showScreen(screenId) {
 
   // タイトルに戻るたびデイリーボーナス判定（日またぎ対応）
   if (screenId === 'title-screen') {
+    renderDailyMissionTitle();
     maybeShowDailyBonus();
   }
 }
