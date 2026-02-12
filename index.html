@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>カズモン</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- タイトル画面 -->
+  <div id="title-screen">
+    <!-- 上部情報バー -->
+    <div class="title-top-bar">
+      <div class="streak-display">🔥 <span id="streak-count">0</span>にちれんぞく</div>
+      <div class="best-floor-display">さいこうきろく：▲ <span id="best-floor">0</span>F</div>
+      <button id="sound-toggle" class="sound-toggle-btn" aria-label="おとの ON/OFF">🔊</button>
+    </div>
+
+    <!-- ロゴ -->
+    <h1 class="title-logo">カズモン</h1>
+
+    <!-- メインキャラ「カズ」 -->
+    <div class="kazu-character" aria-label="カズ">
+      <div class="kazu-body">
+        <div class="kazu-eye kazu-eye-left"></div>
+        <div class="kazu-eye kazu-eye-right"></div>
+        <div class="kazu-mouth"></div>
+      </div>
+    </div>
+
+    <!-- なまえ・レベル表示 -->
+    <div class="title-player-info">
+      <span id="title-player-name" class="title-player-name"></span>
+      <span class="title-level" id="title-level">Lv.1</span>
+    </div>
+
+    <!-- ボタン -->
+    <button id="start-btn" class="start-btn" aria-label="ゲームをスタートする">スタート</button>
+    <button id="collection-btn" class="collection-btn" aria-label="アイテムずかんをひらく">ずかん</button>
+  </div>
+
+  <!-- デイリーボーナスオーバーレイ -->
+  <div id="daily-bonus-overlay" class="collection-overlay" style="display:none;">
+    <div class="daily-bonus-card">
+      <div class="daily-bonus-icon">🎁</div>
+      <div class="daily-bonus-title">きょうのごほうび！</div>
+      <div class="daily-bonus-xp">+20 XP</div>
+      <button id="daily-bonus-ok" class="daily-bonus-ok">OK</button>
+    </div>
+  </div>
+
+  <!-- なまえ入力オーバーレイ -->
+  <div id="name-overlay" class="collection-overlay" style="display:none;">
+    <div class="name-card">
+      <div class="name-title">なまえをいれてね</div>
+      <input id="name-input" class="name-input" type="text" maxlength="8" placeholder="カズ" autocomplete="off">
+      <div id="name-hint" class="name-hint">3〜8もじ（ひらがな・カタカナ）</div>
+      <div class="name-buttons">
+        <button id="name-ok" class="name-ok" disabled>けってい</button>
+        <button id="name-skip" class="name-skip">スキップ</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ずかんモーダル -->
+  <div id="collection-overlay" class="collection-overlay" style="display:none;">
+    <div class="collection-card">
+      <div class="collection-header">
+        <span class="collection-title">ずかん</span>
+        <button id="collection-close" class="collection-close">×</button>
+      </div>
+      <div id="collection-body" class="collection-body"></div>
+    </div>
+  </div>
+
+  <!-- バトル画面 -->
+  <div id="battle-screen" style="display:none;">
+    <!-- ステータスバー -->
+    <div class="battle-status-bar">
+      <div class="floor-display">▲ <span id="floor-number">1</span>F</div>
+      <div class="score-display">スコア: <span id="score">0</span></div>
+      <div class="menu-spacer"></div>
+    </div>
+
+    <!-- HPバーエリア -->
+    <div class="hp-area">
+      <!-- プレイヤーHP -->
+      <div class="hp-row">
+        <span class="hp-icon">❤️</span>
+        <span class="hp-label">HP</span>
+        <div class="hp-bar-wrap">
+          <div id="player-hp-bar" class="hp-bar hp-bar-player" style="width:100%"></div>
+        </div>
+        <span class="hp-numbers" id="player-hp-text">3/3</span>
+      </div>
+      <!-- モンスターHP -->
+      <div class="hp-row">
+        <span class="hp-icon">👿</span>
+        <span class="hp-label" id="monster-name">スライム</span>
+        <div class="hp-bar-wrap">
+          <div id="monster-hp-bar" class="hp-bar hp-bar-monster" style="width:100%"></div>
+        </div>
+        <span class="hp-numbers" id="monster-hp-text">1/1</span>
+      </div>
+    </div>
+
+    <!-- バトルフィールド -->
+    <div class="battle-field">
+      <!-- コンボ表示 -->
+      <div id="combo-display" class="combo-display" style="display:none;">
+        x<span id="combo-count">0</span> <span id="combo-label">COMBO!</span>
+      </div>
+
+      <!-- キャラクター配置 -->
+      <div class="battle-characters">
+        <!-- プレイヤー -->
+        <div class="player-sprite">
+          <div class="kazu-body kazu-body-sm">
+            <div class="kazu-eye kazu-eye-sm kazu-eye-left-sm"></div>
+            <div class="kazu-eye kazu-eye-sm kazu-eye-right-sm"></div>
+            <div class="kazu-mouth kazu-mouth-sm"></div>
+          </div>
+        </div>
+        <!-- モンスター -->
+        <div class="monster-sprite">
+          <div class="monster-body">
+            <div class="monster-eye monster-eye-left"></div>
+            <div class="monster-eye monster-eye-right"></div>
+            <div class="monster-mouth"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 問題表示エリア -->
+    <div class="question-box">
+      <span class="question-num" id="question-a">3</span>
+      <span class="question-op">+</span>
+      <span class="question-num" id="question-b">5</span>
+      <span class="question-op">=</span>
+      <span class="question-num question-mark">?</span>
+    </div>
+
+    <!-- タイマーバー -->
+    <div id="timer-wrap" class="timer-wrap" style="display:none;">
+      <div id="timer-bar" class="timer-bar timer-safe"></div>
+    </div>
+
+    <!-- 選択肢エリア -->
+    <div class="choices-grid">
+      <button class="choice-btn">7</button>
+      <button class="choice-btn">8</button>
+      <button class="choice-btn">9</button>
+      <button class="choice-btn">6</button>
+    </div>
+  </div>
+
+  <!-- 撃破演出オーバーレイ -->
+  <div id="defeat-overlay" class="overlay" style="display:none;">
+    <div class="defeat-text" id="defeat-text">げきは！</div>
+    <div id="loot-line" class="loot-line" style="display:none;">
+      <span class="loot-icon">📦</span>
+      <span id="loot-text" class="loot-text"></span>
+    </div>
+    <div class="defeat-particles" id="defeat-particles"></div>
+    <button id="next-floor-btn" class="next-floor-btn" style="display:none;">つぎのフロアへ</button>
+  </div>
+
+  <!-- ボス登場演出オーバーレイ -->
+  <div id="boss-overlay" class="overlay" style="display:none;">
+    <div class="boss-appear-text" id="boss-appear-text">ボスとうじょう！</div>
+  </div>
+
+  <!-- ゲームオーバーオーバーレイ -->
+  <div id="gameover-overlay" class="overlay" style="display:none;">
+    <div class="gameover-text" id="gameover-text">よくがんばった！</div>
+  </div>
+
+  <!-- レベルアップ演出オーバーレイ -->
+  <div id="levelup-overlay" class="overlay" style="display:none;">
+    <div class="levelup-text" id="levelup-text">レベルアップ！</div>
+  </div>
+
+  <!-- フローティングテキスト（おしい！、ダメージ数字など） -->
+  <div id="float-text" class="float-text" style="display:none;"></div>
+
+  <!-- リザルト画面 -->
+  <div id="result-screen" style="display:none;">
+    <!-- ヘッダー: メッセージ + キャラ -->
+    <div class="result-header">
+      <div class="result-kazu">
+        <div class="kazu-body kazu-body-result">
+          <div class="kazu-eye kazu-eye-sm kazu-eye-left-sm"></div>
+          <div class="kazu-eye kazu-eye-sm kazu-eye-right-sm"></div>
+          <div class="kazu-mouth kazu-mouth-sm"></div>
+        </div>
+      </div>
+      <div class="result-message" id="result-message">よくがんばった！</div>
+    </div>
+
+    <!-- 記録カード -->
+    <div class="result-card">
+      <div class="result-floor-big">▲ <span id="result-floor">0</span>F</div>
+      <div class="result-divider"></div>
+      <div class="result-row">
+        <span class="result-label">スコア</span>
+        <span class="result-value" id="result-score">0</span>
+      </div>
+      <div class="result-row">
+        <span class="result-label">コンボさいだい</span>
+        <span class="result-value">x<span id="result-max-combo">0</span></span>
+      </div>
+      <div class="result-row">
+        <span class="result-label">せいかいりつ</span>
+        <span class="result-value"><span id="result-accuracy">0</span>%</span>
+      </div>
+      <div class="result-row">
+        <span class="result-label">プレイじかん</span>
+        <span class="result-value result-value-sm" id="result-time">0ふん0びょう</span>
+      </div>
+    </div>
+
+    <!-- ベスト更新 -->
+    <div id="result-new-record" class="result-new-record" style="display:none;">
+      <div class="new-record-text">🎉 しんきろく！</div>
+      <div class="new-record-diff" id="result-record-diff"></div>
+    </div>
+
+    <!-- 獲得アイテム -->
+    <div id="result-items" class="result-items" style="display:none;">
+      <div class="result-items-header">📦 ゲットしたアイテム</div>
+      <div class="result-items-list" id="result-items-list"></div>
+    </div>
+
+    <!-- ボタンエリア -->
+    <div class="result-buttons">
+      <button id="retry-btn" class="retry-btn" aria-label="もういちどあそぶ">もういちど</button>
+      <button id="quit-btn" class="quit-btn" aria-label="タイトルにもどる">おわる</button>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/sound.js"></script>
+  <script src="js/animation.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
