@@ -1602,10 +1602,14 @@ body {
    ======================================== */
 
 .daily-mission-display {
+  display: block;
+  width: 100%;
+  flex: 0 0 auto;
+  box-sizing: border-box;
   text-align: center;
   font-size: 15px;
   color: #4A5568;
-  margin: 8px 16px 12px;
+  margin: 8px 0 12px;
   padding: 10px 16px;
   background: #EDF2F7;
   border-radius: 12px;
