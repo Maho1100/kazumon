@@ -469,6 +469,7 @@ function handleAnswer(selectedValue) {
   var isCorrect = selectedValue === correct;
 
   gameState.totalAnswered++;
+  trackDailyMissionAttempt();
 
   // 押されたボタンと正解ボタンを特定
   var clickedBtn = null;
@@ -927,6 +928,45 @@ function startGame() {
 }
 
 // ========================================
+// デイリーミッション
+// ========================================
+
+function renderDailyMissionTitle() {
+  var el = document.getElementById('daily-mission-display');
+  if (!el) return;
+  var mission = loadDailyMission();
+  if (mission.claimed) {
+    el.textContent = '⭐ きょうのミッション：たっせい！';
+    el.className = 'daily-mission-display daily-mission-done';
+  } else {
+    el.textContent = '📋 きょうのミッション：もんだいを 5もん とく（' + mission.attempts + '/5）';
+    el.className = 'daily-mission-display';
+  }
+}
+
+function trackDailyMissionAttempt() {
+  var mission = loadDailyMission();
+  if (mission.claimed) return;
+  mission.attempts++;
+  saveDailyMission(mission);
+  if (mission.attempts >= 5) {
+    setTimeout(function () {
+      var m = loadDailyMission();
+      if (m.claimed) return;
+      m.claimed = true;
+      saveDailyMission(m);
+      addXP(50);
+      debugLog('デイリーミッションたっせい！ +50 XP');
+      document.getElementById('daily-mission-overlay').style.display = 'flex';
+    }, 1000);
+  }
+}
+
+function closeDailyMissionOverlay() {
+  document.getElementById('daily-mission-overlay').style.display = 'none';
+}
+
+// ========================================
 // ストリーク報酬
 // ========================================
 
@@ -1095,6 +1135,9 @@ function applyUserDataToTitle() {
   // ストリーク報酬判定
   maybeShowStreakReward();
 
+  // デイリーミッション表示
+  renderDailyMissionTitle();
+
   // 音声設定の復元
   soundEnabled = user.soundEnabled;
   document.getElementById('sound-toggle').textContent = soundEnabled ? '🔊' : '🔇';
@@ -1129,6 +1172,19 @@ document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('streak-reward-overlay').addEventListener('click', function (e) {
     if (e.target === this) {
       closeStreakReward();
+    }
+  });
+
+  // デイリーミッション — OKボタン
+  document.getElementById('daily-mission-ok').addEventListener('click', function () {
+    playTapSound();
+    closeDailyMissionOverlay();
+  });
+
+  // デイリーミッション — 背景タップで閉じる
+  document.getElementById('daily-mission-overlay').addEventListener('click', function (e) {
+    if (e.target === this) {
+      closeDailyMissionOverlay();
     }
   });
 

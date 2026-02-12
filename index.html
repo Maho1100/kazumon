@@ -37,6 +37,9 @@
       <span class="title-level" id="title-level">Lv.1</span>
     </div>
 
+    <!-- デイリーミッション表示 -->
+    <div id="daily-mission-display" class="daily-mission-display"></div>
+
     <!-- ボタン -->
     <button id="start-btn" class="start-btn" aria-label="ゲームをスタートする">スタート</button>
     <button id="collection-btn" class="collection-btn" aria-label="アイテムずかんをひらく">ずかん</button>
@@ -61,6 +64,16 @@
       <div class="streak-reward-label">とくべつアイテムゲット！</div>
       <div class="streak-reward-item" id="streak-reward-item"></div>
       <button id="streak-reward-ok" class="streak-reward-ok">やったー！</button>
+    </div>
+  </div>
+
+  <!-- デイリーミッション達成オーバーレイ -->
+  <div id="daily-mission-overlay" class="collection-overlay" style="display:none;">
+    <div class="daily-mission-card">
+      <div class="daily-mission-icon">⭐</div>
+      <div class="daily-mission-complete-title">デイリーミッションたっせい！</div>
+      <div class="daily-mission-xp">+50 XP</div>
+      <button id="daily-mission-ok" class="daily-bonus-ok">OK</button>
     </div>
   </div>
 

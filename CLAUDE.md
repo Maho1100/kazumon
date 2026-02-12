@@ -408,3 +408,40 @@ UIでアイテムのレア度を表示するときは、英語ラベル（common
 - `game.js` — `showProblem()` にバッジ表示切り替え追加、`onCorrectAnswer()` に復習正解時の削除追加
 - `index.html` — `#review-badge` DOM追加
 - `css/style.css` — `.review-badge` スタイル追加、`.question-box` に `position: relative` 追加
+
+## デイリーミッション
+
+1日1つの固定ミッション。達成で報酬、翌日リセット。
+
+### localStorage
+- キー: `kazumon_daily_mission`
+- JSON: `{ date: "YYYY-MM-DD", claimed: true/false, attempts: number }`
+- 日付が変わると `attempts=0, claimed=false` に自動リセット（`loadDailyMission()` 内で判定）
+
+### 達成条件
+- 当日中にバトルで **回答を5回** 行う（正解・不正解を問わない。タイムアウトは含まない）
+
+### 報酬
+- +50 XP（`addXP(50)` で付与）
+- `claimed=true` 後は同日中に再付与しない（多重付与禁止）
+
+### UI
+- タイトル画面: `#daily-mission-display` にミッション内容と進捗を常時表示（例: `📋 きょうのミッション：もんだいを 5もん とく（3/5）`）
+- 達成時: `#daily-mission-overlay`（`collection-overlay` 流用）で「デイリーミッションたっせい！ +50 XP」を表示
+- 閉じ方: `#daily-mission-ok` クリック、またはカード外の背景タップ
+
+### 呼び出しタイミング
+- 回答フック: `handleAnswer()` 内の `gameState.totalAnswered++` 直後に `trackDailyMissionAttempt()` を呼ぶ
+- タイトル表示: `applyUserDataToTitle()` 内で `renderDailyMissionTitle()` を呼ぶ
+
+### JS関数
+- `loadDailyMission()` / `saveDailyMission(data)` (data.js) — localStorage の読み書き（日付不一致時に自動リセット）
+- `renderDailyMissionTitle()` (game.js) — タイトル画面のミッション表示更新
+- `trackDailyMissionAttempt()` (game.js) — attempts++ → 達成判定 → XP付与 → オーバーレイ表示
+- `closeDailyMissionOverlay()` (game.js) — オーバーレイ非表示
+
+### 変更ファイル
+- `data.js` — `KEYS.DAILY_MISSION`、`loadDailyMission()`、`saveDailyMission()`
+- `game.js` — `renderDailyMissionTitle()`、`trackDailyMissionAttempt()`、`closeDailyMissionOverlay()`、イベントリスナー追加
+- `index.html` — `#daily-mission-display` DOM追加、`#daily-mission-overlay` DOM追加
+- `css/style.css` — `.daily-mission-*` スタイル追加

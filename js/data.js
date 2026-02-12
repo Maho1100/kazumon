@@ -8,7 +8,8 @@ var KEYS = {
   SESSIONS:       'kazumon_sessions',
   MISTAKES:       'kazumon_mistakes',
   DAILY_BONUS:    'kazumon_daily_bonus_date',
-  STREAK_REWARDS: 'kazumon_streak_rewards'
+  STREAK_REWARDS: 'kazumon_streak_rewards',
+  DAILY_MISSION:  'kazumon_daily_mission'
 };
 
 var MAX_SESSIONS = 100;
@@ -315,6 +316,23 @@ function markStreakRewardClaimed(milestone) {
     claimed.push(milestone);
     safeSetItem(KEYS.STREAK_REWARDS, claimed);
   }
+}
+
+// ========================================
+// 11. デイリーミッション管理
+// ========================================
+
+function loadDailyMission() {
+  var data = safeGetItem(KEYS.DAILY_MISSION);
+  var today = getToday();
+  if (!data || data.date !== today) {
+    return { date: today, claimed: false, attempts: 0 };
+  }
+  return data;
+}
+
+function saveDailyMission(data) {
+  safeSetItem(KEYS.DAILY_MISSION, data);
 }
 
 function getUnclaimedStreakReward(streakDays) {

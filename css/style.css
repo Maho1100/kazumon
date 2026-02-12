@@ -1596,3 +1596,55 @@ body {
   transform: scale(0.95);
   background: rgba(255, 255, 255, 0.3);
 }
+
+/* ========================================
+   デイリーミッション — タイトル表示
+   ======================================== */
+
+.daily-mission-display {
+  text-align: center;
+  font-size: 15px;
+  color: #4A5568;
+  margin: 8px 16px 12px;
+  padding: 10px 16px;
+  background: #EDF2F7;
+  border-radius: 12px;
+}
+
+.daily-mission-done {
+  color: #B7791F;
+  background: #FEFCBF;
+}
+
+/* ========================================
+   デイリーミッション — 達成オーバーレイ
+   ======================================== */
+
+.daily-mission-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 32px 24px;
+  text-align: center;
+  max-width: 320px;
+  width: 85%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.daily-mission-icon {
+  font-size: 48px;
+  margin-bottom: 8px;
+}
+
+.daily-mission-complete-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #D69E2E;
+  margin-bottom: 8px;
+}
+
+.daily-mission-xp {
+  font-size: 28px;
+  font-weight: 900;
+  color: #48BB78;
+  margin-bottom: 16px;
+}
