@@ -3,11 +3,12 @@
 // ========================================
 
 var KEYS = {
-  USER:        'kazumon_user',
-  ITEMS:       'kazumon_items',
-  SESSIONS:    'kazumon_sessions',
-  MISTAKES:    'kazumon_mistakes',
-  DAILY_BONUS: 'kazumon_daily_bonus_date'
+  USER:           'kazumon_user',
+  ITEMS:          'kazumon_items',
+  SESSIONS:       'kazumon_sessions',
+  MISTAKES:       'kazumon_mistakes',
+  DAILY_BONUS:    'kazumon_daily_bonus_date',
+  STREAK_REWARDS: 'kazumon_streak_rewards'
 };
 
 var MAX_SESSIONS = 100;
@@ -285,4 +286,33 @@ function getDailyBonusDate() {
 
 function setDailyBonusDate(dateStr) {
   safeSetItem(KEYS.DAILY_BONUS, dateStr);
+}
+
+// ========================================
+// 10. ストリーク報酬管理
+// ========================================
+
+var STREAK_MILESTONES = [7, 30];
+
+function loadStreakRewards() {
+  return safeGetItem(KEYS.STREAK_REWARDS) || [];
+}
+
+function markStreakRewardClaimed(milestone) {
+  var claimed = loadStreakRewards();
+  if (claimed.indexOf(milestone) === -1) {
+    claimed.push(milestone);
+    safeSetItem(KEYS.STREAK_REWARDS, claimed);
+  }
+}
+
+function getUnclaimedStreakReward(streakDays) {
+  var claimed = loadStreakRewards();
+  for (var i = 0; i < STREAK_MILESTONES.length; i++) {
+    var m = STREAK_MILESTONES[i];
+    if (streakDays >= m && claimed.indexOf(m) === -1) {
+      return m;
+    }
+  }
+  return null;
 }

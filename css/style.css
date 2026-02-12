@@ -379,6 +379,82 @@ body {
   transform: scale(0.95);
 }
 
+/* --- ストリーク報酬モーダル --- */
+
+.streak-reward-card {
+  background: linear-gradient(135deg, #fff8e1, #fff, #fff3e0);
+  border: 3px solid #D69E2E;
+  border-radius: 24px;
+  padding: 32px 28px;
+  text-align: center;
+  box-shadow: 0 8px 30px rgba(214, 158, 46, 0.35);
+  max-width: 320px;
+  width: 100%;
+  animation: streak-card-appear 0.4s ease-out;
+}
+
+@keyframes streak-card-appear {
+  0%   { opacity: 0; transform: scale(0.6); }
+  70%  { opacity: 1; transform: scale(1.05); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.streak-reward-icon {
+  font-size: 56px;
+  margin-bottom: 8px;
+  animation: streak-icon-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes streak-icon-pulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.15); }
+}
+
+.streak-reward-title {
+  font-size: 22px;
+  font-weight: 900;
+  color: #C05621;
+  margin-bottom: 6px;
+}
+
+.streak-reward-days {
+  font-size: 18px;
+  font-weight: 700;
+  color: #D69E2E;
+  margin-bottom: 12px;
+}
+
+.streak-reward-label {
+  font-size: 16px;
+  font-weight: 700;
+  color: #4A5568;
+  margin-bottom: 10px;
+}
+
+.streak-reward-item {
+  font-size: 24px;
+  font-weight: 900;
+  margin-bottom: 20px;
+}
+
+.streak-reward-ok {
+  width: 160px;
+  height: 50px;
+  background: linear-gradient(135deg, #D69E2E, #ECC94B);
+  color: #fff;
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  border: none;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(214, 158, 46, 0.4);
+  cursor: pointer;
+}
+
+.streak-reward-ok:active {
+  transform: scale(0.95);
+}
+
 /* --- ずかんモーダル --- */
 
 .collection-overlay {

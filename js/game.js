@@ -914,6 +914,56 @@ function startGame() {
 }
 
 // ========================================
+// ストリーク報酬
+// ========================================
+
+function generateStreakRewardItem(milestone) {
+  var candidates = [];
+  for (var i = 0; i < ITEM_POOL.length; i++) {
+    if (milestone >= 30) {
+      if (ITEM_POOL[i].rarity === 'legendary') candidates.push(ITEM_POOL[i]);
+    } else if (milestone >= 7) {
+      if (ITEM_POOL[i].rarity === 'epic' || ITEM_POOL[i].rarity === 'legendary') candidates.push(ITEM_POOL[i]);
+    }
+  }
+  var picked = candidates[randInt(0, candidates.length - 1)];
+  return {
+    id: 'streak_' + milestone + '_' + Date.now(),
+    name: picked.name,
+    rarity: picked.rarity,
+    obtainedAt: new Date().toISOString()
+  };
+}
+
+function maybeShowStreakReward() {
+  var user = loadUserData();
+  var milestone = getUnclaimedStreakReward(user.streakDays);
+  if (!milestone) return;
+
+  // アイテム生成・保存
+  var item = generateStreakRewardItem(milestone);
+  var allItems = loadItems();
+  allItems.push(item);
+  saveItems(allItems);
+  markStreakRewardClaimed(milestone);
+  debugLog('ストリーク報酬:', milestone + 'にち →', formatItemDisplay(item));
+
+  // DOM反映
+  document.getElementById('streak-reward-title').textContent = milestone + 'にち れんぞくたっせい！';
+  document.getElementById('streak-reward-days').textContent = '🔥 ' + milestone + 'にち';
+
+  var itemEl = document.getElementById('streak-reward-item');
+  itemEl.textContent = formatItemDisplay(item);
+  itemEl.className = 'streak-reward-item rarity-' + item.rarity;
+
+  document.getElementById('streak-reward-overlay').style.display = 'flex';
+}
+
+function closeStreakReward() {
+  document.getElementById('streak-reward-overlay').style.display = 'none';
+}
+
+// ========================================
 // なまえ入力（初回起動のみ）
 // ========================================
 
@@ -1029,6 +1079,9 @@ function applyUserDataToTitle() {
   user = updateStreak();
   document.getElementById('streak-count').textContent = user.streakDays;
 
+  // ストリーク報酬判定
+  maybeShowStreakReward();
+
   // 音声設定の復元
   soundEnabled = user.soundEnabled;
   document.getElementById('sound-toggle').textContent = soundEnabled ? '🔊' : '🔇';
@@ -1050,6 +1103,19 @@ document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('daily-bonus-overlay').addEventListener('click', function (e) {
     if (e.target === this) {
       closeDailyBonus();
+    }
+  });
+
+  // ストリーク報酬 — OKボタン
+  document.getElementById('streak-reward-ok').addEventListener('click', function () {
+    playTapSound();
+    closeStreakReward();
+  });
+
+  // ストリーク報酬 — 背景タップで閉じる
+  document.getElementById('streak-reward-overlay').addEventListener('click', function (e) {
+    if (e.target === this) {
+      closeStreakReward();
     }
   });
 

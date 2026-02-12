@@ -353,3 +353,29 @@ UIでアイテムのレア度を表示するときは、英語ラベル（common
 - `maybeShowDailyBonus()` (game.js) — 日付判定 → XP付与 → Lv表示更新 → overlay表示
 - `closeDailyBonus()` (game.js) — overlay非表示
 - `getDailyBonusDate()` / `setDailyBonusDate(dateStr)` (data.js) — localStorage の読み書き
+
+## ストリーク報酬
+
+連続ログインのマイルストーン達成時に特別なアイテムを付与する。
+
+### マイルストーン表
+| 日数 | 報酬ルール | 説明 |
+|------|-----------|------|
+| 7日 | epic以上確定 | ITEM_POOLからepic+legendaryで抽選 |
+| 30日 | legendary確定 | ITEM_POOLからlegendaryのみ抽選 |
+
+### ルール
+- 各マイルストーンの報酬付与は **1回だけ**（多重付与禁止）
+- 判定タイミング: `applyUserDataToTitle()` 内の `updateStreak()` 直後
+- 付与時にゴールド枠の演出オーバーレイを表示
+
+### localStorage
+- キー: `kazumon_streak_rewards` (Array型、例: `[7]` or `[7, 30]`)
+- 付与済みマイルストーンの数値配列を保存
+- 既存の `kazumon_user.streakDays` を参照して判定（変更なし）
+
+### 変更ファイル
+- `data.js` — `KEYS.STREAK_REWARDS`、`loadStreakRewards()`、`markStreakRewardClaimed(milestone)`、`getUnclaimedStreakReward(streakDays)`
+- `game.js` — `generateStreakRewardItem(milestone)`、`maybeShowStreakReward()`、`closeStreakReward()`、イベントリスナー追加
+- `index.html` — `#streak-reward-overlay` DOM追加
+- `css/style.css` — `.streak-reward-*` スタイル追加
