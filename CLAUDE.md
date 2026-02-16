@@ -425,23 +425,51 @@ UIでアイテムのレア度を表示するときは、英語ラベル（common
 - +50 XP（`addXP(50)` で付与）
 - `claimed=true` 後は同日中に再付与しない（多重付与禁止）
 
-### UI
-- タイトル画面: `#daily-mission-display` にミッション内容と進捗を常時表示（例: `📋 きょうのミッション：もんだいを 5もん とく（3/5）`）
-- 達成時: `#daily-mission-overlay`（`collection-overlay` 流用）で「デイリーミッションたっせい！ +50 XP」を表示
-- 閉じ方: `#daily-mission-ok` クリック、またはカード外の背景タップ
+### UI — タイトル画面
+- `#daily-mission-display` にミッション内容と進捗を常時表示
+- 未達成: `📋 きょうのミッション：もんだいを 5もん とく（3/5）`（`.daily-mission-display`）
+- 達成済: `⭐ きょうのミッション：たっせい！`（`.daily-mission-display .daily-mission-done`）
+- `showScreen('title-screen')` と `applyUserDataToTitle()` の両方で `renderDailyMissionTitle()` を呼ぶ
+
+### UI — 達成オーバーレイ
+- `#daily-mission-overlay`（`collection-overlay` + `hidden` クラスで表示制御）
+- z-index: 9999（他オーバーレイより前面）
+- カード内容: ⭐ アイコン + 「デイリーミッションたっせい！」 + 「+50 XP」 + OKボタン
+- 表示: `trackDailyMissionAttempt()` 内で `classList.remove('hidden')`（回答確定から1秒後）
+- 閉じ方: `#daily-mission-ok` クリック、またはカード外の背景タップ → `classList.add('hidden')`
 
 ### 呼び出しタイミング
 - 回答フック: `handleAnswer()` 内の `gameState.totalAnswered++` 直後に `trackDailyMissionAttempt()` を呼ぶ
-- タイトル表示: `applyUserDataToTitle()` 内で `renderDailyMissionTitle()` を呼ぶ
+- タイトル表示: `applyUserDataToTitle()` 内 + `showScreen('title-screen')` 内で `renderDailyMissionTitle()` を呼ぶ
 
 ### JS関数
 - `loadDailyMission()` / `saveDailyMission(data)` (data.js) — localStorage の読み書き（日付不一致時に自動リセット）
 - `renderDailyMissionTitle()` (game.js) — タイトル画面のミッション表示更新
-- `trackDailyMissionAttempt()` (game.js) — attempts++ → 達成判定 → XP付与 → オーバーレイ表示
-- `closeDailyMissionOverlay()` (game.js) — オーバーレイ非表示
+- `trackDailyMissionAttempt()` (game.js) — attempts++ → 達成判定（`!claimed && attempts>=5`）→ claimed=true保存 → XP付与 → オーバーレイ表示
+- `closeDailyMissionOverlay()` (game.js) — `classList.add('hidden')` でオーバーレイ非表示
+- `getTomorrowMissionTitle()` (game.js) — 明日のチャレンジ予告文言を返す
 
 ### 変更ファイル
 - `data.js` — `KEYS.DAILY_MISSION`、`loadDailyMission()`、`saveDailyMission()`
-- `game.js` — `renderDailyMissionTitle()`、`trackDailyMissionAttempt()`、`closeDailyMissionOverlay()`、イベントリスナー追加
-- `index.html` — `#daily-mission-display` DOM追加、`#daily-mission-overlay` DOM追加
-- `css/style.css` — `.daily-mission-*` スタイル追加
+- `game.js` — `renderDailyMissionTitle()`、`trackDailyMissionAttempt()`、`closeDailyMissionOverlay()`、`getTomorrowMissionTitle()`、イベントリスナー追加
+- `index.html` — `#daily-mission-display` DOM追加、`#daily-mission-overlay` DOM追加、`#result-tomorrow` DOM追加
+- `css/style.css` — `.daily-mission-*` / `#daily-mission-overlay` / `.result-tomorrow` スタイル追加
+
+## あしたのチャレンジ予告
+
+リザルト画面に翌日のミッション内容を予告し、再訪モチベーションを作る。
+
+### 表示ルール
+- リザルト画面（`#result-screen`）のボタンエリア直前に `#result-tomorrow` を配置
+- `onGameOver()` のリザルト更新末尾で `getTomorrowMissionTitle()` の戻り値をセット
+- localStorage キー追加なし（保存しない。表示のたびに関数から取得）
+
+### 文言
+- 現在は固定: `🔮 あしたの ちょうせん：もんだいを 5もん とく`
+- 将来ミッション複数対応時は `getTomorrowMissionTitle()` の中身を差し替える
+
+### DOM
+- `#result-tomorrow` — `.result-tomorrow`（紫系背景、テキスト中央寄せ）
+
+### JS関数
+- `getTomorrowMissionTitle()` (game.js) — 予告文言を返す（現在は固定文字列）

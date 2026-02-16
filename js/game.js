@@ -722,6 +722,9 @@ function onGameOver() {
     dom.resultItems.style.display = 'none';
   }
 
+  // あしたのちょうせん
+  document.getElementById('result-tomorrow').textContent = getTomorrowMissionTitle();
+
   // ゲームオーバー演出 → レベルアップ演出 → リザルト画面
   playGameOverAnimation(function () {
     if (xpResult.leveledUp) {
@@ -963,6 +966,10 @@ function trackDailyMissionAttempt() {
 
 function closeDailyMissionOverlay() {
   document.getElementById('daily-mission-overlay').classList.add('hidden');
+}
+
+function getTomorrowMissionTitle() {
+  return '🔮 あしたの ちょうせん：もんだいを 5もん とく';
 }
 
 // ========================================
