@@ -103,36 +103,63 @@ function generateProblem(floor, mistakeLog) {
 // --- フロア設定 ---
 
 var MONSTER_NAMES = [
-  { maxFloor: 5,  names: ['スライム', 'マメッチ', 'プルリン'] },
-  { maxFloor: 10, names: ['ゴブリン', 'コウモリン', 'キノッピ'] },
-  { maxFloor: 15, names: ['ゴーレム', 'ドラッチ', 'オニャンコ'] },
-  { maxFloor: 20, names: ['ガーゴイル', 'シャドウン', 'ヨロイダケ'] },
-  { maxFloor: 30, names: ['ドラゴニー', 'デスポット', 'マジョリカ'] },
-  { maxFloor: Infinity, names: ['ダークキング', 'カオスドラゴ', 'まおうスラ'] }
+  { maxFloor: 5,  monsters: [
+    { name: 'スライム',   style: 'slime' },
+    { name: 'マメッチ',   style: 'mamecchi' },
+    { name: 'プルリン',   style: 'pururin' }
+  ]},
+  { maxFloor: 10, monsters: [
+    { name: 'ゴブリン',   style: 'goblin' },
+    { name: 'コウモリン', style: 'koumorin' },
+    { name: 'キノッピ',   style: 'kinoppi' }
+  ]},
+  { maxFloor: 15, monsters: [
+    { name: 'ゴーレム',   style: 'golem' },
+    { name: 'ドラッチ',   style: 'doracchi' },
+    { name: 'オニャンコ', style: 'onyanko' }
+  ]},
+  { maxFloor: 20, monsters: [
+    { name: 'ガーゴイル',   style: 'gargoyle' },
+    { name: 'シャドウン',   style: 'shadowun' },
+    { name: 'ヨロイダケ',   style: 'yoroidake' }
+  ]},
+  { maxFloor: 30, monsters: [
+    { name: 'ドラゴニー',   style: 'dragony' },
+    { name: 'デスポット',   style: 'despot' },
+    { name: 'マジョリカ',   style: 'majorica' }
+  ]},
+  { maxFloor: Infinity, monsters: [
+    { name: 'ダークキング',   style: 'darkking' },
+    { name: 'カオスドラゴ',   style: 'chaosdrago' },
+    { name: 'まおうスラ',     style: 'maoeslime' }
+  ]}
 ];
 
 var BOSS_NAMES = [
-  { maxFloor: 5,  name: 'キングスライム' },
-  { maxFloor: 10, name: 'ゴブリンキング' },
-  { maxFloor: 15, name: 'ゴーレムマスター' },
-  { maxFloor: 20, name: 'ガーゴイルロード' },
-  { maxFloor: 30, name: 'ドラゴンキング' },
-  { maxFloor: Infinity, name: 'まおう' }
+  { maxFloor: 5,  name: 'キングスライム',     style: 'slime' },
+  { maxFloor: 10, name: 'ゴブリンキング',     style: 'goblin' },
+  { maxFloor: 15, name: 'ゴーレムマスター',   style: 'golem' },
+  { maxFloor: 20, name: 'ガーゴイルロード',   style: 'gargoyle' },
+  { maxFloor: 30, name: 'ドラゴンキング',     style: 'dragony' },
+  { maxFloor: Infinity, name: 'まおう',       style: 'darkking' }
 ];
 
-function getMonsterName(floor, isBoss) {
+function getMonsterInfo(floor, isBoss) {
   if (isBoss) {
     for (var i = 0; i < BOSS_NAMES.length; i++) {
-      if (floor <= BOSS_NAMES[i].maxFloor) return BOSS_NAMES[i].name;
+      if (floor <= BOSS_NAMES[i].maxFloor) {
+        return { name: BOSS_NAMES[i].name, style: BOSS_NAMES[i].style || 'default' };
+      }
     }
   }
   for (var j = 0; j < MONSTER_NAMES.length; j++) {
     if (floor <= MONSTER_NAMES[j].maxFloor) {
-      var names = MONSTER_NAMES[j].names;
-      return names[randInt(0, names.length - 1)];
+      var monsters = MONSTER_NAMES[j].monsters;
+      var picked = monsters[randInt(0, monsters.length - 1)];
+      return { name: picked.name, style: picked.style };
     }
   }
-  return 'モンスター';
+  return { name: 'モンスター', style: 'default' };
 }
 
 function getFloorConfig(floor) {
@@ -158,12 +185,15 @@ function getFloorConfig(floor) {
     timeLimit = Math.max(5, 12 - Math.floor((floor - 30) / 5));
   }
 
+  var info = getMonsterInfo(floor, isBoss);
+
   return {
     monsterHP: monsterHP,
     problemsNeeded: monsterHP,
     timeLimit: timeLimit,
     isBoss: isBoss,
-    monsterName: getMonsterName(floor, isBoss)
+    monsterName: info.name,
+    monsterStyle: info.style
   };
 }
 
@@ -298,15 +328,30 @@ function updateMonsterAppearance() {
   var monsterBody = document.querySelector('.monster-body');
   if (!monsterBody) return;
 
+  // 既存のモンスタースタイルクラスを全て削除
+  var classes = monsterBody.className.split(' ');
+  for (var i = classes.length - 1; i >= 0; i--) {
+    if (classes[i].indexOf('monster-') === 0 && classes[i] !== 'monster-body' &&
+        classes[i] !== 'monster-eye' && classes[i] !== 'monster-eye-left' &&
+        classes[i] !== 'monster-eye-right' && classes[i] !== 'monster-mouth') {
+      monsterBody.classList.remove(classes[i]);
+    }
+  }
+  monsterBody.classList.remove('boss-body');
+
+  // 新しいスタイルクラスを適用
+  var style = gameState.floorConfig.monsterStyle || 'default';
+  monsterBody.classList.add('monster-' + style);
+
   if (gameState.floorConfig && gameState.floorConfig.isBoss) {
     var color = getBossColor(gameState.floor);
     monsterBody.style.background = color;
     monsterBody.style.boxShadow = '0 8px 24px ' + color + '80';
     monsterBody.classList.add('boss-body');
   } else {
-    monsterBody.style.background = '#F56565';
-    monsterBody.style.boxShadow = '0 6px 16px rgba(245, 101, 101, 0.4)';
-    monsterBody.classList.remove('boss-body');
+    // スタイルクラスで色を制御するので、インラインスタイルはリセット
+    monsterBody.style.background = '';
+    monsterBody.style.boxShadow = '';
   }
 }
 
