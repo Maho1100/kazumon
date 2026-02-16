@@ -473,3 +473,23 @@ UIでアイテムのレア度を表示するときは、英語ラベル（common
 
 ### JS関数
 - `getTomorrowMissionTitle()` (game.js) — 予告文言を返す（現在は固定文字列）
+
+## スマホ表示のビューポート対応
+
+スマホブラウザではアドレスバー＋ナビゲーションバーにより `100vh` が実際の表示領域より大きくなる問題への対策。
+
+### 基本方針
+- `100dvh`（動的ビューポート高さ）を使い、スマホUIバーを考慮した高さにフィットさせる
+- `100vh` を `100dvh` の直前に記述し、非対応ブラウザ用フォールバックとする（ブラウザは後の値を優先）
+
+### 適用箇所
+
+| セレクタ | 変更内容 |
+|---------|---------|
+| `body` | `height: 100vh; height: 100dvh;` |
+| `#title-screen` | `min-height: 100vh; min-height: 100dvh;` |
+| `#battle-screen` | `height: 100vh; height: 100dvh;` + `overflow: hidden` |
+| `.battle-field` | `min-height: 180px` → `min-height: 0` + `overflow: hidden` |
+| `.question-box` | `flex-shrink: 0` 追加 |
+| `.choices-grid` | `flex-shrink: 0` 追加 |
+| `#result-screen` | `height: 100vh; height: 100dvh;` + `justify-content: center` 削除 + `overflow-y: auto; -webkit-overflow-scrolling: touch;` 追加 |
