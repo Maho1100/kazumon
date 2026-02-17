@@ -275,5 +275,40 @@
   <script src="js/sound.js"></script>
   <script src="js/animation.js"></script>
   <script src="js/game.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = "https://cworoufonygmvmljvluu.supabase.co";
+  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_hBpWRrCmZ03740iLBmwmFg_tXas6DMj";
+
+  const supabase = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
+
+  function getOrCreateUserId() {
+    let id = localStorage.getItem("kazumon_user_id");
+    if (!id) {
+      id = crypto.randomUUID();
+      localStorage.setItem("kazumon_user_id", id);
+    }
+    return id;
+  }
+
+  async function testWrite() {
+    const userId = getOrCreateUserId();
+    const { error } = await supabase.from("profiles").upsert({
+      user_id: userId,
+      level: 1,
+      xp: 10,
+      encyclopedia: { test: true },
+      best_score: 0
+    });
+    console.log("write result:", error);
+  }
+
+  testWrite();
+</script>
+
 </body>
 </html>
