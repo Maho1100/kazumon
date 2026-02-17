@@ -379,6 +379,27 @@ function _getSupabaseClient() {
   return null;
 }
 
+// --- サーバーでデイリー受取り判定 ---
+async function claimDailyOnServer() {
+  var sb = _getSupabaseClient();
+  if (!sb) return null;
+  try {
+    var userId = getOrCreateUserId();
+    var result = await sb.rpc('claim_daily', { p_user_id: userId });
+    if (result.error) {
+      console.warn('claimDailyOnServer error', result.error);
+      return null;
+    }
+    var row = Array.isArray(result.data) ? result.data[0] : result.data;
+    if (!row) return null;
+    console.log('claimDailyOnServer ok', row);
+    return row;
+  } catch (e) {
+    console.warn('claimDailyOnServer error', e);
+    return null;
+  }
+}
+
 // --- サーバーから復元 ---
 async function syncFromServer() {
   var sb = _getSupabaseClient();

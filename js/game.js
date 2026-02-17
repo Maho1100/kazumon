@@ -1143,21 +1143,42 @@ function maybeShowDailyBonus() {
   var today = getToday();
   if (getDailyBonusDate() === today) return;
 
-  // 付与（1回だけ）
-  setDailyBonusDate(today);
-  addXP(20);
-  debugLog('デイリーボーナス +20 XP');
-
-  // Lv 表示を即反映
-  var user = loadUserData();
-  dom.titleLevel.textContent = 'Lv.' + user.level;
-
-  // オーバーレイ表示
+  // XP付与はオーバーレイ確定時にサーバー経由で行う
   document.getElementById('daily-bonus-overlay').style.display = 'flex';
 }
 
 function closeDailyBonus() {
   document.getElementById('daily-bonus-overlay').style.display = 'none';
+}
+
+function handleDailyBonusClaim() {
+  closeDailyBonus();
+  // キャッシュを即更新（重複表示防止）
+  setDailyBonusDate(getToday());
+
+  claimDailyOnServer().then(function (result) {
+    if (result && !result.claimed_today) {
+      // サーバー確認OK: XP付与 + ストリーク反映
+      addXP(20);
+      var user = loadUserData();
+      user.streakDays = result.streak_count;
+      user.lastPlayDate = result.last_claim_date;
+      saveUserData(user);
+      dom.titleLevel.textContent = 'Lv.' + user.level;
+      document.getElementById('streak-count').textContent = result.streak_count;
+      console.log('claimDaily ok: +20XP, streak', result.streak_count);
+      maybeShowStreakReward();
+    } else if (!result) {
+      // サーバー失敗: localStorageフォールバック
+      addXP(20);
+      var user2 = loadUserData();
+      dom.titleLevel.textContent = 'Lv.' + user2.level;
+      console.log('claimDaily fallback: +20XP');
+    } else {
+      // サーバー上は既に受取済み
+      console.log('claimDaily: already claimed today');
+    }
+  });
 }
 
 // ========================================
@@ -1203,13 +1224,13 @@ document.addEventListener('DOMContentLoaded', function () {
   // デイリーボーナス — OKボタン
   document.getElementById('daily-bonus-ok').addEventListener('click', function () {
     playTapSound();
-    closeDailyBonus();
+    handleDailyBonusClaim();
   });
 
   // デイリーボーナス — 背景タップで閉じる
   document.getElementById('daily-bonus-overlay').addEventListener('click', function (e) {
     if (e.target === this) {
-      closeDailyBonus();
+      handleDailyBonusClaim();
     }
   });
 
