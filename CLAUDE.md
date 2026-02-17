@@ -482,6 +482,12 @@ UIでアイテムのレア度を表示するときは、英語ラベル（common
 - `100dvh`（動的ビューポート高さ）を使い、スマホUIバーを考慮した高さにフィットさせる
 - `100vh` を `100dvh` の直前に記述し、非対応ブラウザ用フォールバックとする（ブラウザは後の値を優先）
 
+## Supabase導入（進捗保存のサーバー化）
+使用キー：
+- Project URL（supabase.co）
+- Publishable key（sb_publishable_〜）
+index.html に Supabase 接続コードを追加。
+
 ### 適用箇所
 
 | セレクタ | 変更内容 |
