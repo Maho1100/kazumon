@@ -372,12 +372,10 @@ function getOrCreateUserId() {
 
 function _getSupabaseClient() {
   try {
-    if (supabase && typeof supabase.from === 'function') {
-      return supabase;
+    if (window._kazumonSupabase && typeof window._kazumonSupabase.from === 'function') {
+      return window._kazumonSupabase;
     }
-  } catch (e) {
-    // supabase未ロードまたはTDZ
-  }
+  } catch (e) {}
   return null;
 }
 
