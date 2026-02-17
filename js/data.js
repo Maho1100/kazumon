@@ -102,6 +102,7 @@ function loadUserData() {
 
 function saveUserData(data) {
   safeSetItem(KEYS.USER, data);
+  scheduleSyncToServer();
 }
 
 // ========================================
@@ -114,6 +115,7 @@ function loadItems() {
 
 function saveItems(items) {
   safeSetItem(KEYS.ITEMS, items);
+  scheduleSyncToServer();
 }
 
 // ========================================
@@ -132,6 +134,7 @@ function saveSessionHistory(session) {
     sessions = sessions.slice(sessions.length - MAX_SESSIONS);
   }
   safeSetItem(KEYS.SESSIONS, sessions);
+  scheduleSyncToServer();
 }
 
 // ========================================
@@ -144,6 +147,7 @@ function loadMistakeLog() {
 
 function saveMistakeLog(log) {
   safeSetItem(KEYS.MISTAKES, log);
+  scheduleSyncToServer();
 }
 
 // ========================================
@@ -298,6 +302,7 @@ function getDailyBonusDate() {
 
 function setDailyBonusDate(dateStr) {
   safeSetItem(KEYS.DAILY_BONUS, dateStr);
+  scheduleSyncToServer();
 }
 
 // ========================================
@@ -315,6 +320,7 @@ function markStreakRewardClaimed(milestone) {
   if (claimed.indexOf(milestone) === -1) {
     claimed.push(milestone);
     safeSetItem(KEYS.STREAK_REWARDS, claimed);
+    scheduleSyncToServer();
   }
 }
 
@@ -333,6 +339,7 @@ function loadDailyMission() {
 
 function saveDailyMission(data) {
   safeSetItem(KEYS.DAILY_MISSION, data);
+  scheduleSyncToServer();
 }
 
 function getUnclaimedStreakReward(streakDays) {
@@ -345,3 +352,140 @@ function getUnclaimedStreakReward(streakDays) {
   }
   return null;
 }
+
+// ========================================
+// 12. Supabase 同期層
+// ========================================
+
+var _syncTimer = null;
+var _initialSyncDone = false;
+var SYNC_DEBOUNCE_MS = 2000;
+
+function getOrCreateUserId() {
+  var id = localStorage.getItem('kazumon_user_id');
+  if (!id) {
+    id = crypto.randomUUID();
+    localStorage.setItem('kazumon_user_id', id);
+  }
+  return id;
+}
+
+function _getSupabaseClient() {
+  try {
+    if (supabase && typeof supabase.from === 'function') {
+      return supabase;
+    }
+  } catch (e) {
+    // supabase未ロードまたはTDZ
+  }
+  return null;
+}
+
+// --- サーバーから復元 ---
+async function syncFromServer() {
+  var sb = _getSupabaseClient();
+  if (!sb) {
+    console.log('syncFromServer skip: supabase not available');
+    return;
+  }
+  try {
+    var userId = getOrCreateUserId();
+    var result = await sb
+      .from('profiles')
+      .select('encyclopedia')
+      .eq('user_id', userId)
+      .maybeSingle();
+
+    if (result.error) {
+      console.warn('syncFromServer error', result.error);
+      return;
+    }
+
+    if (!result.data) {
+      console.log('syncFromServer ok (no server data)');
+      return;
+    }
+
+    var enc = result.data.encyclopedia;
+    if (enc && typeof enc === 'object' && enc.save) {
+      // サーバーデータが存在 → localStorageを上書き復元
+      safeSetItem(KEYS.USER, enc.save);
+      if (enc.items != null)          safeSetItem(KEYS.ITEMS, enc.items);
+      if (enc.sessions != null)       safeSetItem(KEYS.SESSIONS, enc.sessions);
+      if (enc.mistakes != null)       safeSetItem(KEYS.MISTAKES, enc.mistakes);
+      if (enc.dailyBonus != null)     safeSetItem(KEYS.DAILY_BONUS, enc.dailyBonus);
+      if (enc.streakRewards != null)  safeSetItem(KEYS.STREAK_REWARDS, enc.streakRewards);
+      if (enc.dailyMission != null)   safeSetItem(KEYS.DAILY_MISSION, enc.dailyMission);
+      console.log('syncFromServer ok (restored)');
+    } else {
+      console.log('syncFromServer ok (no save data in encyclopedia)');
+    }
+  } catch (e) {
+    console.warn('syncFromServer error', e);
+  }
+}
+
+// --- サーバーへ保存 ---
+async function syncToServer() {
+  var sb = _getSupabaseClient();
+  if (!sb) return;
+  try {
+    var userId = getOrCreateUserId();
+    var user = loadUserData();
+
+    var encyclopedia = {
+      save:           safeGetItem(KEYS.USER),
+      items:          safeGetItem(KEYS.ITEMS),
+      sessions:       safeGetItem(KEYS.SESSIONS),
+      mistakes:       safeGetItem(KEYS.MISTAKES),
+      dailyBonus:     safeGetItem(KEYS.DAILY_BONUS),
+      streakRewards:  safeGetItem(KEYS.STREAK_REWARDS),
+      dailyMission:   safeGetItem(KEYS.DAILY_MISSION)
+    };
+
+    var result = await sb.from('profiles').upsert({
+      user_id:         userId,
+      level:           user.level,
+      xp:              user.totalXP,
+      encyclopedia:    encyclopedia,
+      streak_count:    user.streakDays,
+      last_claim_date: user.lastPlayDate,
+      best_score:      user.bestScore
+    });
+
+    if (result.error) {
+      console.warn('syncToServer error', result.error);
+    } else {
+      console.log('syncToServer ok');
+    }
+  } catch (e) {
+    console.warn('syncToServer error', e);
+  }
+}
+
+// --- デバウンス付き同期スケジューラ ---
+function scheduleSyncToServer() {
+  if (!_initialSyncDone) return;
+  if (_syncTimer) clearTimeout(_syncTimer);
+  _syncTimer = setTimeout(function () {
+    _syncTimer = null;
+    syncToServer();
+  }, SYNC_DEBOUNCE_MS);
+}
+
+// --- 起動時の同期 ---
+document.addEventListener('DOMContentLoaded', function () {
+  syncFromServer().then(function () {
+    _initialSyncDone = true;
+    // 復元データでタイトル画面を再描画
+    if (typeof applyUserDataToTitle === 'function') {
+      applyUserDataToTitle();
+    }
+    // ローカルの最新データをサーバーへバックアップ
+    scheduleSyncToServer();
+  }, function (e) {
+    // 失敗してもゲームは止めない
+    _initialSyncDone = true;
+    console.warn('syncFromServer init error', e);
+  });
+});
