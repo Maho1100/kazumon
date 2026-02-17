@@ -12,5 +12,6 @@ Desktop.ini
 
 # Zone.Identifier (WSL)
 *:Zone.Identifier
-private/
+
+# Private (strategy, ops, notes — never publish)
 private/
