@@ -20,7 +20,17 @@ GoogleService-Info.plist
 *.swp
 *~
 
+# Editor
+.vscode/
+.idea/
+
 # Secrets
 *.p8
 *.p12
 *.mobileprovision
+
+# Private (strategy, ops, notes)
+private/
+
+# Zone.Identifier (WSL)
+*:Zone.Identifier

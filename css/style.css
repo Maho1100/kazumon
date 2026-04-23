@@ -1,0 +1,1950 @@
+/* ========================================
+   カズモン — グローバルスタイル
+   ======================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Zen Maru Gothic", sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  overflow: hidden;
+  height: 100vh;
+  height: 100dvh;
+}
+
+/* ========================================
+   画面A: タイトル画面
+   ======================================== */
+
+#title-screen {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: linear-gradient(135deg, #E8F4FD 0%, #F0E6FF 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 20px;
+}
+
+/* --- 上部情報バー --- */
+
+.title-top-bar {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.streak-display {
+  font-size: 14px;
+  font-weight: 700;
+  color: #555;
+}
+
+.best-floor-display {
+  font-size: 14px;
+  font-weight: 700;
+  color: #555;
+  margin-right: 40px;
+}
+
+.sound-toggle-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 30px;
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  cursor: pointer;
+  line-height: 30px;
+  padding: 0;
+  border-radius: 6px;
+}
+
+.sound-toggle-btn:active {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+/* --- ロゴ --- */
+
+.title-logo {
+  font-size: 56px;
+  font-weight: 900;
+  background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: none;
+  filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.2));
+  animation: logo-float 3s ease-in-out infinite;
+  margin-bottom: 32px;
+}
+
+@keyframes logo-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+/* --- メインキャラ「カズ」 --- */
+
+.kazu-character {
+  animation: kazu-idle 2s ease-in-out infinite;
+  margin-bottom: 12px;
+}
+
+@keyframes kazu-idle {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+
+.kazu-body {
+  width: 100px;
+  height: 100px;
+  background: #4299E1;
+  border-radius: 50%;
+  position: relative;
+  box-shadow: 0 6px 16px rgba(66, 153, 225, 0.4);
+}
+
+/* 目 */
+.kazu-eye {
+  width: 14px;
+  height: 16px;
+  background: #fff;
+  border-radius: 50%;
+  position: absolute;
+  top: 32px;
+}
+
+.kazu-eye::after {
+  content: "";
+  display: block;
+  width: 7px;
+  height: 8px;
+  background: #2D3748;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.kazu-eye-left {
+  left: 26px;
+}
+
+.kazu-eye-right {
+  right: 26px;
+}
+
+/* 口 */
+.kazu-mouth {
+  width: 20px;
+  height: 10px;
+  border: 3px solid #fff;
+  border-color: transparent transparent #fff transparent;
+  border-radius: 0 0 20px 20px;
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* --- なまえ・レベル表示 --- */
+
+.title-player-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 32px;
+}
+
+.title-player-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: #4A5568;
+}
+
+.title-level {
+  font-size: 22px;
+  font-weight: 700;
+  color: #4A5568;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 4px 20px;
+  border-radius: 20px;
+}
+
+/* --- スタートボタン --- */
+
+.start-btn {
+  width: 200px;
+  height: 70px;
+  background: #E53E3E;
+  color: #fff;
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(229, 62, 62, 0.4);
+  cursor: pointer;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.start-btn:active {
+  transform: scale(0.95);
+  animation: none;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1.0); }
+  50%      { transform: scale(1.05); }
+}
+
+/* --- ずかんボタン --- */
+
+.collection-btn {
+  width: 160px;
+  height: 50px;
+  background: #fff;
+  color: #4A5568;
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  border: 2px solid #CBD5E0;
+  border-radius: 14px;
+  cursor: pointer;
+  margin-top: 14px;
+}
+
+.collection-btn:active {
+  transform: scale(0.95);
+  background: #EDF2F7;
+}
+
+/* --- なまえ入力モーダル --- */
+
+.name-card {
+  background: #fff;
+  border-radius: 24px;
+  padding: 32px 28px;
+  text-align: center;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+  max-width: 320px;
+  width: 100%;
+}
+
+.name-title {
+  font-size: 26px;
+  font-weight: 900;
+  color: #2D3748;
+  margin-bottom: 20px;
+}
+
+.name-input {
+  width: 100%;
+  height: 54px;
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  text-align: center;
+  border: 3px solid #CBD5E0;
+  border-radius: 14px;
+  outline: none;
+  color: #2D3748;
+  background: #F7FAFC;
+}
+
+.name-input:focus {
+  border-color: #4299E1;
+  background: #fff;
+}
+
+.name-hint {
+  font-size: 14px;
+  font-weight: 700;
+  color: #A0AEC0;
+  margin-top: 8px;
+  margin-bottom: 20px;
+}
+
+.name-hint.name-hint-error {
+  color: #E53E3E;
+}
+
+.name-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.name-ok {
+  width: 140px;
+  height: 50px;
+  background: #4299E1;
+  color: #fff;
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  border: none;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(66, 153, 225, 0.4);
+  cursor: pointer;
+}
+
+.name-ok:disabled {
+  background: #CBD5E0;
+  box-shadow: none;
+  cursor: default;
+}
+
+.name-ok:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.name-skip {
+  height: 50px;
+  padding: 0 16px;
+  background: transparent;
+  color: #A0AEC0;
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  border: 2px solid #E2E8F0;
+  border-radius: 14px;
+  cursor: pointer;
+}
+
+.name-skip:active {
+  background: #EDF2F7;
+}
+
+/* --- デイリーボーナス --- */
+
+.daily-bonus-card {
+  background: #fff;
+  border-radius: 24px;
+  padding: 32px 28px;
+  text-align: center;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+  max-width: 300px;
+  width: 100%;
+}
+
+.daily-bonus-icon {
+  font-size: 52px;
+  margin-bottom: 8px;
+}
+
+.daily-bonus-title {
+  font-size: 26px;
+  font-weight: 900;
+  color: #2D3748;
+  margin-bottom: 12px;
+}
+
+.daily-bonus-xp {
+  font-size: 36px;
+  font-weight: 900;
+  color: #D69E2E;
+  text-shadow: 0 1px 4px rgba(214, 158, 46, 0.3);
+  margin-bottom: 24px;
+}
+
+.daily-bonus-ok {
+  width: 140px;
+  height: 50px;
+  background: #4299E1;
+  color: #fff;
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  border: none;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(66, 153, 225, 0.4);
+  cursor: pointer;
+}
+
+.daily-bonus-ok:active {
+  transform: scale(0.95);
+}
+
+/* --- ストリーク報酬モーダル --- */
+
+.streak-reward-card {
+  background: linear-gradient(135deg, #fff8e1, #fff, #fff3e0);
+  border: 3px solid #D69E2E;
+  border-radius: 24px;
+  padding: 32px 28px;
+  text-align: center;
+  box-shadow: 0 8px 30px rgba(214, 158, 46, 0.35);
+  max-width: 320px;
+  width: 100%;
+  animation: streak-card-appear 0.4s ease-out;
+}
+
+@keyframes streak-card-appear {
+  0%   { opacity: 0; transform: scale(0.6); }
+  70%  { opacity: 1; transform: scale(1.05); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.streak-reward-icon {
+  font-size: 56px;
+  margin-bottom: 8px;
+  animation: streak-icon-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes streak-icon-pulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.15); }
+}
+
+.streak-reward-title {
+  font-size: 22px;
+  font-weight: 900;
+  color: #C05621;
+  margin-bottom: 6px;
+}
+
+.streak-reward-days {
+  font-size: 18px;
+  font-weight: 700;
+  color: #D69E2E;
+  margin-bottom: 12px;
+}
+
+.streak-reward-label {
+  font-size: 16px;
+  font-weight: 700;
+  color: #4A5568;
+  margin-bottom: 10px;
+}
+
+.streak-reward-item {
+  font-size: 24px;
+  font-weight: 900;
+  margin-bottom: 20px;
+}
+
+.streak-reward-ok {
+  width: 160px;
+  height: 50px;
+  background: linear-gradient(135deg, #D69E2E, #ECC94B);
+  color: #fff;
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  border: none;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(214, 158, 46, 0.4);
+  cursor: pointer;
+}
+
+.streak-reward-ok:active {
+  transform: scale(0.95);
+}
+
+/* --- ずかんモーダル --- */
+
+.collection-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 150;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+}
+
+.collection-card {
+  width: 100%;
+  max-width: 440px;
+  max-height: 80vh;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.collection-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 2px solid #E2E8F0;
+  flex-shrink: 0;
+}
+
+.collection-title {
+  font-size: 26px;
+  font-weight: 900;
+  color: #2D3748;
+}
+
+.collection-close {
+  width: 36px;
+  height: 36px;
+  background: #EDF2F7;
+  border: none;
+  border-radius: 50%;
+  font-size: 22px;
+  font-weight: 700;
+  color: #718096;
+  cursor: pointer;
+  line-height: 36px;
+  text-align: center;
+  padding: 0;
+}
+
+.collection-close:active {
+  background: #E2E8F0;
+}
+
+.collection-body {
+  padding: 16px 20px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  flex: 1;
+}
+
+/* セクション */
+.collection-section {
+  margin-bottom: 16px;
+}
+
+.collection-section-label {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #E2E8F0;
+}
+
+/* アイテム行 */
+.collection-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+}
+
+.collection-item-name {
+  font-size: 17px;
+  font-weight: 700;
+  color: #2D3748;
+}
+
+.collection-item-count {
+  font-size: 15px;
+  font-weight: 700;
+  color: #718096;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+/* 空メッセージ */
+.collection-empty {
+  text-align: center;
+  padding: 40px 0;
+  color: #A0AEC0;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 2;
+}
+
+/* ========================================
+   画面B: バトル画面
+   ======================================== */
+
+#battle-screen {
+  max-width: 480px;
+  margin: 0 auto;
+  height: 100vh;
+  height: 100dvh;
+  background: linear-gradient(180deg, #E8F4FD 0%, #F0E6FF 100%);
+  display: flex;
+  flex-direction: column;
+  padding: 12px 16px;
+  overflow: hidden;
+}
+
+/* --- ステータスバー --- */
+
+.battle-status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.floor-display {
+  font-size: 28px;
+  font-weight: 700;
+  color: #2D3748;
+}
+
+.score-display {
+  font-size: 16px;
+  font-weight: 700;
+  color: #4A5568;
+}
+
+.menu-spacer {
+  width: 28px;
+}
+
+/* --- HPバーエリア --- */
+
+.hp-area {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.hp-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hp-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+  width: 22px;
+  text-align: center;
+}
+
+.hp-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #4A5568;
+  flex-shrink: 0;
+  min-width: 28px;
+}
+
+#monster-name {
+  min-width: 60px;
+}
+
+.hp-bar-wrap {
+  flex: 1;
+  height: 14px;
+  background: #E2E8F0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.hp-bar {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.4s ease;
+  will-change: width;
+}
+
+.hp-bar-player {
+  background: #48BB78;
+}
+
+.hp-bar-monster {
+  background: #F56565;
+}
+
+.hp-numbers {
+  font-size: 13px;
+  font-weight: 700;
+  color: #4A5568;
+  flex-shrink: 0;
+  min-width: 30px;
+  text-align: right;
+}
+
+/* --- バトルフィールド --- */
+
+.battle-field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  min-height: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, rgba(203,213,224,0.2) 100%);
+  border-radius: 16px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+/* コンボ表示 */
+.combo-display {
+  font-size: 22px;
+  font-weight: 900;
+  color: #E53E3E;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.15);
+  margin-bottom: 4px;
+}
+
+/* キャラクター配置 */
+.battle-characters {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  padding: 0 24px;
+}
+
+/* プレイヤー（小さいカズ） */
+.player-sprite {
+  animation: kazu-idle 2s ease-in-out infinite;
+  will-change: transform;
+}
+
+.kazu-body-sm {
+  width: 80px;
+  height: 80px;
+}
+
+.kazu-eye-sm {
+  width: 11px;
+  height: 13px;
+  top: 25px;
+}
+
+.kazu-eye-sm::after {
+  width: 6px;
+  height: 7px;
+}
+
+.kazu-eye-left-sm {
+  left: 20px;
+}
+
+.kazu-eye-right-sm {
+  right: 20px;
+}
+
+.kazu-mouth-sm {
+  width: 16px;
+  height: 8px;
+  bottom: 22px;
+}
+
+/* モンスター */
+.monster-sprite {
+  animation: monster-idle 2s ease-in-out infinite;
+  position: relative;
+  will-change: transform;
+}
+
+@keyframes monster-idle {
+  0%, 100% { transform: translateX(0); }
+  50%      { transform: translateX(6px); }
+}
+
+.monster-body {
+  width: 100px;
+  height: 100px;
+  background: #F56565;
+  border-radius: 50%;
+  position: relative;
+  box-shadow: 0 6px 16px rgba(245, 101, 101, 0.4);
+}
+
+/* モンスターの目（怒り） */
+.monster-eye {
+  width: 14px;
+  height: 14px;
+  background: #fff;
+  border-radius: 50%;
+  position: absolute;
+  top: 30px;
+}
+
+.monster-eye::after {
+  content: "";
+  display: block;
+  width: 8px;
+  height: 8px;
+  background: #1A202C;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 1px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* 怒り眉毛 */
+.monster-eye::before {
+  content: "";
+  display: block;
+  width: 16px;
+  height: 3px;
+  background: #1A202C;
+  border-radius: 2px;
+  position: absolute;
+  top: -6px;
+  left: 50%;
+}
+
+.monster-eye-left {
+  left: 22px;
+}
+
+.monster-eye-left::before {
+  transform: translateX(-50%) rotate(20deg);
+}
+
+.monster-eye-right {
+  right: 22px;
+}
+
+.monster-eye-right::before {
+  transform: translateX(-50%) rotate(-20deg);
+}
+
+/* モンスターの口（ギザギザ） */
+.monster-mouth {
+  width: 24px;
+  height: 10px;
+  position: absolute;
+  bottom: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+  background:
+    linear-gradient( 45deg, transparent 33.3%, #fff 33.3%, #fff 66.6%, transparent 66.6%),
+    linear-gradient(-45deg, transparent 33.3%, #fff 33.3%, #fff 66.6%, transparent 66.6%);
+  background-size: 8px 10px;
+}
+
+/* --- モンスターバリエーション --- */
+
+/* スライム: みどり、まんまる、ぷるぷる半透明 */
+.monster-body.monster-slime {
+  background: #68D391;
+  box-shadow: 0 6px 16px rgba(104, 211, 145, 0.4), inset 0 -8px 16px rgba(255, 255, 255, 0.3);
+}
+
+/* マメッチ: オレンジ、少し縦長 */
+.monster-body.monster-mamecchi {
+  background: #F6AD55;
+  box-shadow: 0 6px 16px rgba(246, 173, 85, 0.4);
+  border-radius: 42% 42% 50% 50%;
+  height: 110px;
+  width: 90px;
+}
+
+/* プルリン: うすむらさき、やや横広 */
+.monster-body.monster-pururin {
+  background: #B794F4;
+  box-shadow: 0 6px 16px rgba(183, 148, 244, 0.4), inset 0 -6px 12px rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  width: 115px;
+  height: 90px;
+}
+
+/* ゴブリン: くすんだみどり、少し角ばった丸 */
+.monster-body.monster-goblin {
+  background: #68D391;
+  box-shadow: 0 6px 16px rgba(104, 211, 145, 0.4);
+  border-radius: 40% 40% 50% 50%;
+}
+
+/* コウモリン: くらいグレー、横長、翼っぽいbox-shadow */
+.monster-body.monster-koumorin {
+  background: #4A5568;
+  box-shadow: -20px 4px 0 -6px #4A5568, 20px 4px 0 -6px #4A5568, 0 6px 16px rgba(74, 85, 104, 0.4);
+  border-radius: 50%;
+  width: 110px;
+  height: 90px;
+}
+
+/* キノッピ: きいろ、きのこの笠っぽい */
+.monster-body.monster-kinoppi {
+  background: #F6E05E;
+  box-shadow: 0 6px 16px rgba(246, 224, 94, 0.4);
+  border-radius: 50% 50% 40% 40%;
+  width: 115px;
+  height: 95px;
+}
+
+/* ゴーレム: グレー、四角っぽい丸、ゴツゴツ */
+.monster-body.monster-golem {
+  background: #A0AEC0;
+  box-shadow: 0 6px 16px rgba(160, 174, 192, 0.4);
+  border-radius: 30%;
+  border: 3px solid #718096;
+}
+
+/* ドラッチ: あかピンク、まんまる、ちいさいツノ */
+.monster-body.monster-doracchi {
+  background: #FC8181;
+  box-shadow: 0 6px 16px rgba(252, 129, 129, 0.4);
+}
+.monster-body.monster-doracchi::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 14px solid #FC8181;
+}
+
+/* オニャンコ: クリーム、まんまる、ネコ耳 */
+.monster-body.monster-onyanko {
+  background: #FBD38D;
+  box-shadow: 0 6px 16px rgba(251, 211, 141, 0.4);
+}
+.monster-body.monster-onyanko::before {
+  content: "";
+  position: absolute;
+  top: -12px;
+  left: 14px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 16px solid #FBD38D;
+}
+.monster-body.monster-onyanko::after {
+  content: "";
+  position: absolute;
+  top: -12px;
+  right: 14px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 16px solid #FBD38D;
+}
+
+/* ガーゴイル: ダークグレー、角ばった丸、翼shadow */
+.monster-body.monster-gargoyle {
+  background: #718096;
+  box-shadow: -24px 6px 0 -8px #718096, 24px 6px 0 -8px #718096, 0 6px 16px rgba(113, 128, 150, 0.4);
+  border-radius: 35%;
+  width: 110px;
+  height: 110px;
+}
+
+/* シャドウン: ほぼ黒、ゆらゆら揺れ */
+.monster-body.monster-shadowun {
+  background: #2D3748;
+  box-shadow: 0 6px 24px rgba(45, 55, 72, 0.6);
+  border-radius: 46% 54% 50% 50%;
+  animation: shadowun-wobble 2s ease-in-out infinite !important;
+}
+@keyframes shadowun-wobble {
+  0%, 100% { transform: translateX(0) scale(1); border-radius: 46% 54% 50% 50%; }
+  25%      { transform: translateX(4px) scale(1.02); border-radius: 50% 46% 48% 52%; }
+  50%      { transform: translateX(-2px) scale(0.98); border-radius: 52% 48% 54% 46%; }
+  75%      { transform: translateX(3px) scale(1.01); border-radius: 48% 52% 46% 54%; }
+}
+
+/* ヨロイダケ: こげ茶、縦長、鎧っぽいborder */
+.monster-body.monster-yoroidake {
+  background: #C05621;
+  box-shadow: 0 6px 16px rgba(192, 86, 33, 0.4);
+  border-radius: 40% 40% 48% 48%;
+  width: 90px;
+  height: 115px;
+  border: 3px solid #9C4221;
+}
+
+/* ドラゴニー: あか、やや大きい丸、ツノ2本 */
+.monster-body.monster-dragony {
+  background: #E53E3E;
+  box-shadow: 0 6px 16px rgba(229, 62, 62, 0.4);
+  width: 110px;
+  height: 110px;
+}
+.monster-body.monster-dragony::before {
+  content: "";
+  position: absolute;
+  top: -12px;
+  left: 18px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 16px solid #E53E3E;
+}
+.monster-body.monster-dragony::after {
+  content: "";
+  position: absolute;
+  top: -12px;
+  right: 18px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 16px solid #E53E3E;
+}
+
+/* デスポット: こいむらさき、大きめ、王冠っぽいギザギザ */
+.monster-body.monster-despot {
+  background: #553C9A;
+  box-shadow: 0 6px 16px rgba(85, 60, 154, 0.4);
+  width: 110px;
+  height: 110px;
+}
+.monster-body.monster-despot::before {
+  content: "";
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 14px;
+  background:
+    linear-gradient( 45deg, transparent 33.3%, #D69E2E 33.3%, #D69E2E 66.6%, transparent 66.6%),
+    linear-gradient(-45deg, transparent 33.3%, #D69E2E 33.3%, #D69E2E 66.6%, transparent 66.6%);
+  background-size: 16px 14px;
+}
+
+/* マジョリカ: むらさき、まんまる、魔女帽子 */
+.monster-body.monster-majorica {
+  background: #6B46C1;
+  box-shadow: 0 6px 16px rgba(107, 70, 193, 0.4);
+}
+.monster-body.monster-majorica::before {
+  content: "";
+  position: absolute;
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 22px solid transparent;
+  border-right: 22px solid transparent;
+  border-bottom: 28px solid #553C9A;
+}
+
+/* ダークキング: くろ、大きめ、多重グローオーラ */
+.monster-body.monster-darkking {
+  background: #1A202C;
+  box-shadow:
+    0 0 12px rgba(229, 62, 62, 0.4),
+    0 0 24px rgba(128, 90, 213, 0.3),
+    0 0 40px rgba(214, 158, 46, 0.2),
+    0 6px 16px rgba(26, 32, 44, 0.5);
+  width: 110px;
+  height: 110px;
+}
+
+/* カオスドラゴ: こいあか、大きめ、ツノ＋翼shadow */
+.monster-body.monster-chaosdrago {
+  background: #C53030;
+  box-shadow: -22px 6px 0 -8px #C53030, 22px 6px 0 -8px #C53030, 0 6px 16px rgba(197, 48, 48, 0.4);
+  width: 110px;
+  height: 110px;
+}
+.monster-body.monster-chaosdrago::before {
+  content: "";
+  position: absolute;
+  top: -12px;
+  left: 16px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 18px solid #C53030;
+}
+.monster-body.monster-chaosdrago::after {
+  content: "";
+  position: absolute;
+  top: -12px;
+  right: 16px;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 18px solid #C53030;
+}
+
+/* まおうスラ: こいあお、スライム型、王冠付き半透明グロー */
+.monster-body.monster-maoeslime {
+  background: #2B6CB0;
+  box-shadow: 0 0 20px rgba(43, 108, 176, 0.5), inset 0 -8px 16px rgba(255, 255, 255, 0.25), 0 6px 16px rgba(43, 108, 176, 0.4);
+}
+.monster-body.monster-maoeslime::before {
+  content: "";
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 44px;
+  height: 14px;
+  background:
+    linear-gradient( 45deg, transparent 33.3%, #D69E2E 33.3%, #D69E2E 66.6%, transparent 66.6%),
+    linear-gradient(-45deg, transparent 33.3%, #D69E2E 33.3%, #D69E2E 66.6%, transparent 66.6%);
+  background-size: 14px 14px;
+}
+
+/* --- 問題表示エリア --- */
+
+.question-box {
+  position: relative;
+  background: #fff;
+  border-radius: 16px;
+  padding: 18px 20px;
+  text-align: center;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.review-badge {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #D69E2E;
+}
+
+.question-num {
+  font-size: 44px;
+  font-weight: 900;
+  color: #1A202C;
+}
+
+.question-op {
+  font-size: 44px;
+  font-weight: 700;
+  color: #718096;
+}
+
+.question-mark {
+  color: #E53E3E;
+}
+
+/* --- タイマーバー --- */
+
+.timer-wrap {
+  width: 100%;
+  height: 8px;
+  background: #E2E8F0;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.timer-bar {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.1s linear;
+  will-change: width;
+}
+
+.timer-safe {
+  background: #48BB78;
+}
+
+.timer-warning {
+  background: #ECC94B;
+}
+
+.timer-danger {
+  background: #E53E3E;
+  animation: timer-blink 0.5s ease-in-out infinite;
+}
+
+@keyframes timer-blink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.4; }
+}
+
+/* --- 選択肢エリア --- */
+
+.choices-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding: 0 0 20px;
+  flex-shrink: 0;
+}
+
+.choice-btn {
+  min-height: 70px;
+  background: #4299E1;
+  color: #fff;
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(66, 153, 225, 0.35);
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.choice-btn:active {
+  transform: scale(0.95);
+  background: #3182CE;
+}
+
+.choice-btn.correct {
+  background: #48BB78;
+  box-shadow: 0 4px 10px rgba(72, 187, 120, 0.35);
+  opacity: 1;
+}
+
+.choice-btn.wrong {
+  background: #E53E3E;
+  box-shadow: 0 4px 10px rgba(229, 62, 62, 0.35);
+  opacity: 1;
+}
+
+.choice-btn:disabled {
+  cursor: default;
+}
+
+.choice-btn.disabled {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* --- 正解フラッシュ --- */
+
+.correct-flash {
+  animation: correct-flash 0.12s ease-out;
+}
+
+@keyframes correct-flash {
+  0%   { background-color: rgba(72, 187, 120, 0.3); }
+  100% { background-color: transparent; }
+}
+
+/* ========================================
+   アニメーション
+   ======================================== */
+
+/* --- ボタン演出 --- */
+
+.btn-pop {
+  animation: btn-pop 0.2s ease-out;
+}
+
+@keyframes btn-pop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.blink-correct {
+  animation: blink-correct 0.3s ease-in-out 3;
+}
+
+@keyframes blink-correct {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.3; }
+}
+
+/* --- プレイヤー: ジャンプ攻撃 --- */
+
+.anim-jump-attack {
+  animation: jump-attack 0.35s ease-out !important;
+}
+
+@keyframes jump-attack {
+  0%   { transform: translateY(0) translateX(0); }
+  40%  { transform: translateY(-30px) translateX(20px); }
+  60%  { transform: translateY(-10px) translateX(30px); }
+  100% { transform: translateY(0) translateX(0); }
+}
+
+/* --- モンスター: シェイク --- */
+
+.anim-shake {
+  animation: shake 0.3s ease-in-out !important;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%      { transform: translateX(-8px); }
+  40%      { transform: translateX(8px); }
+  60%      { transform: translateX(-6px); }
+  80%      { transform: translateX(6px); }
+}
+
+/* --- モンスター: 攻撃モーション --- */
+
+.anim-monster-attack {
+  animation: monster-attack 0.4s ease-out !important;
+}
+
+@keyframes monster-attack {
+  0%   { transform: translateX(0); }
+  30%  { transform: translateX(-30px) scale(1.1); }
+  50%  { transform: translateX(-40px) scale(1.15); }
+  100% { transform: translateX(0) scale(1); }
+}
+
+/* --- ダメージ数字 --- */
+
+.damage-number {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 28px;
+  font-weight: 900;
+  color: #E53E3E;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  pointer-events: none;
+  animation: damage-float 0.7s ease-out forwards;
+  z-index: 10;
+}
+
+@keyframes damage-float {
+  0%   { opacity: 1; transform: translateX(-50%) translateY(0); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(-40px); }
+}
+
+/* --- フローティングテキスト --- */
+
+.float-text {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 36px;
+  font-weight: 900;
+  pointer-events: none;
+  z-index: 200;
+  animation: float-pop 0.6s ease-out forwards;
+}
+
+.float-oshii {
+  color: #ED8936;
+  text-shadow: 0 2px 6px rgba(237, 137, 54, 0.4);
+}
+
+@keyframes float-pop {
+  0%   { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+  30%  { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+  60%  { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1); }
+}
+
+/* --- コンボ演出 --- */
+
+.combo-display {
+  font-size: 22px;
+  font-weight: 900;
+  color: #E53E3E;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.15);
+  margin-bottom: 4px;
+  transition: color 0.3s, font-size 0.3s;
+}
+
+.combo-label {
+  font-size: 0.85em;
+}
+
+.combo-nice {
+  color: #ED8936;
+  font-size: 24px;
+}
+
+.combo-super {
+  color: #E53E3E;
+  font-size: 26px;
+  text-shadow: 0 0 10px rgba(229, 62, 62, 0.4);
+}
+
+.combo-amazing {
+  color: #805AD5;
+  font-size: 28px;
+  text-shadow: 0 0 12px rgba(128, 90, 213, 0.4);
+}
+
+.combo-legendary {
+  color: #D69E2E;
+  font-size: 30px;
+  text-shadow: 0 0 16px rgba(214, 158, 46, 0.5);
+}
+
+.combo-bounce {
+  animation: combo-bounce 0.5s ease-out;
+}
+
+@keyframes combo-bounce {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(1.4); }
+  60%  { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+
+/* --- オーバーレイ共通 --- */
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+/* --- 撃破演出 --- */
+
+#defeat-overlay {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.defeat-text {
+  font-size: 48px;
+  font-weight: 900;
+  color: #D69E2E;
+  text-shadow:
+    0 0 20px rgba(214, 158, 46, 0.6),
+    0 2px 6px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+}
+
+.loot-line {
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 12px;
+  opacity: 0;
+  animation: loot-pop 0.5s 0.3s ease-out forwards;
+}
+
+.loot-icon {
+  font-size: 28px;
+}
+
+.loot-text {
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes loot-pop {
+  0%   { opacity: 0; transform: translateY(10px) scale(0.8); }
+  60%  { opacity: 1; transform: translateY(-4px) scale(1.05); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.defeat-particles {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+}
+
+.particle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  animation: particle-burst 0.8s ease-out forwards;
+}
+
+.particle-0 { background: #F56565; animation-delay: 0s;    --px: -60px; --py: -80px; }
+.particle-1 { background: #ED8936; animation-delay: 0.05s; --px:  60px; --py: -70px; }
+.particle-2 { background: #ECC94B; animation-delay: 0.1s;  --px: -80px; --py:  10px; }
+.particle-3 { background: #48BB78; animation-delay: 0.05s; --px:  80px; --py:  20px; }
+.particle-4 { background: #4299E1; animation-delay: 0.1s;  --px: -40px; --py:  70px; }
+.particle-5 { background: #9F7AEA; animation-delay: 0s;    --px:  40px; --py:  60px; }
+.particle-6 { background: #FC8181; animation-delay: 0.05s; --px: -70px; --py: -30px; }
+.particle-7 { background: #68D391; animation-delay: 0.1s;  --px:  70px; --py: -40px; }
+
+@keyframes particle-burst {
+  0%   { opacity: 1; transform: translate(0, 0) scale(1); }
+  100% { opacity: 0; transform: translate(var(--px), var(--py)) scale(0); }
+}
+
+/* モンスター消滅 */
+.anim-defeat-vanish {
+  animation: defeat-vanish 0.5s ease-in forwards !important;
+}
+
+@keyframes defeat-vanish {
+  0%   { opacity: 1; transform: scale(1) rotate(0deg); }
+  60%  { opacity: 0.5; transform: scale(1.2) rotate(10deg); }
+  100% { opacity: 0; transform: scale(0) rotate(30deg); }
+}
+
+/* ズームイン */
+.anim-zoom-in {
+  animation: zoom-in 0.4s ease-out forwards;
+}
+
+@keyframes zoom-in {
+  0%   { opacity: 0; transform: scale(0.3); }
+  70%  { opacity: 1; transform: scale(1.1); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* つぎのフロアへボタン */
+.next-floor-btn {
+  margin-top: 32px;
+  width: 200px;
+  height: 56px;
+  background: #4299E1;
+  color: #fff;
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  border: none;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(66, 153, 225, 0.4);
+  cursor: pointer;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.next-floor-btn:active {
+  transform: scale(0.95);
+  animation: none;
+}
+
+/* --- ボス登場演出 --- */
+
+#boss-overlay {
+  background: rgba(180, 30, 30, 0);
+}
+
+.boss-flash {
+  animation: boss-flash 0.8s ease-out;
+}
+
+@keyframes boss-flash {
+  0%   { background: rgba(220, 40, 40, 0.6); }
+  30%  { background: rgba(220, 40, 40, 0.2); }
+  60%  { background: rgba(220, 40, 40, 0.5); }
+  100% { background: rgba(220, 40, 40, 0.15); }
+}
+
+.boss-appear-text {
+  font-size: 40px;
+  font-weight: 900;
+  color: #fff;
+  text-shadow:
+    0 0 20px rgba(220, 40, 40, 0.8),
+    0 2px 8px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+}
+
+/* 画面シェイク */
+.anim-screen-shake {
+  animation: screen-shake 0.6s ease-in-out;
+}
+
+@keyframes screen-shake {
+  0%, 100% { transform: translateX(0) translateY(0); }
+  10%      { transform: translateX(-4px) translateY(2px); }
+  20%      { transform: translateX(4px) translateY(-2px); }
+  30%      { transform: translateX(-3px) translateY(3px); }
+  40%      { transform: translateX(3px) translateY(-1px); }
+  50%      { transform: translateX(-2px) translateY(2px); }
+  60%      { transform: translateX(2px) translateY(-2px); }
+  70%      { transform: translateX(-3px) translateY(1px); }
+  80%      { transform: translateX(3px) translateY(-1px); }
+  90%      { transform: translateX(-1px) translateY(1px); }
+}
+
+/* --- ボスモンスター --- */
+
+.monster-body.boss-body {
+  transform: scale(1.5);
+  transform-origin: center center;
+}
+
+/* --- レベルアップ演出 --- */
+
+#levelup-overlay {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.levelup-text {
+  font-size: 36px;
+  font-weight: 900;
+  color: #ECC94B;
+  text-shadow:
+    0 0 20px rgba(236, 201, 75, 0.7),
+    0 0 40px rgba(236, 201, 75, 0.4),
+    0 2px 8px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+}
+
+.anim-levelup {
+  animation: levelup-bounce 1.2s ease-out forwards;
+}
+
+@keyframes levelup-bounce {
+  0%   { opacity: 0; transform: scale(0.3) translateY(20px); }
+  30%  { opacity: 1; transform: scale(1.2) translateY(-10px); }
+  50%  { transform: scale(0.95) translateY(0); }
+  70%  { transform: scale(1.05) translateY(-5px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* --- ゲームオーバー演出 --- */
+
+#gameover-overlay {
+  background: rgba(0, 0, 0, 0);
+}
+
+.gameover-fade-in {
+  animation: gameover-bg 0.6s ease-out forwards;
+}
+
+@keyframes gameover-bg {
+  0%   { background: rgba(0, 0, 0, 0); }
+  100% { background: rgba(0, 0, 0, 0.5); }
+}
+
+.gameover-text {
+  font-size: 40px;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+}
+
+.anim-fade-in {
+  animation: fade-in 0.5s ease-out forwards;
+}
+
+@keyframes fade-in {
+  0%   { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* プレイヤー手振り */
+.anim-wave {
+  animation: wave 0.4s ease-in-out 4 !important;
+}
+
+@keyframes wave {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25%      { transform: translateY(-5px) rotate(-8deg); }
+  75%      { transform: translateY(-5px) rotate(8deg); }
+}
+
+/* ========================================
+   画面E: リザルト画面
+   ======================================== */
+
+#result-screen {
+  max-width: 480px;
+  margin: 0 auto;
+  height: 100vh;
+  height: 100dvh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 24px 20px;
+  gap: 18px;
+}
+
+/* --- ヘッダー --- */
+
+.result-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.result-kazu {
+  animation: result-bounce 1.2s ease-in-out infinite;
+}
+
+@keyframes result-bounce {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25%      { transform: translateY(-6px) rotate(-5deg); }
+  75%      { transform: translateY(-6px) rotate(5deg); }
+}
+
+.kazu-body-result {
+  width: 70px;
+  height: 70px;
+}
+
+.result-message {
+  font-size: 32px;
+  font-weight: 900;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* --- 記録カード --- */
+
+.result-card {
+  width: 100%;
+  background: #fff;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.result-floor-big {
+  font-size: 48px;
+  font-weight: 900;
+  color: #2D3748;
+  text-align: center;
+}
+
+.result-divider {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #E2E8F0, transparent);
+  margin: 2px 0;
+}
+
+.result-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.result-label {
+  font-size: 16px;
+  font-weight: 700;
+  color: #718096;
+}
+
+.result-value {
+  font-size: 22px;
+  font-weight: 900;
+  color: #2D3748;
+}
+
+.result-value-sm {
+  font-size: 16px;
+}
+
+/* --- ベスト更新 --- */
+
+.result-new-record {
+  text-align: center;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.new-record-text {
+  font-size: 28px;
+  font-weight: 900;
+  color: #ECC94B;
+  text-shadow:
+    0 0 16px rgba(236, 201, 75, 0.6),
+    0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.new-record-diff {
+  font-size: 20px;
+  font-weight: 700;
+  color: #F6E05E;
+  margin-top: 4px;
+}
+
+/* --- 獲得アイテム --- */
+
+.result-items {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.result-items-header {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 10px;
+}
+
+.result-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.result-item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  padding: 8px 14px;
+}
+
+.result-item-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #2D3748;
+}
+
+.result-item-stars {
+  font-size: 14px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.rarity-common    { color: #A0AEC0; }
+.rarity-rare      { color: #4299E1; }
+.rarity-epic      { color: #9F7AEA; }
+.rarity-legendary { color: #D69E2E; }
+
+/* --- ボタンエリア --- */
+
+.result-buttons {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 4px;
+}
+
+.retry-btn {
+  width: 180px;
+  height: 60px;
+  background: #E53E3E;
+  color: #fff;
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(229, 62, 62, 0.4);
+  cursor: pointer;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.retry-btn:active {
+  transform: scale(0.95);
+  animation: none;
+}
+
+.quit-btn {
+  width: 120px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.quit-btn:active {
+  transform: scale(0.95);
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.result-tomorrow {
+  text-align: center;
+  font-size: 15px;
+  color: #6B46C1;
+  background: #F3E8FF;
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin: 12px 0;
+}
+
+/* ========================================
+   デイリーミッション — タイトル表示
+   ======================================== */
+
+.daily-mission-display {
+  display: block;
+  width: 100%;
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  text-align: center;
+  font-size: 15px;
+  color: #4A5568;
+  margin: 8px 0 12px;
+  padding: 10px 16px;
+  background: #EDF2F7;
+  border-radius: 12px;
+}
+
+.daily-mission-done {
+  color: #B7791F;
+  background: #FEFCBF;
+}
+
+#daily-mission-overlay {
+  z-index: 9999;
+}
+
+#daily-mission-overlay.hidden {
+  display: none;
+}
+
+/* ========================================
+   デイリーミッション — 達成オーバーレイ
+   ======================================== */
+
+.daily-mission-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 32px 24px;
+  text-align: center;
+  max-width: 320px;
+  width: 85%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.daily-mission-icon {
+  font-size: 48px;
+  margin-bottom: 8px;
+}
+
+.daily-mission-complete-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #D69E2E;
+  margin-bottom: 8px;
+}
+
+.daily-mission-xp {
+  font-size: 28px;
+  font-weight: 900;
+  color: #48BB78;
+  margin-bottom: 16px;
+}
