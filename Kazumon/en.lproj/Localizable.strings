@@ -1,0 +1,1074 @@
+/*
+  Localizable.strings (English)
+  Kazumon
+
+  Created by 0000 on 2026/03/21.
+*/
+
+// ============================================================
+// MARK: - App
+// ============================================================
+
+"app_name" = "Kazumon";
+
+// ============================================================
+// MARK: - Title Screen
+// ============================================================
+
+"view_title_start" = "Start!";
+"view_title_collection" = "Collection";
+"view_title_streak_days" = "%d-day streak";
+"view_title_daily_mission" = "Daily Mission";
+"view_title_daily_mission_complete" = "Daily Mission Done!";
+"view_title_daily_mission_claim" = "Get Your Bonus!";
+"view_title_daily_mission_remaining" = "Play %d more time(s)!";
+"view_title_plays_remaining" = "You can play %d more time(s)";
+"view_title_play_limit_reached" = "That's all for today!";
+"view_title_see_you_tomorrow" = "See you tomorrow! 🌙";
+"view_title_upgrade_pro" = "Upgrade to Pro";
+"view_title_unlimited_play" = "Play as much as you want!";
+"view_title_bgm_select" = "Pick a Song";
+"view_title_bgm_close" = "Close";
+
+// ============================================================
+// MARK: - Battle Screen
+// ============================================================
+
+"view_battle_floor" = "🏰 Floor %d";
+"view_battle_best_floor" = "⭐Best: Floor %d";
+"view_battle_score" = "Score: %d";
+"view_battle_review" = "Review";
+"view_battle_problem_format" = "%d + %d = ?";
+
+// ============================================================
+// MARK: - Floating Text (Battle)
+// ============================================================
+
+"view_battle_xp_gained" = "+%d XP";
+"view_battle_correct_answer" = "Answer: %d";
+"view_battle_time_up" = "Time's up!";
+
+// ============================================================
+// MARK: - Combo
+// ============================================================
+
+"view_combo_count" = "%d Combo!";
+"view_combo_break" = "%d Combo Break!";
+
+// ============================================================
+// MARK: - Overlays
+// ============================================================
+
+"view_overlay_boss_appears" = "Boss Incoming!";
+"view_overlay_game_over" = "Game Over";
+"view_overlay_defeated" = "You beat\n%@!";
+"view_overlay_daily_bonus" = "Daily Bonus!";
+"view_overlay_level_up" = "Level Up! Lv.%d";
+"view_overlay_level_up_title" = "Level Up!";
+"battle_evolution" = "✨ Evolution! ✨";
+"battle_near_evolution" = "Almost there…✨";
+"view_overlay_evolved" = "✨ You Evolved! ✨";
+"view_overlay_evolved_stronger" = "You got even stronger!";
+"view_overlay_new_item" = "New Item!";
+"view_overlay_item_hint" = "Use it on your adventure!";
+
+// ============================================================
+// MARK: - Result Screen
+// ============================================================
+
+"view_result_well_done" = "Great Job!";
+"view_result_score" = "Score";
+"view_result_combo" = "Combo";
+"view_result_accuracy" = "Accuracy";
+"view_result_play_time" = "Play Time";
+"view_result_earned_xp" = "XP Earned";
+"view_result_new_record" = "🎉 New Record!";
+"view_result_daily_mission_bonus" = "Daily Mission Bonus +%d XP";
+"view_result_mission_claimed" = "Mission Bonus Collected!";
+"view_result_retry" = "Try Again";
+"view_result_finish" = "Done";
+"view_result_evolution_goal" = "%d more levels to evolve (Lv%d)";
+"view_result_max_evolution" = "Final Form";
+
+// ============================================================
+// MARK: - Collection Screen
+// ============================================================
+
+"view_collection_title" = "Collection";
+"view_collection_back" = "Back";
+"view_collection_empty" = "No items yet!";
+"view_collection_empty_hint" = "Beat bosses to get cool items!";
+
+// ============================================================
+// MARK: - Monsters
+// ============================================================
+
+"model_monster_slime" = "Slime";
+"model_monster_boss_slime" = "Boss Slime";
+"model_monster_goblin" = "Goblin";
+"model_monster_boss_goblin" = "Boss Goblin";
+"model_monster_orc" = "Orc";
+"model_monster_boss_orc" = "Boss Orc";
+"model_monster_dragon" = "Dragon";
+"model_monster_boss_dragon" = "Boss Dragon";
+"model_monster_demon" = "Demon";
+"model_monster_maou" = "Dark Lord";
+"model_monster_unknown" = "???";
+
+// ============================================================
+// MARK: - Items
+// ============================================================
+
+"model_item_wooden_sword" = "Wooden Sword";
+"model_item_leather_shield" = "Leather Shield";
+"model_item_herb" = "Healing Herb";
+"model_item_iron_sword" = "Iron Sword";
+"model_item_magic_ring" = "Magic Ring";
+"model_item_fire_sword" = "Fire Sword";
+"model_item_ice_staff" = "Ice Staff";
+"model_item_dragon_crown" = "Dragon Crown";
+
+// ============================================================
+// MARK: - Item Rarity
+// ============================================================
+
+"model_rarity_common" = "Common";
+"model_rarity_uncommon" = "Uncommon";
+"model_rarity_rare" = "Rare";
+"model_rarity_legendary" = "Legendary";
+
+// ============================================================
+// MARK: - Character Evolution Stages
+// ============================================================
+
+"model_evolution_base" = "Normal";
+"model_evolution_stage1" = "Evolution 1";
+"model_evolution_stage2" = "Evolution 2";
+"model_evolution_final" = "Final Form";
+
+// ============================================================
+// MARK: - BGM Names
+// ============================================================
+
+"model_bgm_battle" = "Monster Battle";
+"model_bgm_glimmer_0" = "Glimmer Road";
+"model_bgm_glimmer_1" = "Stardust Sky";
+"model_bgm_glimmer_2" = "Magic Door";
+"model_bgm_glimmer_3" = "Shining Adventure";
+"bgm_unlock_hint" = "Play more to unlock new songs!";
+
+// ============================================================
+// MARK: - Player Name
+// ============================================================
+
+"default_player_name" = "Kazu";
+
+// ============================================================
+// MARK: - Name Input Screen
+// ============================================================
+
+"view_name_input_title" = "What's your name?";
+"view_name_input_confirm" = "Let's go!";
+"view_name_input_skip" = "Use Kazu";
+"view_name_input_placeholder" = "Enter your name";
+"view_name_input_too_long" = "10 characters max";
+
+// ============================================================
+// MARK: - Settings Screen
+// ============================================================
+
+"view_settings_title" = "Settings";
+"view_settings_player_name" = "Name";
+"view_settings_save" = "Save";
+
+// ============================================================
+// MARK: - Floor Limit Overlay
+// ============================================================
+
+"overlay_floor_limit_title" = "Amazing! You reached Floor 30!";
+"overlay_floor_limit_body" = "Upgrade to Pro and explore even higher floors!";
+"overlay_floor_limit_upgrade" = "Keep Playing (Pro)";
+"overlay_floor_limit_result" = "See Results";
+
+// ============================================================
+// MARK: - Pro Upgrade
+// ============================================================
+
+"title_upgrade_pro" = "👑 Upgrade to Pro";
+"title_restore_purchase" = "Restore Purchase";
+
+// ============================================================
+// MARK: - Common / Shared
+// ============================================================
+
+"common_ok" = "OK";
+
+// ============================================================
+// MARK: - Game Over (Extra Battle)
+// ============================================================
+
+"overlay_gameover_timeup" = "Time's Up!";
+"overlay_gameover_goodjob" = "Good Job!";
+"overlay_gameover_quit" = "Finished";
+"overlay_gameover_timeup_sub" = "You did your best!";
+"overlay_gameover_life_sub" = "Great effort!";
+
+// ============================================================
+// MARK: - Share Bonus
+// ============================================================
+
+"share_bonus_thanks" = "Thanks for sharing!";
+"share_bonus_play_plus1" = "Plays +1";
+"share_bonus_play_more" = "You can play one more time!";
+"share_bonus_pro_thanks" = "Thanks for your support!";
+"share_bonus_yay" = "Yay!";
+"share_button_bonus" = "Share & Get +1 Play!";
+"share_button_normal" = "Share Results";
+"share_text_format" = "Reached %@Floor %d in Kazumon!\nAccuracy %d%% 🎯\n#Kazumon #Math #KidsGame\nhttps://apps.apple.com/app/id6760188603";
+
+// ============================================================
+// MARK: - Streak Reward
+// ============================================================
+
+"streak_reward_title" = "%d-day streak!";
+"streak_reward_body" = "Awesome! Bonus:\n+%d plays!";
+"streak_reward_yay" = "Hooray!";
+"streak_badge" = "%d-day streak!";
+"streak_stamina" = "+1 Stamina earned";
+
+// ============================================================
+// MARK: - Difficulty Select
+// ============================================================
+
+"difficulty_select_title" = "Pick a difficulty!";
+"difficulty_goal_format" = "Goal: Floor %d";
+"difficulty_easy" = "Easy";
+"difficulty_normal" = "Normal";
+"difficulty_hard" = "Hard";
+"difficulty_about" = "~";
+"difficulty_minutes" = "min";
+
+// ============================================================
+// MARK: - Rank Badge Popup
+// ============================================================
+
+"rank_floor_reached" = "Reached Floor %d!";
+"rank_new_record" = "🎉 New Record!";
+"rank_best_floor" = "Best: %@ Floor %d";
+"rank_next" = "Next ▶︎";
+
+// ============================================================
+// MARK: - FloorRank Messages
+// ============================================================
+
+"floor_comment_1" = "You can go even further next time!";
+"floor_comment_2" = "Try reaching Floor 10!";
+"floor_comment_3" = "Not bad at all!";
+"floor_comment_4" = "Almost at Floor 20!";
+"floor_comment_5" = "You're a real adventurer now!";
+"floor_comment_6" = "Getting close to legendary…!";
+"floor_comment_7" = "You're the strongest! 👑";
+
+"star_msg_1" = "Almost!";
+"star_msg_2" = "Good try!";
+"star_msg_3" = "Well done!";
+"star_msg_4" = "Amazing!";
+"star_msg_5" = "Perfect!";
+
+// ============================================================
+// MARK: - Extra Result
+// ============================================================
+
+"extra_correct_count" = "correct!";
+"extra_best_record" = "🎉 New Best!";
+"extra_best_count" = "Best: %d correct";
+
+// ============================================================
+// MARK: - Tab Unlock Popup
+// ============================================================
+
+"tab_unlock_title" = "New feature\nunlocked!";
+"tab_unlock_yay" = "Hooray!";
+
+// ============================================================
+// MARK: - Tab Labels
+// ============================================================
+
+"tab_home" = "Home";
+"tab_collection" = "Collection";
+"tab_bgm" = "BGM";
+"tab_extra" = "Arena";
+"tab_settings" = "Settings";
+
+// ============================================================
+// MARK: - Extra Select (Arena)
+// ============================================================
+
+"extra_title" = "Arena";
+"extra_subtitle" = "Boss Time Attack!";
+"extra_challenge" = "Challenge!";
+"extra_locked" = "Floor %d+";
+
+// ============================================================
+// MARK: - Pause / Continue
+// ============================================================
+
+"pause_title" = "⏸ Paused";
+"pause_resume" = "▶︎ Resume";
+"pause_quit" = "✕ Quit";
+"goal_continue" = "Continue";
+"extra_score_count" = "%d pts";
+"goal_clear_title" = "Today's Adventure\nComplete!";
+"goal_clear_subtitle" = "Great job!";
+"goal_clear_finish" = "See you tomorrow!";
+"floating_answer" = "Answer: %d";
+
+// ============================================================
+// MARK: - Extra Result
+// ============================================================
+
+"extra_retry" = "Try Again";
+"extra_reselect" = "Pick Stage";
+"extra_to_title" = "Home";
+
+// ============================================================
+// MARK: - Settings
+// ============================================================
+
+"age_select_title" = "How old are you?";
+// Versus Mode
+"versus_button" = "Battle";
+"versus_match_title" = "Battle";
+// Initial Setup
+"profile_switcher_title" = "Choose Player";
+"profile_add_new" = "Add New Player";
+"profile_delete_confirm" = "Delete this profile? All data will be lost.";
+"profile_delete_action" = "Delete";
+"profile_delete_cancel" = "Cancel";
+"setup_intro_title" = "For Parents";
+"setup_intro_body" = "Kazumon is a learning RPG app\nthat helps master 1st grade math\nin just 5 minutes a day for 30 days.\n\nPlease set your child's age\nand name to get started.";
+"setup_intro_button" = "Get Started";
+"setup_age_title" = "Select your child's age";
+"setup_age_young4" = "Age 4";
+"setup_age_young4_sub" = "Pre-K";
+"setup_age_young" = "Ages 5-6";
+"setup_age_young_sub" = "Kindergarten / 1st Grade";
+"setup_age_older" = "Ages 7+";
+"setup_age_older_sub" = "1st-2nd Grade";
+"setup_age_note" = "You can change this later in Settings";
+"setup_name_title" = "Enter your child's name";
+"setup_name_placeholder" = "e.g. Taro";
+"setup_name_button" = "Next";
+"setup_complete_title" = "%@, you're all set!";
+"setup_complete_sub" = "Let's have fun with math!";
+"setup_complete_button" = "Let's Go!";
+"settings_growth_dashboard" = "Growth Dashboard";
+"young4_promotion_title" = "Amazing!";
+"young4_promotion_sub" = "Try the 5-year-old\nchallenges!";
+"young4_promotion_hint" = "First, let's take a test!";
+"young4_promotion_button" = "Let's Go!";
+"young4_l5_question" = "How many?";
+"young4_addition_test_1" = "Plus 1 Test";
+"young4_addition_test_2" = "Plus 2 Test";
+
+// Addition Check Test
+"addition_check_round_title" = "Plus %d Test";
+"addition_check_plus_explain" = "+ means 'plus'!";
+"addition_check_pass" = "Amazing!\nPlus %d Perfect!";
+"addition_check_fail" = "Let's try\nplus %d again!";
+"addition_check_all_clear" = "Amazing!\nAll Perfect!";
+"addition_check_next" = "Try plus %d next!";
+"addition_check_retry" = "Try Again";
+"addition_check_start_battle" = "Start Battle!";
+"addition_check_skip" = "Start with current level";
+"addition_check_skip_test" = "Skip Test";
+"young4_level_title" = "Level %d";
+"young4_level_progress" = "%d / %d";
+"older_mode_challenge" = "Training";
+"older_mode_versus" = "Battle";
+
+// Emotional Triggers
+"young_trigger_levelup" = "Almost level up!";
+"young_trigger_play" = "Let's play today!";
+
+// Title bubbles
+"title_bubble_eyes" = "Look at my eyes!";
+"title_bubble_1" = "Let's gooo!";
+"title_bubble_2" = "Here we go!";
+"title_bubble_3" = "Come on come on!";
+"title_bubble_4" = "This is it!";
+"title_bubble_5" = "I'll win today! Maybe!";
+"title_bubble_6" = "I won't lose! Probably!";
+"title_bubble_7" = "I got a good feeling!";
+"title_bubble_8" = "I look strong!";
+"title_bubble_9" = "WOOOOO!";
+
+// Battle effects
+"battle_enemy_smirk" = "Hehe";
+"combo_bubble_3" = "Nice!";
+"result_next_enemy" = "Next enemy...?";
+"older_back_button" = "Back";
+"versus_bgm_title" = "Choose BGM";
+"versus_bgm_subtitle" = "Music for the battle";
+"versus_bgm_1" = "Critical Hit Calculus";
+"versus_bgm_2" = "Pixel Math Showdown";
+"versus_bgm_start" = "Start Battle";
+"versus_opponent_name" = "Friend";
+"versus_result_win" = "Victory";
+"versus_result_lose" = "So Close!";
+"lose_encourage_1" = "You did great!";
+"lose_encourage_2" = "You'll do even better next time!";
+"versus_result_draw" = "Draw";
+"versus_result_rematch" = "Challenge Again";
+"versus_result_home" = "Go Home";
+
+// Online Battle
+"online_mode_title" = "Online Battle";
+"online_lobby_title" = "Online Battle";
+"online_create_room" = "Create Room";
+"online_join_room" = "Join Room";
+"online_room_code" = "Room Code";
+"online_enter_code" = "Enter Room Code";
+"online_join_button" = "Join";
+"online_waiting_opponent" = "Waiting for opponent...";
+"online_ready" = "Ready";
+"online_waiting_ready" = "Waiting for opponent...";
+"online_start_battle" = "Start Battle!";
+"online_opponent_left" = "Opponent has left";
+"online_error_title" = "Error";
+"online_error_no_room" = "Room not found";
+"online_error_full" = "Room is full";
+"online_self" = "You";
+
+// Course Select
+"versus_course_title" = "Choose a Course";
+"versus_course_addition" = "Addition Only";
+"versus_course_addition_desc" = "Only addition problems";
+"versus_course_normal" = "Normal";
+"versus_course_normal_desc" = "Addition and Subtraction";
+"online_reversal" = "REVERSAL!";
+"online_waiting_friend" = "Waiting for\nyour friend...";
+
+// Category Select
+"versus_category_title" = "Who will you battle?";
+"versus_category_friend" = "Friend Battle";
+"versus_category_friend_desc" = "Compete with your friend";
+"versus_category_family" = "Family Battle";
+"versus_category_family_desc" = "Fun battle at home";
+"online_lobby_family" = "Family Battle";
+
+// Family praise
+"family_praise_1" = "Great job!";
+"family_praise_2" = "You did it!";
+"family_praise_3" = "Even better next time!";
+"settings_play_with_child" = "Play with Child";
+"versus_rank_c" = "Adventurer";
+"versus_rank_b" = "Math Apostle";
+"versus_rank_a" = "Eternal Solver";
+"versus_rank_s" = "Master of Numbers";
+
+"age_group_young4" = "Age 4";
+"age_group_young" = "Ages 5-6";
+"age_group_older" = "Ages 7+";
+"age_group_young4_sub" = "Counting\nnumbers";
+"age_group_young_sub" = "Addition\npractice";
+"age_group_older_sub" = "Harder\nproblems";
+"age_select_parent_title" = "How old is your child?";
+"age_select_parent_subtitle" = "The display will adapt to your child's age.";
+"age_select_young_label" = "Ages 4-7";
+"age_select_young_desc1" = "Hiragana display";
+"age_select_young_desc2" = "Simple UI";
+"age_select_older_label" = "Ages 8+";
+"age_select_older_desc1" = "More detailed stats";
+"age_select_older_desc2" = "Full information";
+"age_select_parent_note" = "You can change this later in Settings.";
+"settings_age_group" = "Age Group";
+"settings_age_young" = "Ages 4-7";
+"settings_age_older" = "Ages 8+";
+"settings_pro_section" = "Pro";
+"settings_pro_active" = "Pro is active";
+"settings_voice_title" = "Record Cheer Voice";
+"settings_voice_recorded" = "Recorded";
+"settings_app_info" = "App Info";
+"settings_version" = "Version";
+
+// Voice Recorder
+"voice_recorder_nav_title" = "Cheer Voice";
+"voice_recorder_title" = "Record a Cheer Voice";
+"voice_recorder_desc" = "This voice will play when your child clears a battle";
+"voice_recorder_tap" = "Tap to Record";
+"voice_recorder_recording" = "Recording...";
+"voice_recorder_done" = "Recorded";
+"voice_recorder_play" = "Preview";
+"voice_recorder_save" = "Use This Voice";
+"voice_recorder_delete" = "Delete";
+"voice_recorder_delete_all" = "Delete All";
+"voice_recorder_desc_combo" = "This voice plays every 20 combos";
+"voice_recorder_permission_title" = "Microphone Access";
+"voice_recorder_permission_message" = "Please allow microphone access in Settings";
+"voice_recorder_permission_settings" = "Open Settings";
+"battle_quit_button" = "Quit";
+
+// ============================================================
+// MARK: - Home Card
+// ============================================================
+
+"power_label" = "Power";
+"power_up" = "Up!";
+"growth_record_link" = "Growth Record ›";
+"challenge_title" = "Today's Challenge";
+"challenge_clear" = "Clear! 🎉";
+"challenge_remaining" = "%d more!";
+"challenge_achieved" = "Done!";
+
+// ============================================================
+// MARK: - Radar Chart
+// ============================================================
+
+"radar_speed" = "Speed";
+"radar_strength" = "Strength";
+"radar_combo" = "Combo";
+"radar_daily" = "Daily";
+"radar_this_week" = "This wk";
+"radar_last_week" = "Last wk";
+"status_days" = "%d days";
+
+// ============================================================
+// MARK: - Parent Dashboard
+// ============================================================
+
+"dashboard_title" = "Growth Record";
+"dashboard_close" = "Close";
+"dashboard_this_week" = "This Week";
+"dashboard_speed_label" = "Answer Speed";
+"dashboard_top_floor" = "Best Floor This Week";
+"dashboard_max_combo" = "Best Combo";
+"dashboard_play_days" = "Days Played";
+"dashboard_last_week" = "Last wk %@";
+"dashboard_speed_chart" = "Answer Speed (4 Weeks)";
+"dashboard_speed_hint" = "Shorter is faster";
+"dashboard_no_chart_data" = "Graph will appear as data is collected";
+"dashboard_weak_problems" = "Tricky Problems";
+"dashboard_no_mistakes" = "No mistakes yet! 🎉";
+"dashboard_pro_unlock" = "See all with Pro";
+"dashboard_mistake_format" = "→ Answered %d";
+"dashboard_week_4ago" = "4 wks";
+"dashboard_week_3ago" = "3 wks";
+"dashboard_week_last" = "Last wk";
+"dashboard_week_this" = "This wk";
+"dashboard_ai_speed" = "Your speed is improving! Avg %@s";
+"dashboard_ai_floor" = "You reached Floor %d this week!";
+"dashboard_ai_combo" = "You hit a %d max combo!";
+"dashboard_ai_days" = "You played %d days this week!";
+"dashboard_ai_default" = "Great job this week! Keep going 👍";
+"dashboard_speed_faster" = "▲%@s faster";
+"dashboard_mastery_title" = "1st Grade Math Mastery";
+"dashboard_mastery_remaining" = "%d problems to go!";
+"dashboard_mastery_complete" = "🎉 1st Grade Math Mastered!";
+"mastery_phase_addition" = "Addition Master (Day1-10)";
+"mastery_phase_carry" = "Carry Master (Day11-20)";
+"mastery_phase_subtraction" = "Subtraction Master (Day21-25)";
+"mastery_phase_borrow" = "Borrow Master (Day26-30)";
+"mastery_progress_addition" = "Mastering Addition";
+"mastery_progress_carry" = "Mastering Carry";
+"mastery_progress_subtraction" = "Mastering Subtraction";
+"mastery_progress_borrow" = "Mastering Borrow";
+"mastery_progress_complete" = "Master Complete!";
+"mastery_map_title" = "1st Grade Math Mastery";
+"mastery_map_start_day" = "Start Day %d!";
+"mastery_map_complete" = "🎉 All Complete! Congratulations! 🎉";
+"mastery_map_complete_sub" = "1st Grade Math Mastered!";
+"mastery_addition_basic" = "Add ≤10";
+"mastery_addition_carry" = "Carry";
+"mastery_subtraction_basic" = "Sub ≤10";
+"mastery_subtraction_borrow" = "Borrow";
+
+// ============================================================
+// MARK: - Notifications
+// ============================================================
+
+"notif_fallback_name" = "friend";
+"notif_24h_1_title" = "％NAME％ hasn't come! 😭";
+"notif_24h_1_body" = "Kazumon sighed 47 times already!";
+"notif_24h_2_title" = "％NAME％! Did you hear?! 😲";
+"notif_24h_2_body" = "The final boss keeps losing to Slimes!";
+"notif_24h_3_title" = "％NAME％! Listen! 😢";
+"notif_24h_3_body" = "The monsters looked at the sky 53 times today!";
+"notif_24h_4_title" = "％NAME％ is missing! 😭";
+"notif_24h_4_body" = "99 letters piled up at the village post!";
+"notif_24h_5_title" = "％NAME％! Did you know? 😢";
+"notif_24h_5_body" = "The boss wakes up 12 times every night worrying!";
+"notif_24h_6_title" = "％NAME％! No way?! 😳";
+"notif_24h_6_body" = "The invincible boss lost to a weakling yesterday!";
+"notif_48h_1_title" = "％NAME％! Help! 😱";
+"notif_48h_1_body" = "Kazumon sighed 108 times and counting!";
+"notif_48h_2_title" = "％NAME％! Oh no! 😨";
+"notif_48h_2_body" = "The strongest dragon can't breathe fire anymore…";
+"notif_48h_3_title" = "％NAME％! Unbelievable! 😤";
+"notif_48h_3_body" = "The final boss has been crying for 2 days straight!";
+"notif_48h_4_title" = "％NAME％! Help! 😱";
+"notif_48h_4_body" = "The final boss is getting weaker by the hour!";
+"notif_48h_5_title" = "％NAME％! Guess what?! 😲";
+"notif_48h_5_body" = "The whole village is worried about ％NAME％!";
+"notif_48h_6_title" = "％NAME％! We can't take it! 😭";
+"notif_48h_6_body" = "Monsters waited so long they built 3 ponds!";
+
+// MARK: - Young Result
+"young_result_amazing" = "Amazing!";
+"young_praise_floor" = "You climbed to floor %d!";
+"young_praise_stronger" = "You're stronger than yesterday!";
+"young_praise_hero" = "You're a math hero!";
+"young_praise_tomorrow" = "Great job! Let's get even stronger tomorrow!";
+"young_praise_cool" = "That was awesome!";
+"young_result_improvement" = "+%d floors from last time 🔥";
+"young_result_new_record" = "🏆 New Record!";
+"young_result_retry" = "Again!";
+"young_result_done" = "Done";
+
+// MARK: - Certificate
+"certificate_title" = "Certificate of Completion";
+"certificate_player" = "%@ has";
+"certificate_achievement" = "completed the 30-Day Challenge!";
+"certificate_congrats" = "Congratulations!\nYou've mastered addition & subtraction!";
+"certificate_rank" = "Certified: Math Master ⭐️";
+"certificate_logo" = "Kazumon";
+"certificate_share" = "Share";
+"certificate_close" = "Close";
+
+// MARK: - Young Share
+"young_share_title" = "Show parents!";
+"young_share_reached" = "%@ reached %dF!";
+"young_share_logo" = "Kazumon";
+
+// MARK: - Mistake Boss
+"mistake_boss_banner_title" = " Mistake Oni appeared!";
+"mistake_boss_banner_subtitle" = "Defeat your weak spots!";
+"mistake_boss_banner_action" = "Fight!";
+"mistake_boss_intro_1" = "I know your weaknesses!";
+"mistake_boss_intro_2" = "I brought your hardest problems!";
+"mistake_boss_intro_3" = "Can you solve these?";
+"mistake_boss_defeat_1" = "You conquered your weaknesses!";
+"mistake_boss_defeat_2" = "Nothing to fear anymore!";
+"mistake_boss_defeat_3" = "You've gotten stronger!";
+"mistake_boss_defeated_title" = "Mistake Oni Defeated!";
+"mistake_boss_done" = "Done";
+
+// MARK: - Mistake Boss Warning
+"mistake_boss_warning_1" = "…I saw you.\nSomeone remembers every problem\nyou got wrong today.\nWill you come tomorrow?";
+"mistake_boss_warning_2" = "Don't run.\nSomeone who knows your weaknesses\nis waiting.\nCan you beat it…?";
+"mistake_boss_warning_3" = "Hey, did you know?\nWrong answers don't disappear.\nYou'll find out tomorrow morning.";
+"mistake_boss_warning_4" = "…Tomorrow.\nI'll definitely come.\nI'm waiting.";
+"mistake_boss_warning_5" = "You made mistakes today.\nI won't forget.\nTomorrow, when you open this app…\nI'll be there.";
+"mistake_boss_entrance_title" = "I've been waiting...";
+"mistake_boss_entrance_subtitle" = "Face your weak spots";
+"mistake_boss_fight_button" = "FIGHT";
+"mistake_boss_enemy_name" = "Mistake Oni";
+"mistake_boss_result_praise" = "You've gotten stronger!";
+
+// Time Boss
+"time_boss_warning_1" = "...Time is running out.";
+"time_boss_warning_2" = "The Time Thief is coming.";
+"time_boss_warning_3" = "Tomorrow.";
+"time_boss_appear_title" = "Give back my time!";
+"time_boss_appear_subtitle" = "Answer fast, or else...";
+"time_boss_fight_button" = "FIGHT";
+"time_boss_enemy_name" = "Time Thief";
+"time_boss_intro_1" = "No time left! Hurry up!";
+"time_boss_intro_2" = "Can you make it?";
+"time_boss_intro_3" = "Too slow...";
+"time_boss_defeat_1" = "You reclaimed your time!";
+"time_boss_defeat_2" = "You've gotten faster!";
+"time_boss_defeat_3" = "Amazing! You made it!";
+"time_boss_defeated_title" = "Time Thief Defeated!";
+"time_boss_result_praise" = "You've gotten faster!";
+"time_boss_done" = "Done";
+
+// Magic Time
+"tap_to_continue" = "Tap to continue";
+
+// Before Test
+"name_input_post_test_title" = "Awesome!";
+"name_input_post_test_subtitle" = "What's your name?";
+"name_input_post_test_start" = "Let's go!";
+// After Test
+"after_test_intro_1" = "You made it through 30 days!";
+"after_test_intro_2" = "Time for the final test!";
+"after_test_result_title" = "🎉 30-Day Challenge Complete!";
+"after_test_before_label" = "Before (Day1)";
+"after_test_after_label" = "Now (Day30)";
+"after_test_level_up_count" = "Level +%d Up!";
+"after_test_growth_up" = "Amazing! You've gotten stronger!";
+"after_test_growth_same" = "You were already strong!";
+"after_test_growth_next" = "You'll do even better next time!";
+"after_test_certificate_button" = "View Certificate";
+"after_test_pass" = "Math Master!";
+"after_test_fail" = "So close! Try again!";
+"after_test_comparison_title" = "Your Growth";
+"after_test_retry_button" = "Try Again!";
+"after_test_home_button" = "Go Home";
+"after_test_banner_title" = "Take the Final Test!";
+"after_test_banner_subtitle" = "Show what you've learned in 30 days";
+"collection_certificate_button" = "Certificate";
+"before_test_speed_fast" = "That was fast!";
+"before_test_speed_good" = "Great job!";
+"before_test_avg_time" = "Avg. answer time: %.1fs";
+"before_test_msg_low" = "Let's learn together!";
+"before_test_msg_mid" = "Good start!\nYou'll get stronger!";
+"before_test_msg_high" = "Amazing! Almost there!";
+"before_test_msg_perfect" = "Perfect! You're a genius!";
+"before_test_young_title" = "Awesome!";
+"before_test_young_done" = "Next!";
+"before_test_older_title" = "Results";
+"before_test_older_score" = "%d out of %d correct (%d%%)";
+"before_test_older_message" = "Take the same test in 30 days.\nSee your growth in numbers.";
+"before_test_older_done" = "Start 30-Day Challenge";
+"magic_time_speech_1" = "Wow! So pretty!";
+"magic_time_speech_2" = "Rainbow!";
+"magic_time_speech_3" = "It's magic time!";
+"magic_time_speech_4" = "Something's different...!";
+"magic_time_speech_5" = "Let's play today too!";
+"settings_magic_time" = "Magic Time";
+"settings_magic_start" = "Time";
+"settings_magic_locked" = "Cannot change for %d hours";
+"magic_time_countdown" = "%d days left...";
+
+// ============================================================
+// MARK: - Island World
+// ============================================================
+
+"island_label_battle" = "Cloud Gate";
+"island_label_bgm" = "BGM Shop";
+"island_label_kisekae" = "Dress Up";
+"island_label_koukan" = "Exchange";
+
+"island_bubble_battle_1" = "Into the clouds!";
+"island_bubble_battle_2" = "The gate is glowing!";
+"island_bubble_battle_3" = "Let's defeat the monsters!";
+"island_bubble_bgm_1" = "Let's get groovin'!";
+"island_bubble_bgm_2" = "Music is the best!";
+"island_bubble_bgm_3" = "Pick your fave song!";
+"island_bubble_kisekae_1" = "Looking good matters!";
+"island_bubble_kisekae_2" = "Horns are so cool!";
+"island_bubble_kisekae_3" = "What will I become?";
+"island_bubble_koukan_1" = "Anything good here?";
+"island_bubble_koukan_2" = "Let's trade treasures!";
+"island_bubble_koukan_3" = "Want rare items!";
+
+"island_locked_message" = "Can't open yet!";
+
+// ============================================================
+// MARK: - Start Screen
+// ============================================================
+
+"start_screen_title" = "Kazumon";
+"start_screen_go" = "Go on an adventure!";
+
+// ============================================================
+// MARK: - Battle Shop
+// ============================================================
+
+"battle_shop_welcome" = "Which path?";
+"battle_shop_back" = "Go back";
+
+// ============================================================
+// MARK: - Kisekae Shop
+// ============================================================
+
+"kisekae_title" = "Dress Up Shop";
+"kisekae_pick" = "Pick a color!";
+"kisekae_owned" = "Owned";
+"kisekae_buy_confirm" = "Buy this color?";
+"kisekae_cancel" = "Cancel";
+"kisekae_buy" = "Buy!";
+"kisekae_not_enough" = "Not enough coins...";
+"kisekae_color_blue" = "Blue";
+"kisekae_color_green" = "Green";
+"kisekae_color_red" = "Red";
+"kisekae_color_yellow" = "Yellow";
+"kisekae_color_dark" = "Dark";
+"kisekae_color_white" = "White";
+
+// ============================================================
+// MARK: - Koukan Shop (Exchange)
+// ============================================================
+
+"koukan_title" = "Exchange";
+"koukan_desc" = "Trade items for coins!";
+"koukan_empty" = "No items yet...";
+
+// ============================================================
+// MARK: - Shop Unlock
+// ============================================================
+
+"island_unlock_koukan" = "Exchange is now open!";
+"island_unlock_kisekae" = "Dress Up Shop is now open!";
+
+// Kisekae Tabs & Details
+"kisekae_tab_color" = "Color";
+"kisekae_tab_detail" = "Horns";
+"kisekae_detail_none" = "None";
+"kisekae_detail_horn_l" = "Big Horn";
+"kisekae_detail_horn_s" = "Small Horn";
+"kisekae_detail_ant_l" = "Big Antenna";
+"kisekae_detail_ant_s" = "Small Antenna";
+"kisekae_detail_ear" = "Ears";
+"kisekae_detail_ear_r" = "Round Ears";
+
+// Kisekae Details (updated)
+"kisekae_detail_horn_1" = "Horn ×1";
+"kisekae_detail_horn_2" = "Horn ×2";
+"kisekae_detail_horn_3" = "Horn ×3";
+"kisekae_detail_ant_1" = "Antenna ×1";
+"kisekae_detail_ant_2" = "Antenna ×2";
+"kisekae_detail_ant_3" = "Antenna ×3";
+"kisekae_detail_ear_2" = "Ears";
+"kisekae_detail_ear_r_2" = "Round Ears";
+
+// ============================================================
+// MARK: - Pro Plan
+// ============================================================
+
+"pro_plan_title" = "Kazumon PRO";
+"pro_plan_free" = "Free";
+"pro_plan_buy" = "Upgrade to PRO!";
+"pro_plan_already" = "You're already PRO!";
+"pro_plan_restore" = "Restore Purchase";
+"pro_feature_play" = "Daily Play";
+"pro_free_play" = "3 times";
+"pro_pro_play" = "Unlimited";
+"pro_pro_unlimited" = "Unlimited";
+"pro_feature_profile" = "Profiles";
+"pro_feature_floor" = "Max Floor";
+"pro_feature_online" = "Online Battle";
+"pro_feature_kisekae" = "Dress Up";
+
+// Battle Shop Steps
+"battle_step_mode" = "Mode";
+"battle_step_diff" = "Difficulty";
+"battle_step_type" = "Type";
+
+// Kisekae floor unlock hints
+"kisekae_unlock_10f" = "Reach 10F";
+"kisekae_unlock_20f" = "Reach 20F";
+"kisekae_unlock_30f" = "Reach 30F";
+"kisekae_coming_soon" = "Coming soon!";
+
+// Family mode (NPC pass-and-play)
+"battle_mode_select_title" = "Who will you battle?";
+"battle_mode_family" = "Family";
+"battle_mode_family_desc" = "Battle your\nfamily!";
+"battle_mode_online" = "Online";
+"battle_mode_online_desc" = "Battle players\nworldwide!";
+
+// Intro
+"intro_title" = "Write a\nchallenge letter!";
+"intro_family_card" = "Challenge\nFamily";
+"intro_online_card" = "Online\nBattle";
+
+// Recipient select
+"recipient_select_title" = "Who will get\nthe letter?";
+
+// Challenge design
+"design_title" = "What kind of challenge?";
+"design_monster" = "Who to defeat?";
+"design_difficulty" = "Difficulty";
+"design_problem_type" = "Problems";
+"design_done_button" = "Done!";
+"design_preview_title" = "To %@";
+"design_preview_message" = "Defeat it!";
+
+// Monster choices
+"monster_choice_slime" = "Slime";
+"monster_choice_goblin" = "Goblin";
+"monster_choice_orc" = "Orc";
+"monster_choice_dragon" = "Dragon";
+"monster_choice_demon" = "Demon";
+
+// Writing/Delivery
+"writing_text" = "Writing the letter...";
+"writing_recipient" = "To %@";
+"delivery_text" = "Give it to %@!";
+
+// Sibling welcome message
+"family_sibling_welcome_message" = "A challenge\nfrom %@!";
+
+// Family member names (from child's POV)
+"family_member_father" = "Dad";
+"family_member_mother" = "Mom";
+"family_member_older_brother" = "Big Bro";
+"family_member_older_sister" = "Big Sis";
+"family_member_self" = "Me";
+"family_member_younger_brother" = "Lil Bro";
+"family_member_younger_sister" = "Lil Sis";
+"family_member_grandfather" = "Grandpa";
+"family_member_grandmother" = "Grandma";
+
+// Family select screen
+"family_select_title" = "Who's playing?";
+"family_member_best_score" = "Best %d pts";
+"family_member_no_score" = "Not yet played";
+"family_edit_button" = "Edit";
+
+// Family setup
+"family_setup_title" = "Tell me your family";
+"family_setup_subtitle" = "Pick who plays with you\n(you can change this later)";
+"family_setup_done" = "Done";
+
+// Parent welcome overlay (adult-targeted)
+"family_parent_welcome_title" = "To %@";
+"family_parent_welcome_message" = "Your child wants to\nchallenge you!";
+"family_parent_welcome_message_named" = "A challenge\nfrom %@!";
+"family_parent_welcome_b1" = "~3 min";
+"family_parent_welcome_b2" = "Mostly addition problems";
+"family_parent_welcome_b3" = "Joins the family ranking";
+"family_parent_welcome_start" = "Let's go";
+"family_parent_welcome_later" = "Maybe later";
+"family_parent_welcome_bubble" = "Please!";
+
+// Handoff screen (child hands device to recipient)
+"handoff_message" = "Hand the phone\nto %@!";
+"handoff_done_button" = "Done!";
+"handoff_play_self" = "I'll play myself!";
+
+// Family ranking screen
+"family_ranking_title" = "Family Ranking";
+"family_ranking_new_best" = "%@'s new best!";
+"family_ranking_updated" = "↑ Updated!";
+"family_ranking_close" = "Close";
+
+// ============================================================
+// MARK: - Island Tree / Daily
+// ============================================================
+
+"island_label_tree" = "Plant Tree";
+"island_plant_blocked" = "Can't plant here!";
+"island_plant_prompt" = "Tap the island to plant a tree!";
+"island_daily_clear" = "Daily Clear!";
+"island_mission_progress" = "Mission %d/%d";
+"island_chest_already_opened" = "Already opened today";
+"island_chest_reward" = "✨ 100 Coins!";
+
+// Exchange shop (tree)
+"koukan_tree_name" = "Tree (Plant on Island)";
+"koukan_tree_desc" = "Enrich your island and attract more slimes!";
+"koukan_tree_stock" = "Stock: %d/%d ・ Refill in %d days";
+"koukan_coin_label" = "Coins";
+"koukan_tree_purchased" = "Purchased! Tap the island to plant it.";
+
+// Play limit paywall
+"overlay_play_limit_title" = "That's all for today!";
+"overlay_play_limit_body" = "Come back tomorrow!\nOr play anytime with Pro.";
+"overlay_play_limit_upgrade" = "Play Anytime with Pro!";
+"overlay_play_limit_dismiss" = "See you tomorrow";
+
+// Parent dashboard: accuracy
+"dashboard_accuracy_chart" = "Accuracy (4 Weeks)";
+"dashboard_accuracy_hint" = "Percentage of correct answers";
+
+// Comeback bonus
+"comeback_title" = "Welcome Back!";
+"comeback_reward" = "You got %d coins!";
+"comeback_dismiss" = "Let's play!";
+
+// Title screen (additional)
+"title_logo" = "Kazumon";
+"title_daily_challenge" = "Today's Challenge!";
+"title_30day_challenge" = "30-Day Challenge";
+"challenge_progress_pct" = "%d%% Complete";
+
+// Play count display
+"island_plays_remaining" = "%d left";
+
+// Certificate additional text
+"certificate_best_floor" = "Best Floor";
+"certificate_accuracy" = "Accuracy";
+
+// Profile add gate
+"pro_plan_siblings_pitch" = "Track each sibling's\nprogress separately!";
+
+// Category weakness
+"dashboard_cat_title" = "Weak Areas";
+"dashboard_cat_add_basic" = "Addition (Basic)";
+"dashboard_cat_add_carry" = "Addition (Carry)";
+"dashboard_cat_sub_basic" = "Subtraction (Basic)";
+"dashboard_cat_sub_borrow" = "Subtraction (Borrow)";
+
+// Best streak
+"island_best_streak" = "Best: %d days";
+
+// 30-day challenge phase descriptions
+"challenge_phase1_desc" = "Practice addition up to 10";
+"challenge_phase2_desc" = "Addition with carrying (11-20)";
+"challenge_phase3_desc" = "Practice basic subtraction";
+"challenge_phase4_desc" = "Subtraction with borrowing";
+
+// Voice recording hint
+"dashboard_voice_title" = "Record your encouragement voice";
+"dashboard_voice_desc" = "Your voice plays at 20 combos!";
+"dashboard_voice_where" = "Settings → Voice";
+
+// Before/After comparison
+"dashboard_before_after_title" = "Test Growth";
+"dashboard_before_label" = "Before";
+"dashboard_after_label" = "Now";
+"dashboard_growth" = "▲ +%d points growth!";
+
+// Play calendar
+"dashboard_calendar_title" = "28-Day Play History";
+"dashboard_calendar_summary" = "Played %d / %d days";
+
+// Weekly challenge
+"island_weekly_progress" = "Weekly %d/%d days";
+"island_weekly_complete" = "Weekly Clear!";
+
+// Streak exclusive colors
+"kisekae_color_pink" = "Pink";
+"kisekae_color_gold" = "Gold";
+"kisekae_unlock_streak7" = "7-day streak to unlock";
+"kisekae_unlock_streak14" = "14-day streak to unlock";
+
+// Accessibility
+"accessibility_answer" = "Answer";
+"accessibility_locked" = "Not yet unlocked";
+"accessibility_tap_to_enter" = "Tap to enter";
+
+// Onboarding: encouragement voice
+"setup_voice_title" = "Record your\nencouragement!";
+"setup_voice_desc" = "Your voice plays when your child\nhits a combo in battle";
+"setup_voice_play" = "Listen";
+"setup_voice_hint" = "Up to 3 seconds";
+"setup_voice_skip" = "Later";
+"setup_voice_done" = "Sounds good!";
+
+// Island button: Family battle
+"island_label_family" = "Family";
+
+// Mario Kart style menu
+"menu_solo" = "Solo";
+"menu_family" = "Family";
+"menu_kisekae" = "Costume";
+"menu_koukan" = "Exchange";
+
+// Young4 battle choice
+"young4_battle_choice_title" = "What do you want to do?";
+"young4_battle_play" = "Math Battle!";
+"young4_battle_family" = "Family Battle!";
+
+// Gacha
+"gacha_got_item" = "Item Get!";
+"gacha_ok" = "Awesome!";
+
+// Daily versus bonus
+"versus_daily_bonus" = "Daily Bonus +%dBP";
+
+// Reactivation notifications (3 days absent)
+"notif_3d_1_title" = "Welcome back, ％NAME％!";
+"notif_3d_1_body" = "The slimes on your island are waiting! There might be a coin bonus too!";
+"notif_3d_2_title" = "Long time no see!";
+"notif_3d_2_body" = "We missed you, ％NAME％! Come play with us!";
+
+// Reactivation notifications (7 days absent)
+"notif_7d_1_title" = "％NAME％, you can still get stronger!";
+"notif_7d_1_body" = "Kazumon Island is waiting. There's a welcome back bonus!";
+"notif_7d_2_title" = "A letter from Kazumon";
+"notif_7d_2_body" = "I miss you, ％NAME％... Come visit the island!";

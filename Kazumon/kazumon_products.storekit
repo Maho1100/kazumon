@@ -1,0 +1,118 @@
+{
+  "appPolicies" : {
+    "eula" : "",
+    "policies" : [
+      {
+        "locale" : "en_US",
+        "policyText" : "",
+        "policyURL" : ""
+      }
+    ]
+  },
+  "autoRenewableSubscriptions" : [
+
+  ],
+  "consumableProducts" : [
+
+  ],
+  "identifier" : "kazumon_products",
+  "nonConsumableProducts" : [
+    {
+      "displayPrice" : "500",
+      "familySharable" : false,
+      "internalID" : "kazumon_pro_001",
+      "localizations" : [
+        {
+          "description" : "プレイ回数・かいそうの制限なし！毎日何度でもあそべる、かずもんの全機能を解放します。",
+          "displayName" : "かずもん Pro",
+          "locale" : "ja_JP"
+        },
+        {
+          "description" : "Unlimited plays and floors! Play as many times as you want.",
+          "displayName" : "Kazumon Pro",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "info.ohlo.Kazumon.pro",
+      "referenceName" : "Kazumon Pro",
+      "type" : "NonConsumable"
+    }
+  ],
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "CD484538",
+      "localizations" : [
+        {
+          "description" : "",
+          "displayName" : "",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "info.ohlo.Kazumon.pro",
+      "referenceName" : "Kazumon Pro",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_askToBuyEnabled" : false,
+    "_billingGracePeriodEnabled" : false,
+    "_billingIssuesEnabled" : false,
+    "_disableDialogs" : false,
+    "_failTransactionsEnabled" : false,
+    "_locale" : "en_US",
+    "_renewalBillingIssuesEnabled" : false,
+    "_storefront" : "JPN",
+    "_storeKitErrors" : [
+      {
+        "enabled" : false,
+        "name" : "Load Products"
+      },
+      {
+        "enabled" : false,
+        "name" : "Purchase"
+      },
+      {
+        "enabled" : false,
+        "name" : "Verification"
+      },
+      {
+        "enabled" : false,
+        "name" : "App Store Sync"
+      },
+      {
+        "enabled" : false,
+        "name" : "Subscription Status"
+      },
+      {
+        "enabled" : false,
+        "name" : "App Transaction"
+      },
+      {
+        "enabled" : false,
+        "name" : "Manage Subscriptions Sheet"
+      },
+      {
+        "enabled" : false,
+        "name" : "Refund Request Sheet"
+      },
+      {
+        "enabled" : false,
+        "name" : "Offer Code Redeem Sheet"
+      }
+    ],
+    "_timeRate" : 0,
+    "hasStoreKitError" : false
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 4,
+    "minor" : 0
+  }
+}

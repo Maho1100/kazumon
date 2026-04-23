@@ -1,0 +1,26 @@
+# Xcode
+build/
+DerivedData/
+*.xcuserstate
+*.xcscmblueprint
+xcuserdata/
+
+# Swift Package Manager
+.build/
+Packages/
+
+# CocoaPods
+Pods/
+
+# Firebase
+GoogleService-Info.plist
+
+# macOS
+.DS_Store
+*.swp
+*~
+
+# Secrets
+*.p8
+*.p12
+*.mobileprovision

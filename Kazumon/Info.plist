@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>ja</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>ja</string>
+		<string>en</string>
+	</array>
+	<key>SUPABASE_ANON_KEY</key>
+	<string>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN3b3JvdWZvbnlnbXZtbGp2bHV1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEyNjExNTEsImV4cCI6MjA4NjgzNzE1MX0.OTv4eU9HeIZ_EQ6ERONN1T2KXH_R53g_kSUZiY1Lc8A</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>保護者の方が応援メッセージを録音し、お子様のバトルクリア時に再生するために使用します</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>ZenMaruGothic-Regular.ttf</string>
+		<string>ZenMaruGothic-Bold.ttf</string>
+		<string>ZenMaruGothic-Black.ttf</string>
+	</array>
+</dict>
+</plist>

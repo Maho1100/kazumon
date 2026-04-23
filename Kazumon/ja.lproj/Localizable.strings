@@ -1,0 +1,1072 @@
+/*
+  Localizable.strings (Japanese — Source of Truth)
+  Kazumon
+*/
+
+// ============================================================
+// MARK: - App
+// ============================================================
+
+"app_name" = "カズモン";
+
+// ============================================================
+// MARK: - Title Screen
+// ============================================================
+
+"view_title_start" = "スタート";
+"view_title_collection" = "ずかん";
+"view_title_streak_days" = "%dにちれんぞく";
+"view_title_daily_mission" = "デイリーミッション";
+"view_title_daily_mission_complete" = "デイリーミッションたっせい！";
+"view_title_daily_mission_claim" = "ボーナスをもらおう！";
+"view_title_daily_mission_remaining" = "あと%dかいプレイ！";
+"view_title_plays_remaining" = "あと%dかいあそべるよ";
+"view_title_play_limit_reached" = "きょうはここまで！";
+"view_title_see_you_tomorrow" = "またあしたあそんでね 🌙";
+"view_title_upgrade_pro" = "プロにアップグレード";
+"view_title_unlimited_play" = "プレイしほうだい！";
+"view_title_bgm_select" = "BGM えらぶ";
+"view_title_bgm_close" = "とじる";
+
+// ============================================================
+// MARK: - Battle Screen
+// ============================================================
+
+"view_battle_floor" = "🏰 %dF";
+"view_battle_best_floor" = "⭐ベスト: %dF";
+"view_battle_score" = "スコア:%d";
+"view_battle_review" = "ふくしゅう";
+"view_battle_problem_format" = "%d + %d = ?";
+
+// ============================================================
+// MARK: - Floating Text (Battle)
+// ============================================================
+
+"view_battle_xp_gained" = "+%dXP";
+"view_battle_correct_answer" = "こたえ: %d";
+"view_battle_time_up" = "じかんぎれ！";
+
+// ============================================================
+// MARK: - Combo
+// ============================================================
+
+"view_combo_count" = "%dコンボ！";
+"view_combo_break" = "%dコンボブレイク！";
+
+// ============================================================
+// MARK: - Overlays
+// ============================================================
+
+"view_overlay_boss_appears" = "ボスとうじょう！";
+"view_overlay_game_over" = "ゲームオーバー";
+"view_overlay_defeated" = "%@を\nたおした！";
+"view_overlay_daily_bonus" = "デイリーボーナス！";
+"view_overlay_level_up" = "レベルアップ！ Lv.%d";
+"view_overlay_level_up_title" = "レベルアップ！";
+"battle_evolution" = "✨ しんか！ ✨";
+"battle_near_evolution" = "もうすぐしんか…✨";
+"view_overlay_evolved" = "✨ しんかした！ ✨";
+"view_overlay_evolved_stronger" = "もっと つよくなった！";
+"view_overlay_new_item" = "あたらしいアイテム！";
+"view_overlay_item_hint" = "ぼうけんで つかえるよ！";
+
+// ============================================================
+// MARK: - Result Screen
+// ============================================================
+
+"view_result_well_done" = "よくがんばった！";
+"view_result_score" = "スコア";
+"view_result_combo" = "コンボ";
+"view_result_accuracy" = "せいかいりつ";
+"view_result_play_time" = "プレイじかん";
+"view_result_earned_xp" = "かくとくXP";
+"view_result_new_record" = "🎉 しんきろく！";
+"view_result_daily_mission_bonus" = "デイリーミッションボーナス +%dXP";
+"view_result_mission_claimed" = "ミッションボーナスずみ！";
+"view_result_retry" = "もういちど";
+"view_result_finish" = "おわる";
+"view_result_evolution_goal" = "つぎのしんかまで あとLv%d（Lv%d）";
+"view_result_max_evolution" = "さいこうけいたい";
+
+// ============================================================
+// MARK: - Collection Screen
+// ============================================================
+
+"view_collection_title" = "ずかん";
+"view_collection_back" = "もどる";
+"view_collection_empty" = "まだアイテムがないよ";
+"view_collection_empty_hint" = "ボスをたおすとアイテムがもらえるよ！";
+
+// ============================================================
+// MARK: - Monsters
+// ============================================================
+
+"model_monster_slime" = "スライム";
+"model_monster_boss_slime" = "ボススライム";
+"model_monster_goblin" = "ゴブリン";
+"model_monster_boss_goblin" = "ボスゴブリン";
+"model_monster_orc" = "オーク";
+"model_monster_boss_orc" = "ボスオーク";
+"model_monster_dragon" = "ドラゴン";
+"model_monster_boss_dragon" = "ボスドラゴン";
+"model_monster_demon" = "デーモン";
+"model_monster_maou" = "まおう";
+"model_monster_unknown" = "???";
+
+// ============================================================
+// MARK: - Items
+// ============================================================
+
+"model_item_wooden_sword" = "きのつるぎ";
+"model_item_leather_shield" = "かわのたて";
+"model_item_herb" = "やくそう";
+"model_item_iron_sword" = "てつのつるぎ";
+"model_item_magic_ring" = "まほうのゆびわ";
+"model_item_fire_sword" = "ほのおのつるぎ";
+"model_item_ice_staff" = "こおりのつえ";
+"model_item_dragon_crown" = "りゅうのかんむり";
+
+// ============================================================
+// MARK: - Item Rarity
+// ============================================================
+
+"model_rarity_common" = "ふつう";
+"model_rarity_uncommon" = "めずらしい";
+"model_rarity_rare" = "レア";
+"model_rarity_legendary" = "でんせつ";
+
+// ============================================================
+// MARK: - Character Evolution Stages
+// ============================================================
+
+"model_evolution_base" = "ノーマル";
+"model_evolution_stage1" = "だい1しんか";
+"model_evolution_stage2" = "だい2しんか";
+"model_evolution_final" = "さいしゅうけいたい";
+
+// ============================================================
+// MARK: - BGM Names
+// ============================================================
+
+"model_bgm_battle" = "モンスターバトル";
+"model_bgm_glimmer_0" = "グリマーの道";
+"model_bgm_glimmer_1" = "星くずのてんじょう";
+"model_bgm_glimmer_2" = "まほうのとびら";
+"model_bgm_glimmer_3" = "かがやきのぼうけん";
+"bgm_unlock_hint" = "もっとあそぶと新しい曲がひらくよ！";
+
+// ============================================================
+// MARK: - Player Name
+// ============================================================
+
+"default_player_name" = "カズ";
+
+// ============================================================
+// MARK: - Name Input Screen
+// ============================================================
+
+"view_name_input_title" = "なまえをきめよう！";
+"view_name_input_confirm" = "きめた！";
+"view_name_input_skip" = "カズのままでいい";
+"view_name_input_placeholder" = "なまえをいれてね";
+"view_name_input_too_long" = "10もじまでだよ";
+
+// ============================================================
+// MARK: - Settings Screen
+// ============================================================
+
+"view_settings_title" = "せってい";
+"view_settings_player_name" = "なまえ";
+"view_settings_save" = "セーブ";
+
+// ============================================================
+// MARK: - Floor Limit Overlay
+// ============================================================
+
+"overlay_floor_limit_title" = "すごい！30Fとうたつ！";
+"overlay_floor_limit_body" = "Proにアップグレードすると、もっと上のかいそうに いけるよ！";
+"overlay_floor_limit_upgrade" = "つづきをあそぶ（Pro）";
+"overlay_floor_limit_result" = "けっかをみる";
+
+// ============================================================
+// MARK: - Pro Upgrade
+// ============================================================
+
+"title_upgrade_pro" = "👑 Proにアップグレード";
+"title_restore_purchase" = "購入を復元";
+
+// ============================================================
+// MARK: - Common / Shared
+// ============================================================
+
+"common_ok" = "OK";
+
+// ============================================================
+// MARK: - Game Over (Extra Battle)
+// ============================================================
+
+"overlay_gameover_timeup" = "タイムアップ！";
+"overlay_gameover_goodjob" = "おつかれさま！";
+"overlay_gameover_quit" = "しゅうりょう";
+"overlay_gameover_timeup_sub" = "さいごまで がんばったね！";
+"overlay_gameover_life_sub" = "よく がんばったね！";
+
+// ============================================================
+// MARK: - Share Bonus
+// ============================================================
+
+"share_bonus_thanks" = "シェアありがとう！";
+"share_bonus_play_plus1" = "プレイかいすう +1";
+"share_bonus_play_more" = "もう1かいあそべるよ！";
+"share_bonus_pro_thanks" = "いつもありがとう！";
+"share_bonus_yay" = "やった！";
+"share_button_bonus" = "シェアして +1かい ゲット！";
+"share_button_normal" = "けっかをシェアする";
+"share_text_format" = "かずもんで%@フロア%dまで とうたつ！\nせいかいりつ %d%% 🎯\n#かずもん #さんすう #知育ゲーム\nhttps://apps.apple.com/app/id6760188603";
+
+// ============================================================
+// MARK: - Streak Reward
+// ============================================================
+
+"streak_reward_title" = "%dにち れんぞく！";
+"streak_reward_body" = "すごい！ボーナスとして\nプレイかいすう が +%dかい！";
+"streak_reward_yay" = "やったー！";
+"streak_badge" = "%dにち れんぞく！";
+"streak_stamina" = "+スタミナ 1 かくとく";
+
+// ============================================================
+// MARK: - Difficulty Select
+// ============================================================
+
+"difficulty_select_title" = "むずかしさを えらんでね";
+"difficulty_goal_format" = "%dFが ゴール";
+"difficulty_easy" = "かんたん";
+"difficulty_normal" = "ふつう";
+"difficulty_hard" = "むずかしい";
+"difficulty_about" = "やく";
+"difficulty_minutes" = "ふん";
+
+// ============================================================
+// MARK: - Rank Badge Popup
+// ============================================================
+
+"rank_floor_reached" = "フロア %d まで とうたつ！";
+"rank_new_record" = "🎉 さいこうきろく こうしん！";
+"rank_best_floor" = "さいこう： %@ フロア %d";
+"rank_next" = "つぎへ ▶︎";
+
+// ============================================================
+// MARK: - FloorRank Messages
+// ============================================================
+
+"floor_comment_1" = "つぎはもっとおくまでいけるよ！";
+"floor_comment_2" = "フロア10をめざしてみよう！";
+"floor_comment_3" = "なかなかやるね！";
+"floor_comment_4" = "フロア20まであとすこし！";
+"floor_comment_5" = "もう立派なぼうけんしゃだ！";
+"floor_comment_6" = "でんせつに近づいてる…！";
+"floor_comment_7" = "きみは最強だ！👑";
+
+"star_msg_1" = "もうすこし！";
+"star_msg_2" = "がんばった！";
+"star_msg_3" = "よくできた！";
+"star_msg_4" = "すごい！";
+"star_msg_5" = "かんぺき！";
+
+// ============================================================
+// MARK: - Extra Result
+// ============================================================
+
+"extra_correct_count" = "もん せいかい！";
+"extra_best_record" = "🎉 さいこうきろく こうしん！";
+"extra_best_count" = "さいこう： %dもん";
+
+// ============================================================
+// MARK: - Tab Unlock Popup
+// ============================================================
+
+"tab_unlock_title" = "あたらしいきのうが\nかいほうされた！";
+"tab_unlock_yay" = "やったー！";
+
+// ============================================================
+// MARK: - Tab Labels
+// ============================================================
+
+"tab_home" = "ホーム";
+"tab_collection" = "図鑑";
+"tab_bgm" = "BGM";
+"tab_extra" = "競技場";
+"tab_settings" = "設定";
+
+// ============================================================
+// MARK: - Extra Select (Arena)
+// ============================================================
+
+"extra_title" = "きょうぎじょう";
+"extra_subtitle" = "ボスにタイムアタック！";
+"extra_challenge" = "ちょうせん！";
+"extra_locked" = "フロア%d〜";
+
+// ============================================================
+// MARK: - Pause / Continue
+// ============================================================
+
+"pause_title" = "⏸ いちじていし";
+"pause_resume" = "▶︎ つづける";
+"pause_quit" = "✕ やめる";
+"goal_continue" = "つづける";
+"extra_score_count" = "%dもん";
+"goal_clear_title" = "きょうのぼうけん\nかんりょう！";
+"goal_clear_subtitle" = "よくがんばったね！";
+"goal_clear_finish" = "またあした！";
+"floating_answer" = "こたえ: %d";
+
+// ============================================================
+// MARK: - Extra Result
+// ============================================================
+
+"extra_retry" = "もういちど";
+"extra_reselect" = "えらびなおす";
+"extra_to_title" = "タイトルへ";
+
+// ============================================================
+// MARK: - Settings
+// ============================================================
+
+"age_select_title" = "なんさいですか？";
+// 対戦モード
+"versus_button" = "たいせん する";
+"versus_match_title" = "たいせん";
+// 初回セットアップ
+"profile_switcher_title" = "プレイヤーをえらぶ";
+"profile_add_new" = "あたらしく追加する";
+"profile_delete_confirm" = "このプロフィールを削除しますか？データは全て消えます。";
+"profile_delete_action" = "削除する";
+"profile_delete_cancel" = "キャンセル";
+"setup_intro_title" = "保護者の方へ";
+"setup_intro_body" = "かずもんは、1日5分・30日で\n小学1年生の算数を完全マスターできる\n学習RPGアプリです。\n\n最初にお子様の年齢とお名前を\n設定してください。";
+"setup_intro_button" = "はじめる";
+"setup_age_title" = "お子様の年齢を選んでください";
+"setup_age_young4" = "4歳";
+"setup_age_young4_sub" = "年少・年中";
+"setup_age_young" = "5〜6歳";
+"setup_age_young_sub" = "年長・小学1年生";
+"setup_age_older" = "7歳以上";
+"setup_age_older_sub" = "小学1〜2年生";
+"setup_age_note" = "あとで設定から変更できます";
+"setup_name_title" = "お子様のお名前を入力してください";
+"setup_name_placeholder" = "例：たろう";
+"setup_name_button" = "つぎへ";
+"setup_complete_title" = "%@ちゃん、準備完了！";
+"setup_complete_sub" = "いっしょにさんすうをたのしもう！";
+"setup_complete_button" = "さあ、はじめよう！";
+"settings_growth_dashboard" = "せいちょうの きろく";
+"young4_promotion_title" = "すごい！";
+"young4_promotion_sub" = "5さいの もんだいに\nちょうせん！";
+"young4_promotion_hint" = "まず、テストを うけてみよう！";
+"young4_promotion_button" = "はじめる";
+"young4_l5_question" = "みぎは なんこ？";
+"young4_addition_test_1" = "たす1 テスト";
+"young4_addition_test_2" = "たす2 テスト";
+
+// たす確認テスト
+"addition_check_round_title" = "たす%d テスト";
+"addition_check_plus_explain" = "＋は たす という いみだよ！";
+"addition_check_pass" = "すごい！\nたす%d かんぺき！";
+"addition_check_fail" = "もういちど\nたす%d をやってみよう！";
+"addition_check_all_clear" = "すごい！\nぜんぶ かんぺき！";
+"addition_check_next" = "つぎは たす%d にちょうせん！";
+"addition_check_retry" = "もういちど";
+"addition_check_start_battle" = "バトルをはじめる！";
+"addition_check_skip" = "いまの じつりょくで はじめる";
+"addition_check_skip_test" = "テストを スキップする";
+"young4_level_title" = "レベル %d";
+"young4_level_progress" = "%d / %d";
+"older_mode_challenge" = "とっくん";
+"older_mode_versus" = "バトル";
+
+// 感情トリガー
+"young_trigger_levelup" = "あと すこしで レベルアップ！";
+"young_trigger_play" = "きょうも やってみよう！";
+
+// タイトル吹き出し
+"title_bubble_eyes" = "こんなに なっちゃった！";
+"title_bubble_1" = "よっしゃあああ！";
+"title_bubble_2" = "きたきたきた！";
+"title_bubble_3" = "いくぞいくぞ！";
+"title_bubble_4" = "やばいぞこれ！";
+"title_bubble_5" = "きょうはかつぞ！たぶん！";
+"title_bubble_6" = "まけないぞ！たぶん！";
+"title_bubble_7" = "いけるきがする！";
+"title_bubble_8" = "なんかつよそう！";
+"title_bubble_9" = "うおおおお！";
+
+// バトル演出
+"battle_enemy_smirk" = "えへへ";
+"combo_bubble_3" = "いいね！";
+"result_next_enemy" = "つぎの てきは...？";
+"older_back_button" = "もどる";
+"versus_bgm_title" = "BGMをえらぼう";
+"versus_bgm_subtitle" = "たいせんちゅうの おんがく";
+"versus_bgm_1" = "Critical Hit Calculus";
+"versus_bgm_2" = "Pixel Math Showdown";
+"versus_bgm_start" = "たいせん かいし";
+"versus_opponent_name" = "ともだち";
+"versus_result_win" = "勝利";
+"versus_result_lose" = "おしい！";
+"lose_encourage_1" = "さいごまで がんばった！";
+"lose_encourage_2" = "つぎは もっといける！";
+"versus_result_draw" = "引き分け";
+"versus_result_rematch" = "再び挑む";
+"versus_result_home" = "ホームにもどる";
+
+// オンライン対戦
+"online_mode_title" = "オンラインたいせん";
+"online_lobby_title" = "オンラインたいせん";
+"online_create_room" = "へやを つくる";
+"online_join_room" = "へやに はいる";
+"online_room_code" = "へやばんごう";
+"online_enter_code" = "へやばんごうを いれてね";
+"online_join_button" = "はいる";
+"online_waiting_opponent" = "あいてを まっています...";
+"online_ready" = "じゅんび OK";
+"online_waiting_ready" = "あいての じゅんびを まっています...";
+"online_start_battle" = "バトル かいし！";
+"online_opponent_left" = "あいてが いなくなったよ";
+"online_error_title" = "エラー";
+"online_error_no_room" = "そのへやは ないよ";
+"online_error_full" = "へやが いっぱいだよ";
+"online_self" = "じぶん";
+
+// コース選択
+"versus_course_title" = "コースを えらぼう";
+"versus_course_addition" = "たしざんだけ";
+"versus_course_addition_desc" = "たしざんの もんだいだけ";
+"versus_course_normal" = "つうじょう";
+"versus_course_normal_desc" = "たしざん と ひきざん";
+"online_reversal" = "ぎゃくてん！";
+"online_waiting_friend" = "ともだちを\nまっているよ...";
+
+// カテゴリ選択
+"versus_category_title" = "だれと たいせんする？";
+"versus_category_friend" = "ともだちバトル";
+"versus_category_friend_desc" = "ともだちと ガチバトル";
+"versus_category_family" = "おやこバトル";
+"versus_category_family_desc" = "おうちで たのしく たいせん";
+"online_lobby_family" = "おうちで たいせん";
+
+// 親子バトル励まし
+"family_praise_1" = "よく がんばったね";
+"family_praise_2" = "さいごまで できたね";
+"family_praise_3" = "つぎは もっと いいせんぶ！";
+"settings_play_with_child" = "こどもと あそぶ";
+"versus_rank_c" = "ぼうけんしゃ";
+"versus_rank_b" = "すうしきのしと";
+"versus_rank_a" = "えいえんにとくもの";
+"versus_rank_s" = "かずのことわりをしるもの";
+
+"age_group_young4" = "4さい";
+"age_group_young" = "5〜6さい";
+"age_group_older" = "7さい〜";
+"age_group_young4_sub" = "かずを\nかぞえる";
+"age_group_young_sub" = "たし算\nれんしゅう";
+"age_group_older_sub" = "むずかしい\nもんだい";
+"age_select_parent_title" = "お子さんは何歳ですか？";
+"age_select_parent_subtitle" = "画面の表示がお子さんの年齢に合わせて変わります";
+"age_select_young_label" = "4〜7歳";
+"age_select_young_desc1" = "ひらがな表示";
+"age_select_young_desc2" = "シンプルなUI";
+"age_select_older_label" = "8歳以上";
+"age_select_older_desc1" = "より多くの情報";
+"age_select_older_desc2" = "詳細な統計";
+"age_select_parent_note" = "あとから設定画面で変更できます";
+"settings_age_group" = "ねんれい グループ";
+"settings_age_young" = "4〜7さい";
+"settings_age_older" = "8さい いじょう";
+"settings_pro_section" = "Pro版";
+"settings_pro_active" = "Pro版をご利用中です";
+"settings_voice_title" = "おうえんボイスを ろくおんする";
+"settings_voice_recorded" = "ろくおんずみ";
+"settings_app_info" = "アプリ情報";
+"settings_version" = "バージョン";
+
+// おうえんボイス録音画面
+"voice_recorder_nav_title" = "おうえんボイス";
+"voice_recorder_title" = "おうえんボイスを ろくおんする";
+"voice_recorder_desc" = "バトルクリアのときに この こえが ながれます";
+"voice_recorder_tap" = "タップして ろくおん";
+"voice_recorder_recording" = "ろくおんちゅう...";
+"voice_recorder_done" = "ろくおんずみ";
+"voice_recorder_play" = "かくにん さいせい";
+"voice_recorder_save" = "このこえを つかう";
+"voice_recorder_delete" = "さくじょする";
+"voice_recorder_delete_all" = "ぜんぶ さくじょする";
+"voice_recorder_desc_combo" = "20コンボごとに この こえが ながれるよ";
+"voice_recorder_permission_title" = "マイクのきょか";
+"voice_recorder_permission_message" = "せっていアプリから マイクを きょかしてください";
+"voice_recorder_permission_settings" = "せっていをひらく";
+"battle_quit_button" = "やめる";
+
+// ============================================================
+// MARK: - Home Card
+// ============================================================
+
+"power_label" = "パワー";
+"power_up" = "アップ！";
+"growth_record_link" = "せいちょうのきろく ›";
+"challenge_title" = "きょうのチャレンジ";
+"challenge_clear" = "クリア！🎉";
+"challenge_remaining" = "あと%dかい！";
+"challenge_achieved" = "たっせい！";
+
+// ============================================================
+// MARK: - Radar Chart
+// ============================================================
+
+"radar_speed" = "すばやさ";
+"radar_strength" = "つよさ";
+"radar_combo" = "コンボ";
+"radar_daily" = "まいにち";
+"radar_this_week" = "今週";
+"radar_last_week" = "先週";
+"status_days" = "%dにち";
+
+// ============================================================
+// MARK: - Parent Dashboard
+// ============================================================
+
+"dashboard_title" = "成長の記録";
+"dashboard_close" = "閉じる";
+"dashboard_this_week" = "今週の様子";
+"dashboard_speed_label" = "回答速度";
+"dashboard_top_floor" = "今週の最高フロア";
+"dashboard_max_combo" = "最大コンボ";
+"dashboard_play_days" = "プレイ日数";
+"dashboard_last_week" = "先週 %@";
+"dashboard_speed_chart" = "回答速度（4週間）";
+"dashboard_speed_hint" = "短いほど速い";
+"dashboard_no_chart_data" = "データが集まるとグラフが表示されます";
+"dashboard_weak_problems" = "苦手な問題";
+"dashboard_no_mistakes" = "まだ間違いはありません 🎉";
+"dashboard_pro_unlock" = "Proで全部見る";
+"dashboard_mistake_format" = "→ %dって こたえちゃった";
+"dashboard_week_4ago" = "4週前";
+"dashboard_week_3ago" = "3週前";
+"dashboard_week_last" = "先週";
+"dashboard_week_this" = "今週";
+"dashboard_ai_speed" = "答える速さが上がっています！平均%@秒";
+"dashboard_ai_floor" = "今週はF%dまで到達しました！";
+"dashboard_ai_combo" = "最大%d連コンボを達成しました！";
+"dashboard_ai_days" = "今週は%d日プレイしました！";
+"dashboard_ai_default" = "今週もよく頑張りました！続けましょう 👍";
+"dashboard_speed_faster" = "▲%@秒 はやく";
+"dashboard_mastery_title" = "小1算数マスター度";
+"dashboard_mastery_remaining" = "あと%d問でマスター完了！";
+"dashboard_mastery_complete" = "🎉 小1算数マスター達成！";
+"mastery_phase_addition" = "たし算マスター（Day1〜10）";
+"mastery_phase_carry" = "くり上がりマスター（Day11〜20）";
+"mastery_phase_subtraction" = "ひき算マスター（Day21〜25）";
+"mastery_phase_borrow" = "くり下がりマスター（Day26〜30）";
+"mastery_progress_addition" = "たし算マスターちゅう";
+"mastery_progress_carry" = "くり上がりマスターちゅう";
+"mastery_progress_subtraction" = "ひき算マスターちゅう";
+"mastery_progress_borrow" = "くり下がりマスターちゅう";
+"mastery_progress_complete" = "マスターかんりょう！";
+"mastery_map_title" = "くもん1ねんせい かんぜんせいは";
+"mastery_map_start_day" = "Day %d にちょうせん！";
+"mastery_map_complete" = "🎉 ぜんぶクリア！おめでとう！ 🎉";
+"mastery_map_complete_sub" = "小1さんすう かんぜんせいは！";
+"mastery_addition_basic" = "足し算〜10";
+"mastery_addition_carry" = "繰り上がり";
+"mastery_subtraction_basic" = "引き算〜10";
+"mastery_subtraction_borrow" = "繰り下がり";
+
+// ============================================================
+// MARK: - Notifications
+// ============================================================
+
+"notif_fallback_name" = "きみ";
+"notif_24h_1_title" = "％NAME％がこないから😭";
+"notif_24h_1_body" = "かずもんが ため息を 47かいも ついたよ！";
+"notif_24h_2_title" = "％NAME％！きいた？！😲";
+"notif_24h_2_body" = "ラスボスが このごろ スライムに まけてるって！";
+"notif_24h_3_title" = "％NAME％！きいて！😢";
+"notif_24h_3_body" = "モンスターたちが まいにち 53かいも そらを みあげてるよ！";
+"notif_24h_4_title" = "％NAME％がいないから😭";
+"notif_24h_4_body" = "むらの ポストに てがみが 99つも たまってるよ！";
+"notif_24h_5_title" = "％NAME％！しってる？😢";
+"notif_24h_5_body" = "ボスが しんぱいで まいよる 12かいも めを さますんだって";
+"notif_24h_6_title" = "％NAME％！うそでしょ？！😳";
+"notif_24h_6_body" = "むてきの ボスが きのう ザコに たおされたって！";
+"notif_48h_1_title" = "％NAME％！たすけて！😱";
+"notif_48h_1_body" = "かずもんが ため息 ついて ついて ついて 108かいに なった！";
+"notif_48h_2_title" = "％NAME％！たいへん！😨";
+"notif_48h_2_body" = "いちばん つよい ドラゴンが さいきん ひが でなくなってきた…";
+"notif_48h_3_title" = "％NAME％！しんじられない！😤";
+"notif_48h_3_body" = "あの ラスボスが もう 2にちも なみだを ながしてるらしいよ";
+"notif_48h_4_title" = "％NAME％！たすけて！😱";
+"notif_48h_4_body" = "ラスボスが よわって ため息 108かいに なった！";
+"notif_48h_5_title" = "％NAME％！きいた？！😲";
+"notif_48h_5_body" = "むらびと ぜんいんが ％NAME％のことを しんぱいしてるよ！";
+"notif_48h_6_title" = "％NAME％！もう げんかい！😭";
+"notif_48h_6_body" = "モンスターが まちすぎて むらに いけを 3つも つくっちゃった！";
+
+// MARK: - Young Result
+"young_result_amazing" = "すごい！";
+"young_praise_floor" = "%dかいまで のぼったね！";
+"young_praise_stronger" = "きのうより つよくなったね！";
+"young_praise_hero" = "さんすうの ヒーローだ！";
+"young_praise_tomorrow" = "すごい！またあした もっとつよくなろう！";
+"young_praise_cool" = "がんばったね！かっこいい！";
+"young_result_improvement" = "まえより ＋%dかい 🔥";
+"young_result_new_record" = "🏆 しんきろく！";
+"young_result_retry" = "もう1かい！";
+"young_result_done" = "おわる";
+
+// MARK: - Certificate
+"certificate_title" = "かずもん しゅうりょうしょう";
+"certificate_player" = "%@さんは";
+"certificate_achievement" = "30にちチャレンジを かんぜんせいは！";
+"certificate_congrats" = "おめでとうございます！\nたし算・ひき算を マスターしました！";
+"certificate_rank" = "にんてい：さんすうマスター ⭐️";
+"certificate_logo" = "かずもん";
+"certificate_share" = "シェアする";
+"certificate_close" = "とじる";
+
+// MARK: - Young Share
+"young_share_title" = "おやにみせる！";
+"young_share_reached" = "%@さんが %dFに とうたつ！";
+"young_share_logo" = "かずもん";
+
+// MARK: - Mistake Boss
+"mistake_boss_banner_title" = "まちがいおにが あらわれた！";
+"mistake_boss_banner_subtitle" = "にがてを やっつけよう！";
+"mistake_boss_banner_action" = "ちょうせん！";
+"mistake_boss_intro_1" = "おまえの よわいところを しってるぞ！";
+"mistake_boss_intro_2" = "にがてな もんだいを もってきたぞ！";
+"mistake_boss_intro_3" = "これが とけるか？";
+"mistake_boss_defeat_1" = "にがてを こくふく！すごい！";
+"mistake_boss_defeat_2" = "もう こわくない！";
+"mistake_boss_defeat_3" = "つよくなったね！";
+"mistake_boss_defeated_title" = "まちがいおにを たおした！";
+"mistake_boss_done" = "おわる";
+
+// MARK: - Mistake Boss Warning
+"mistake_boss_warning_1" = "…みられてたぞ。\nきょう まちがえた もんだいを\nぜんぶ おぼえているやつが いる。\nあした くるか？";
+"mistake_boss_warning_2" = "にげるなよ。\nおまえの にがてを しっている\nおにが まってる。\nたおせるかな…？";
+"mistake_boss_warning_3" = "ねえ、しってる？\nまちがえた もんだいは\nきえないんだよ。\nあしたの あさ わかるよ";
+"mistake_boss_warning_4" = "…あした。\nかならず くるんだぞ。\nまってる。";
+"mistake_boss_warning_5" = "きょう まちがえたね。\nおれは わすれない。\nあした おまえが アプリを あけた\nその しゅんかん…でる。";
+"mistake_boss_entrance_title" = "まってたぞ…";
+"mistake_boss_entrance_subtitle" = "にがてもんだいに ちょうせんしろ";
+"mistake_boss_fight_button" = "たたかう";
+"mistake_boss_enemy_name" = "まちがいおに";
+"mistake_boss_result_praise" = "つよくなったね！";
+
+// じかんどろぼう
+"time_boss_warning_1" = "…じかんは かぎられている。";
+"time_boss_warning_2" = "じかんどろぼう が あらわれる。";
+"time_boss_warning_3" = "あした。";
+"time_boss_appear_title" = "じかんを かえせ！";
+"time_boss_appear_subtitle" = "はやく こたえないと…";
+"time_boss_fight_button" = "たたかう";
+"time_boss_enemy_name" = "じかんどろぼう";
+"time_boss_intro_1" = "じかんが ないぞ！はやくしろ！";
+"time_boss_intro_2" = "まにあうか？";
+"time_boss_intro_3" = "おそすぎる…";
+"time_boss_defeat_1" = "じかんを とりかえした！";
+"time_boss_defeat_2" = "はやさが みについたね！";
+"time_boss_defeat_3" = "すごい！まにあった！";
+"time_boss_defeated_title" = "じかんどろぼう を たおした！";
+"time_boss_result_praise" = "はやさが みについたね！";
+"time_boss_done" = "おわる";
+
+// まほうのじかん
+"tap_to_continue" = "タップして つづける";
+
+// ビフォーテスト
+"name_input_post_test_title" = "すごい！";
+"name_input_post_test_subtitle" = "きみの なまえは？";
+"name_input_post_test_start" = "はじめる！";
+// アフターテスト
+"after_test_intro_1" = "30にち がんばったね！";
+"after_test_intro_2" = "さいごの テストだよ！";
+"after_test_result_title" = "🎉 30にちチャレンジ かんりょう！";
+"after_test_before_label" = "まえ（Day1）";
+"after_test_after_label" = "いま（Day30）";
+"after_test_level_up_count" = "レベル +%d アップ！";
+"after_test_growth_up" = "すごい！ つよくなったね！";
+"after_test_growth_same" = "もう すでに つよかったんだね！";
+"after_test_growth_next" = "つぎは もっと できるよ！";
+"after_test_certificate_button" = "しゅうりょうしょうを みる";
+"after_test_pass" = "さんすうマスター！";
+"after_test_fail" = "あとすこし！もう1かい！";
+"after_test_comparison_title" = "せいちょうの きろく";
+"after_test_retry_button" = "もう1かい ちょうせん！";
+"after_test_home_button" = "ホームにもどる";
+"after_test_banner_title" = "さいしゅうテストに ちょうせん！";
+"after_test_banner_subtitle" = "30にちの せいかを ためそう";
+"collection_certificate_button" = "ひょうしょうじょう";
+"before_test_speed_fast" = "はやかったね！";
+"before_test_speed_good" = "がんばったね！";
+"before_test_avg_time" = "へいきん かいとうじかん：%.1fびょう";
+"before_test_msg_low" = "いっしょに がんばろう！";
+"before_test_msg_mid" = "いいね！\nもっと つよくなれるよ！";
+"before_test_msg_high" = "すごい！ あとすこし！";
+"before_test_msg_perfect" = "かんぺき！ てんさいだ！";
+"before_test_young_title" = "すごい！";
+"before_test_young_done" = "つぎへ！";
+"before_test_older_title" = "けっか";
+"before_test_older_score" = "%dもんちゅう %dもん せいかい（%d%%）";
+"before_test_older_message" = "30にちごに おなじテストを うけよう。\nせいちょうが すうじで みえるよ。";
+"before_test_older_done" = "30にちチャレンジを はじめる";
+"magic_time_speech_1" = "わあ！きれい";
+"magic_time_speech_2" = "にじいろ！";
+"magic_time_speech_3" = "まほうのじかんだ！";
+"magic_time_speech_4" = "なんかちがう…！";
+"magic_time_speech_5" = "きょうもあそぼう！";
+"settings_magic_time" = "まほうのじかん";
+"settings_magic_start" = "じかん";
+"settings_magic_locked" = "あと%d じかんは へんこうできません";
+"magic_time_countdown" = "あと %dにち…";
+
+// ============================================================
+// MARK: - Island World
+// ============================================================
+
+"island_label_battle" = "くものゲート";
+"island_label_bgm" = "BGMのおみせ";
+"island_label_kisekae" = "きせかえ";
+"island_label_koukan" = "こうかんじょ";
+
+"island_bubble_battle_1" = "くもの なかへ いくぞ！";
+"island_bubble_battle_2" = "ゲートが ひかってる！";
+"island_bubble_battle_3" = "モンスターを たおしにいこう！";
+"island_bubble_bgm_1" = "ノリノリで いこうぜ！";
+"island_bubble_bgm_2" = "おんがく さいこー！";
+"island_bubble_bgm_3" = "すきな きょく えらぼう！";
+"island_bubble_kisekae_1" = "オシャレも だいじ！";
+"island_bubble_kisekae_2" = "ツノって かっこいいよね！";
+"island_bubble_kisekae_3" = "どんな すがたに なれるかな？";
+"island_bubble_koukan_1" = "なにか いいもの あるかな？";
+"island_bubble_koukan_2" = "おたからを こうかんしよう！";
+"island_bubble_koukan_3" = "レアアイテム ほしい！";
+
+"island_locked_message" = "まだ あけられないよ!";
+
+// ============================================================
+// MARK: - Start Screen
+// ============================================================
+
+"start_screen_title" = "かずもん";
+"start_screen_go" = "ぼうけんに いく!";
+
+// ============================================================
+// MARK: - Battle Shop
+// ============================================================
+
+"battle_shop_welcome" = "どっちの みちに いく？";
+"battle_shop_back" = "もどる";
+
+// ============================================================
+// MARK: - Kisekae Shop
+// ============================================================
+
+"kisekae_title" = "きせかえショップ";
+"kisekae_pick" = "いろを えらんでね！";
+"kisekae_owned" = "もっている";
+"kisekae_buy_confirm" = "このいろを かう？";
+"kisekae_cancel" = "やめる";
+"kisekae_buy" = "かう！";
+"kisekae_not_enough" = "コインが たりないよ…";
+"kisekae_color_blue" = "みずいろ";
+"kisekae_color_green" = "みどり";
+"kisekae_color_red" = "あか";
+"kisekae_color_yellow" = "きいろ";
+"kisekae_color_dark" = "ダーク";
+"kisekae_color_white" = "しろ";
+
+// ============================================================
+// MARK: - Koukan Shop (Exchange)
+// ============================================================
+
+"koukan_title" = "こうかんじょ";
+"koukan_desc" = "アイテムを コインに こうかん！";
+"koukan_empty" = "アイテムが まだ ないよ…";
+
+// ============================================================
+// MARK: - Shop Unlock
+// ============================================================
+
+"island_unlock_koukan" = "こうかんじょ かいてん！";
+"island_unlock_kisekae" = "きせかえショップ かいてん！";
+
+// Kisekae Tabs & Details
+"kisekae_tab_color" = "いろ";
+"kisekae_tab_detail" = "ツノ";
+"kisekae_detail_none" = "なし";
+"kisekae_detail_horn_l" = "おおきいツノ";
+"kisekae_detail_horn_s" = "ちいさいツノ";
+"kisekae_detail_ant_l" = "おおきいアンテナ";
+"kisekae_detail_ant_s" = "ちいさいアンテナ";
+"kisekae_detail_ear" = "みみ";
+"kisekae_detail_ear_r" = "まるいみみ";
+
+// Kisekae Details (updated)
+"kisekae_detail_horn_1" = "ツノ ×1";
+"kisekae_detail_horn_2" = "ツノ ×2";
+"kisekae_detail_horn_3" = "ツノ ×3";
+"kisekae_detail_ant_1" = "アンテナ ×1";
+"kisekae_detail_ant_2" = "アンテナ ×2";
+"kisekae_detail_ant_3" = "アンテナ ×3";
+"kisekae_detail_ear_2" = "みみ";
+"kisekae_detail_ear_r_2" = "まるいみみ";
+
+// ============================================================
+// MARK: - Pro Plan
+// ============================================================
+
+"pro_plan_title" = "かずもん PRO";
+"pro_plan_free" = "無料";
+"pro_plan_buy" = "PROにアップグレード！";
+"pro_plan_already" = "PRO加入済みです";
+"pro_plan_restore" = "購入を復元";
+"pro_feature_play" = "1日のプレイ";
+"pro_free_play" = "3回";
+"pro_pro_play" = "無制限";
+"pro_pro_unlimited" = "無制限";
+"pro_feature_profile" = "プロフィール数";
+"pro_feature_floor" = "最高フロア";
+"pro_feature_online" = "オンラインバトル";
+"pro_feature_kisekae" = "きせかえ";
+
+// Battle Shop Steps
+"battle_step_mode" = "モード";
+"battle_step_diff" = "難易度";
+"battle_step_type" = "問題";
+
+// Kisekae floor unlock hints
+"kisekae_unlock_10f" = "10Fで かいほう";
+"kisekae_unlock_20f" = "20Fで かいほう";
+"kisekae_unlock_30f" = "30Fで かいほう";
+"kisekae_coming_soon" = "じゅんびちゅう！";
+
+// 家族モード（NPC/パス&プレイ）
+"battle_mode_select_title" = "だれと たたかう？";
+"battle_mode_family" = "かぞくと";
+"battle_mode_family_desc" = "おうちのひとと\nたいけつ！";
+"battle_mode_online" = "オンライン";
+"battle_mode_online_desc" = "せかいの こと\nたいけつ！";
+
+// イントロ画面
+"intro_title" = "ちょうせんじょうを\nかこう！";
+"intro_family_card" = "かぞくに\nちょうせんじょう";
+"intro_online_card" = "オンライン\nバトル";
+
+// 宛先選択
+"recipient_select_title" = "だれに\nちょうせんじょう？";
+
+// 挑戦内容デザイン
+"design_title" = "どんな ちょうせん？";
+"design_monster" = "だれを たおす？";
+"design_difficulty" = "むずかしさ";
+"design_problem_type" = "もんだい";
+"design_done_button" = "かいた！";
+"design_preview_title" = "%@ へ";
+"design_preview_message" = "を たおして！";
+
+// モンスター選択肢
+"monster_choice_slime" = "スライム";
+"monster_choice_goblin" = "ゴブリン";
+"monster_choice_orc" = "オーク";
+"monster_choice_dragon" = "ドラゴン";
+"monster_choice_demon" = "あくま";
+
+// 書く・渡す演出
+"writing_text" = "ちょうせんじょうを かいてるよ...";
+"writing_recipient" = "%@ へ";
+"delivery_text" = "%@ に わたそう！";
+
+// 兄弟向けウェルカム文言（親と分ける）
+"family_sibling_welcome_message" = "%@から\nちょうせんじょう！";
+
+// 家族メンバー名（子供視点）
+"family_member_father" = "おとうさん";
+"family_member_mother" = "おかあさん";
+"family_member_older_brother" = "おにいちゃん";
+"family_member_older_sister" = "おねえちゃん";
+"family_member_self" = "じぶん";
+"family_member_younger_brother" = "おとうと";
+"family_member_younger_sister" = "いもうと";
+"family_member_grandfather" = "おじいちゃん";
+"family_member_grandmother" = "おばあちゃん";
+
+// 家族選択画面
+"family_select_title" = "だれが あそぶ？";
+"family_member_best_score" = "ベスト %d てん";
+"family_member_no_score" = "まだ あそんでない";
+"family_edit_button" = "へんしゅう";
+
+// 家族構成セットアップ
+"family_setup_title" = "かぞくを おしえて";
+"family_setup_subtitle" = "あそぶ かぞくを えらんでね\n（あとから かえられるよ）";
+"family_setup_done" = "けってい";
+
+// 親向けウェルカムオーバーレイ（大人向けに漢字混じり）
+"family_parent_welcome_title" = "%@ へ";
+"family_parent_welcome_message" = "お子さんから\nちょうせんじょう！";
+"family_parent_welcome_message_named" = "%@ から\nちょうせんじょう！";
+"family_parent_welcome_b1" = "約3分";
+"family_parent_welcome_b2" = "たし算 中心の問題です";
+"family_parent_welcome_b3" = "ランキングに記録されます";
+"family_parent_welcome_start" = "やってみる";
+"family_parent_welcome_later" = "またこんど";
+"family_parent_welcome_bubble" = "おねがい！";
+
+// わたしてね画面（子供→相手にスマホを渡す）
+"handoff_message" = "スマホを\n%@ に わたしてね！";
+"handoff_done_button" = "わたした！";
+"handoff_play_self" = "やっぱり じぶんでやる！";
+
+// 家族ランキング画面
+"family_ranking_title" = "かぞくランキング";
+"family_ranking_new_best" = "%@ の ベスト こうしん！";
+"family_ranking_updated" = "↑ こうしん！";
+"family_ranking_close" = "とじる";
+
+// ============================================================
+// MARK: - Island Tree / Daily
+// ============================================================
+
+"island_label_tree" = "きをうえる";
+"island_plant_blocked" = "ここには植えられないよ!";
+"island_plant_prompt" = "島をタップして木を植えよう!";
+"island_daily_clear" = "デイリークリア！";
+"island_mission_progress" = "ミッション %d/%d";
+"island_chest_already_opened" = "今日はもう開けたよ";
+"island_chest_reward" = "✨ 100コイン獲得!";
+
+// 交換ショップ（木）
+"koukan_tree_name" = "木 (島に植えよう)";
+"koukan_tree_desc" = "島が豊かになりスライムも増える!";
+"koukan_tree_stock" = "在庫: %d/%d ・ 次の補充まで%d日";
+"koukan_coin_label" = "コイン";
+"koukan_tree_purchased" = "購入完了！島で植える場所をタップしよう";
+
+// プレイ制限ペイウォール
+"overlay_play_limit_title" = "きょうは ここまで！";
+"overlay_play_limit_body" = "またあした あそんでね！\nいますぐ やりたいなら…";
+"overlay_play_limit_upgrade" = "プロで いつでもあそべる！";
+"overlay_play_limit_dismiss" = "またあした";
+
+// 親ダッシュボード: 正答率
+"dashboard_accuracy_chart" = "正答率（4週間）";
+"dashboard_accuracy_hint" = "正しく答えた割合";
+
+// カムバックボーナス
+"comeback_title" = "おかえり！";
+"comeback_reward" = "%dコイン もらったよ！";
+"comeback_dismiss" = "あそぶ！";
+
+// タイトル画面（追加）
+"title_logo" = "かずもん";
+"title_daily_challenge" = "きょうの ちょうせん！";
+"title_30day_challenge" = "30にちチャレンジ";
+"challenge_progress_pct" = "%d%% かんりょう";
+
+// プレイ回数表示
+"island_plays_remaining" = "あと%dかい";
+
+// 修了証の追加テキスト
+"certificate_best_floor" = "さいこうフロア";
+"certificate_accuracy" = "せいとうりつ";
+
+// プロフィール追加ゲート
+"pro_plan_siblings_pitch" = "きょうだいで それぞれの\nせいせきを きろくできる！";
+
+// カテゴリ別弱点
+"dashboard_cat_title" = "苦手な分野";
+"dashboard_cat_add_basic" = "足し算（基本）";
+"dashboard_cat_add_carry" = "足し算（繰り上がり）";
+"dashboard_cat_sub_basic" = "引き算（基本）";
+"dashboard_cat_sub_borrow" = "引き算（繰り下がり）";
+
+// 最長ストリーク
+"island_best_streak" = "ベスト: %dにち";
+
+// 30日チャレンジ フェーズ説明
+"challenge_phase1_desc" = "10までの たしざんを れんしゅう";
+"challenge_phase2_desc" = "くりあがりの ある たしざん (11〜20)";
+"challenge_phase3_desc" = "かんたんな ひきざんを れんしゅう";
+"challenge_phase4_desc" = "くりさがりの ある ひきざん";
+
+// ママの声ヒント
+"dashboard_voice_title" = "応援ボイスを録音しよう";
+"dashboard_voice_desc" = "コンボ5回であなたの声が流れます！";
+"dashboard_voice_where" = "設定 → ボイス";
+
+// Before/After比較
+"dashboard_before_after_title" = "テストの成長";
+"dashboard_before_label" = "開始時";
+"dashboard_after_label" = "現在";
+"dashboard_growth" = "▲ +%dポイント成長！";
+
+// プレイカレンダー
+"dashboard_calendar_title" = "28日間のプレイ記録";
+"dashboard_calendar_summary" = "%d / %d日プレイ";
+
+// 週間チャレンジ
+"island_weekly_progress" = "しゅうかん %d/%dにち";
+"island_weekly_complete" = "しゅうかんクリア！";
+
+// ストリーク限定カラー
+"kisekae_color_pink" = "ピンク";
+"kisekae_color_gold" = "ゴールド";
+"kisekae_unlock_streak7" = "7にち れんぞくで かいほう";
+"kisekae_unlock_streak14" = "14にち れんぞくで かいほう";
+
+// アクセシビリティ
+"accessibility_answer" = "こたえ";
+"accessibility_locked" = "まだ あけられません";
+"accessibility_tap_to_enter" = "タップして はいる";
+
+// オンボーディング: おうえんボイス
+"setup_voice_title" = "おうえんの こえを\nろくおんしよう！";
+"setup_voice_desc" = "バトルでコンボをつなげると\nあなたの声がながれます";
+"setup_voice_play" = "きいてみる";
+"setup_voice_hint" = "3びょうまで ろくおんできます";
+"setup_voice_skip" = "あとで";
+"setup_voice_done" = "これでOK！";
+
+// 島ボタン: 家族バトル
+"island_label_family" = "かぞく";
+
+// マリカー風メニュー
+"menu_solo" = "ひとりで";
+"menu_family" = "かぞくで";
+"menu_kisekae" = "きせかえ";
+"menu_koukan" = "こうかんじょ";
+
+// 4歳バトル選択
+"young4_battle_choice_title" = "なにする？";
+"young4_battle_play" = "さんすうバトル！";
+"young4_battle_family" = "かぞくバトル！";
+
+// ガチャ
+"gacha_got_item" = "アイテムゲット！";
+"gacha_ok" = "やったー！";
+
+// デイリー対戦ボーナス
+"versus_daily_bonus" = "デイリーボーナス +%dBP";
+
+// リアクティベーション通知（3日不在）
+"notif_3d_1_title" = "％NAME％、おかえり！";
+"notif_3d_1_body" = "島のスライムたちがまってるよ！コインプレゼントもあるかも？";
+"notif_3d_2_title" = "ひさしぶり！";
+"notif_3d_2_body" = "％NAME％がいなくて さみしかったよ〜！あそぼう！";
+
+// リアクティベーション通知（7日不在）
+"notif_7d_1_title" = "％NAME％、まだまだ つよくなれるよ！";
+"notif_7d_1_body" = "かずもんアイランドで まってるよ。おかえりボーナスもあるよ！";
+"notif_7d_2_title" = "かずもんからの おてがみ";
+"notif_7d_2_body" = "％NAME％に あいたいな…。島にあそびにきて！";
