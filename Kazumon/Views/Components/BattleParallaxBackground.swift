@@ -23,8 +23,14 @@ private struct ParallaxLayout {
         distantY: -276, middleY: -222, foregroundY: -479, groundY: -358,
         distantScale: 3.91, middleScale: 2.70, foregroundScale: 1.46, groundScale: 1.95
     )
-    static let darkCastle = ParallaxLayout()
-    static let darkness = ParallaxLayout()
+    static let darkCastle = ParallaxLayout(
+        distantY: -238, middleY: -106, foregroundY: -435, groundY: -317,
+        distantScale: 2.93, middleScale: 1.91, foregroundScale: 1.00, groundScale: 2.00
+    )
+    static let darkness = ParallaxLayout(
+        distantY: 0, middleY: 0, foregroundY: -106, groundY: -372,
+        distantScale: 1.02, middleScale: 1.00, foregroundScale: 3.53, groundScale: 0.89
+    )
 
     static func forTheme(_ theme: String) -> ParallaxLayout {
         switch theme {
@@ -44,6 +50,7 @@ struct BattleParallaxBackground: View {
     let isTimeBossMode: Bool
     let bgTop: Color
     let bgBottom: Color
+    var speedMultiplier: CGFloat = 1.0
 
     var debugDistantY: CGFloat = 0
     var debugMiddleY: CGFloat = 0
@@ -87,27 +94,27 @@ struct BattleParallaxBackground: View {
         return ZStack {
             ParallaxScrollLayer(
                 imageName: "parallax_\(theme)_distant", speed: 8, alignment: .center,
-                scale: l.distantScale + debugDistantScale
+                scale: l.distantScale + debugDistantScale, speedMultiplier: speedMultiplier
             )
             .offset(y: l.distantY + debugDistantY)
 
             ParallaxScrollLayer(
                 imageName: "parallax_\(theme)_middle", speed: 20, alignment: .center,
-                scale: l.middleScale + debugMiddleScale
+                scale: l.middleScale + debugMiddleScale, speedMultiplier: speedMultiplier
             )
-            .opacity(0.7)
+            .opacity(0.85)
             .offset(y: l.middleY + debugMiddleY)
 
             ParallaxScrollLayer(
                 imageName: "parallax_\(theme)_foreground", speed: 35, alignment: .bottom,
-                scale: l.foregroundScale + debugForegroundScale
+                scale: l.foregroundScale + debugForegroundScale, speedMultiplier: speedMultiplier
             )
             .opacity(0.7)
             .offset(y: l.foregroundY + debugForegroundY)
 
             ParallaxScrollLayer(
                 imageName: "parallax_\(theme)_ground", speed: 50, alignment: .bottom,
-                scale: l.groundScale + debugGroundScale
+                scale: l.groundScale + debugGroundScale, speedMultiplier: speedMultiplier
             )
             .opacity(0.85)
             .offset(y: l.groundY + debugGroundY)
@@ -121,6 +128,7 @@ private struct ParallaxScrollLayer: View {
     let speed: CGFloat
     let alignment: Alignment
     var scale: CGFloat = 1.0
+    var speedMultiplier: CGFloat = 1.0
 
     @State private var startDate = Date()
     @State private var imageAspect: CGFloat = 1.5
@@ -132,7 +140,7 @@ private struct ParallaxScrollLayer: View {
 
             TimelineView(.animation) { ctx in
                 let elapsed = ctx.date.timeIntervalSince(startDate)
-                let offset = CGFloat(elapsed) * speed
+                let offset = CGFloat(elapsed) * speed * speedMultiplier
                 let x = -(offset.truncatingRemainder(dividingBy: w))
 
                 HStack(spacing: 0) {

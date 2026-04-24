@@ -7,9 +7,10 @@ struct ResultView: View {
     @State private var showFlash = true
     @State private var bgRevealed = false
     @State private var shakeOffset: CGFloat = 0
-    @State private var charScale: CGFloat = 0.3
-    @State private var charOpacity: Double = 0
+    @State private var charScale: CGFloat = 1.0
+    @State private var charOpacity: Double = 1
     @State private var charFloat: CGFloat = 0
+    @State private var resultEntrance: Bool = false
     @State private var wellDoneScale: CGFloat = 3.0
     @State private var wellDoneOpacity: Double = 0
     @State private var floorScale: CGFloat = 3.0
@@ -61,19 +62,9 @@ struct ResultView: View {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 18) {
                     // Phase 0: キャラ + wellDone
-                    VStack(spacing: 10) {
-                        if phase >= 0 {
-                            KennyCharacterView(
-                                appearance: gameVM.playerAppearance,
-                                size: 100
-                            )
-                            .scaleEffect(charScale)
-                            .opacity(charOpacity)
-                            .offset(y: charFloat + 40)  // リザルト画面のキャラ位置を下げる
-                        }
-
+                    VStack(spacing: 4) {
                         if phase >= 1 {
-                            // セリフ吹き出し
+                            // セリフ吹き出し（キャラの上）
                             VStack(spacing: 0) {
                                 Text(FloorRank.characterComment(for: gameVM.floor - 1))
                                     .font(.zenMaru(13, weight: .bold))
@@ -91,6 +82,20 @@ struct ResultView: View {
                                     .frame(width: 12, height: 7)
                             }
                             .opacity(speechOpacity)
+                        }
+
+                        if phase >= 0 {
+                            KennyCharacterView(
+                                appearance: gameVM.playerAppearance,
+                                size: 100,
+                                playEntrance: resultEntrance
+                            )
+                            .scaleEffect(charScale)
+                            .opacity(charOpacity)
+                            .offset(y: charFloat)
+                        }
+
+                        if phase >= 1 {
 
                             Text("view_result_well_done")
                                 .font(.zenMaru(36, weight: .black))
@@ -106,11 +111,13 @@ struct ResultView: View {
                     // Phase 2: フロア数 ドドーン + カード
                     if phase >= 2 {
                         VStack(spacing: 12) {
-                            Text("▲ \(gameVM.floor - 1)F")
-                                .font(.zenMaru(48, weight: .black))
-                                .foregroundColor(textDark)
-                                .scaleEffect(floorScale)
-                                .opacity(floorOpacity)
+                            if !gameVM.isFamilyNPCMode {
+                                Text("▲ \(gameVM.floor - 1)F")
+                                    .font(.zenMaru(48, weight: .black))
+                                    .foregroundColor(textDark)
+                                    .scaleEffect(floorScale)
+                                    .opacity(floorOpacity)
+                            }
 
                             Rectangle()
                                 .fill(LinearGradient(
@@ -397,13 +404,11 @@ struct ResultView: View {
         SoundManager.shared.playBossAppear()
         HapticsManager.incorrect()
 
-        // 0.5s: キャラ ボヨーン
+        // 0.5s: 登場アニメーション開始
         at(0.5) {
-            withAnimation(.spring(response: 0.4, dampingFraction: 0.4)) {
-                charScale = 1.0; charOpacity = 1
-            }
+            resultEntrance = true
             HapticsManager.tap(); SoundManager.shared.playTap()
-            at(0.5) {
+            at(2.0) {
                 withAnimation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true)) { charFloat = -8 }
             }
         }

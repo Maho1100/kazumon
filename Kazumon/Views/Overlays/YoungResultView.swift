@@ -19,9 +19,10 @@ struct YoungResultView: View {
     @State private var amazingOpacity: Double = 0
     @State private var starsRevealed = 0
     @State private var praiseOpacity: Double = 0
-    @State private var charScale: CGFloat = 0.3
-    @State private var charOpacity: Double = 0
+    @State private var charScale: CGFloat = 1.0
+    @State private var charOpacity: Double = 1
     @State private var charFloat: CGFloat = 0
+    @State private var resultEntrance: Bool = false
     @State private var buttonOpacity: Double = 0
     @State private var confettiVisible = false
     @State private var shakeOffset: CGFloat = 0
@@ -68,11 +69,12 @@ struct YoungResultView: View {
                 if phase >= 1 {
                     KennyCharacterView(
                         appearance: gameVM.playerAppearance,
-                        size: 80
+                        size: 80,
+                        playEntrance: resultEntrance
                     )
                     .scaleEffect(charScale)
                     .opacity(charOpacity)
-                    .offset(y: charFloat + 40)  // リザルト画面のキャラ位置を下げる
+                    .offset(y: charFloat + 40)
                 }
 
                 // Phase 0: 「すごい！」ドーン
@@ -192,14 +194,12 @@ struct YoungResultView: View {
             amazingScale = 1.0; amazingOpacity = 1
         }
 
-        // 0.8s: キャラ ボヨーン
+        // 0.8s: 登場アニメーション開始
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
             phase = 1
-            withAnimation(.spring(response: 0.4, dampingFraction: 0.4)) {
-                charScale = 1.0; charOpacity = 1
-            }
+            resultEntrance = true
             HapticsManager.tap()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                 withAnimation(.easeInOut(duration: 1.5).repeatForever(autoreverses: true)) { charFloat = -8 }
             }
         }

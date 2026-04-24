@@ -56,6 +56,14 @@ extension CharacterAppearance {
         eyeOffsetY: 0.35, mouthOffsetY: 0.65,
         eyeStyle: .cute, browMood: .normal, eyeAnimated: true
     )
+    static let enemySlime = CharacterAppearance(
+        body: "body_base_B", eyes: "eye_human", mouth: "mouth_closed_happy",
+        leftArm: nil, rightArm: nil, legs: nil,
+        bodyColor: Color(red: 0.45, green: 0.75, blue: 0.40),
+        detail: "detail_none", nose: nil,
+        eyeOffsetY: 0.35, mouthOffsetY: 0.65,
+        eyeStyle: .neutral, browMood: .angry, eyeAnimated: true
+    )
     static let bossSlime = CharacterAppearance(
         body: "body_greenC", eyes: "eye_angry_green", mouth: "mouth_closed_fangs",
         leftArm: "arm_greenA", rightArm: "arm_greenA", legs: nil,
@@ -71,9 +79,10 @@ extension CharacterAppearance {
         eyeStyle: .neutral, browMood: .normal, eyeAnimated: true
     )
     static let bossGoblin = CharacterAppearance(
-        body: "body_darkC", eyes: "eye_angry_blue", mouth: "mouthH",
-        leftArm: "arm_darkA", rightArm: "arm_darkA", legs: "leg_darkA",
-        detail: "detail_dark_horn_large", nose: "nose_brown",
+        body: "body_base_C", eyes: "eye_angry_blue", mouth: "mouthH",
+        leftArm: "arm_base_A", rightArm: "arm_base_A", legs: "leg_base_A",
+        bodyColor: Color(red: 0.30, green: 0.30, blue: 0.35),
+        detail: "detail_base_horn_large", nose: "nose_brown",
         eyeOffsetY: 0.31, mouthOffsetY: 0.55,
         eyeStyle: .angry, browMood: .angry, eyeAnimated: true
     )
@@ -139,7 +148,7 @@ extension CharacterAppearance {
     // フロアからモンスター外見を取得
     static func forFloor(_ floor: Int) -> CharacterAppearance {
         switch floor {
-        case 1...4:   return .slime
+        case 1...4:   return .enemySlime
         case 5:       return .bossSlime
         case 6...9:   return .goblin
         case 10:      return .bossGoblin

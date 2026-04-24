@@ -7,6 +7,11 @@ struct BattleView: View {
     @State private var shakeOffset: CGFloat = 0
     @State private var scoreScale: CGFloat = 1.0
     @State private var lastScore: Int = 0
+    @State private var playerFacing: KennyCharacterView.Facing = .left
+    @State private var playerRunning = false
+    @State private var playerRunOffsetX: CGFloat = -200
+    @State private var playerPlayEntrance = false
+    @State private var monsterOffsetX: CGFloat = 250
     // フロア連動背景色
     @State private var bgTop = Color(red: 0.72, green: 0.93, blue: 1.0)
     @State private var bgBottom = Color(red: 0.78, green: 0.96, blue: 0.72)
@@ -40,6 +45,7 @@ struct BattleView: View {
                 isTimeBossMode: vm.isTimeBossMode,
                 bgTop: bgTop,
                 bgBottom: bgBottom,
+                speedMultiplier: playerRunning ? 1.0 : 0.15,
                 debugDistantY: pxDistantY,
                 debugMiddleY: pxMiddleY,
                 debugForegroundY: pxForegroundY,
@@ -55,7 +61,8 @@ struct BattleView: View {
                 isMistakeBossMode: vm.isMistakeBossMode,
                 isTimeBossMode: vm.isTimeBossMode,
                 bgTop: bgTop,
-                bgBottom: bgBottom
+                bgBottom: bgBottom,
+                speedMultiplier: playerRunning ? 1.0 : 0.15
             )
             #endif
 
@@ -99,9 +106,12 @@ struct BattleView: View {
                                 isAttacking: vm.isAttacking,
                                 isHurt: vm.phase == .incorrect,
                                 level: vm.floor,
-                                isJoyPose: vm.isJoyPose
+                                playEntrance: playerPlayEntrance,
+                                isRunning: playerRunning,
+                                isJoyPose: vm.isJoyPose,
+                                facing: playerFacing
                             )
-                            .offset(y: 50)  // バトル中のプレイヤー位置を下げる
+                            .offset(x: playerRunOffsetX, y: 50)
                             .opacity(vm.timeBossTutorialActive ? 0 : 1)
                             .overlay {
                                 if vm.showSparkle {
@@ -144,6 +154,7 @@ struct BattleView: View {
                             questionsAnswered: vm.questionsAnswered,
                             totalQuestions: vm.isMistakeBossMode ? MistakeBossConfig.bossHP : vm.currentMonster.questionsPerFloor
                         )
+                        .offset(x: monsterOffsetX)
                         .offset(y: 50)
                     }
                     .frame(height: 200, alignment: .center)
@@ -301,7 +312,7 @@ struct BattleView: View {
             }
 
             if vm.phase == .gameOver {
-                GameOverOverlay()
+                GameOverOverlay(appearance: vm.battleAppearance)
             }
 
             if vm.showComboBreak {
@@ -440,16 +451,42 @@ struct BattleView: View {
         .onAppear {
             AnalyticsManager.trackScreenEnter("battle")
             updateBGColors(for: vm.floor)
+            startBattleEntrance()
         }
         .onChange(of: vm.phase) { _, newPhase in
             if newPhase == .bossAppearing {
                 runShake()
+            }
+            if newPhase == .defeating && vm.currentMonster.isBoss {
+                // ボス撃破: 喜びポーズ → 走り退場 → フロア遷移
+                playerFacing = .front
+                playerPlayEntrance = true
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                    guard vm.phase == .defeating else { return }
+                    playerPlayEntrance = false
+                    playerFacing = .right
+
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                        playerRunning = true
+                        withAnimation(.easeIn(duration: 0.6)) {
+                            playerRunOffsetX = 400
+                        }
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.65) {
+                        playerRunning = false
+                    }
+                }
+            } else if newPhase == .defeating {
+                // 通常敵撃破: 正面向いて少し待つだけ（すぐフロア遷移）
+                playerFacing = .front
             }
         }
         .onChange(of: vm.floor) { _, newFloor in
             withAnimation(.easeInOut(duration: 1.2)) {
                 updateBGColors(for: newFloor)
             }
+            startBattleEntrance()
         }
         .onChange(of: vm.combo) { _, _ in
             withAnimation(.easeInOut(duration: 0.5)) {
@@ -534,6 +571,33 @@ struct BattleView: View {
     #endif
 
     // MARK: - シェイク演出
+
+    private func startBattleEntrance() {
+        playerRunning = false
+        playerPlayEntrance = false
+        playerFacing = .left
+
+        var t = Transaction()
+        t.disablesAnimations = true
+        withTransaction(t) {
+            playerRunOffsetX = -200
+            monsterOffsetX = 250
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            playerRunning = true
+            withAnimation(.easeOut(duration: 0.6)) {
+                playerRunOffsetX = 0
+            }
+            withAnimation(.easeOut(duration: 0.5)) {
+                monsterOffsetX = 0
+            }
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+            playerRunning = false
+            playerFacing = .left
+        }
+    }
 
     private func runShake() {
         let steps: [(offset: CGFloat, delay: Double)] = [

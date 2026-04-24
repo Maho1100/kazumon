@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct GameOverOverlay: View {
+    var appearance: CharacterAppearance = .kazu
     var reason: ExtraFinishReason = .timeUp
     @State private var opacity: Double = 0
 
@@ -22,7 +23,7 @@ struct GameOverOverlay: View {
 
     var body: some View {
         VStack(spacing: 16) {
-            KennyCharacterView(appearance: .kazu, size: 90, isHurt: reason == .lifeZero)
+            KennyCharacterView(appearance: appearance, size: 90, isHurt: reason == .lifeZero, isDefeated: reason == .timeUp)
 
             Text(title)
                 .font(.zenMaru(28, weight: .black))

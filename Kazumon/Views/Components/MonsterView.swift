@@ -17,9 +17,9 @@ struct MonsterView: View {
     @State private var slimeHitTrigger: Int = 0
     @State private var slimeColor: Color = SlimeView.randomColor()
 
-    /// スライム判定（通常 floor 1-4 + ボス floor 5）
+    /// スライム判定（4歳モードのみSlimeViewを使用）
     private var isSlime: Bool {
-        monster.imageName == "monster_slime"
+        monster.imageName == "monster_slime" && DataStore.loadAgeGroup() == .young4
     }
 
     /// ボススライムの色: 青(満タン) → 赤(瀕死)
@@ -120,7 +120,8 @@ struct MonsterView: View {
                     size: monsterSize,
                     isAttacking: isMonsterAttacking,
                     isHurt: isHit,
-                    isDefeated: isDefeated
+                    isDefeated: isDefeated,
+                    facing: .right
                 )
             } else if isSlime {
                 // スライム: 4歳モード用 SlimeView を流用、isHit でタップ反応をトリガー
@@ -148,7 +149,8 @@ struct MonsterView: View {
                     size: monsterSize,
                     isAttacking: isMonsterAttacking,
                     isHurt: isHit,
-                    isDefeated: isDefeated
+                    isDefeated: isDefeated,
+                    facing: .right
                 )
             }
         }

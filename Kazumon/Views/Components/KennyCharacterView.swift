@@ -57,6 +57,7 @@ struct KennyCharacterView: View {
     var isHurt: Bool = false
     var isDefeated: Bool = false
     var playEntrance: Bool = false
+    var isRunning: Bool = false
     var isJoyPose: Bool = false
 
     enum Facing { case front, right, left }
@@ -66,12 +67,23 @@ struct KennyCharacterView: View {
     enum IdleMood { case normal, smirk, blush, squint, surprised, sleepy }
     var idleMood: IdleMood = .normal
 
+    /// 縁取り（Metal shader）
+    var outlineThickness: CGFloat = 3.6
+    var outlineColor: Color = .white
+    var outlinePadding: CGFloat = 0.6
+
     /// DEBUG 用: 外部から渡すパーツオフセット（nilなら固定値を使用）
     var debugPartOffsets: CharacterPartOffsets? = nil
     /// DEBUG 用: 表情オーバーレイのオフセット
     var debugMoodOffsets: MoodOverlayOffsets? = nil
 
     @State private var idle = IdleAnimationState()
+    @State private var joyWavePhase: CGFloat = 0
+    @State private var entrancePhase: CGFloat = 0
+    @State private var suppressLegIdle: Bool = false
+    @State private var runLegPhase: CGFloat = 0
+    @State private var runBounce: CGFloat = 0
+    @State private var runTimer: Timer? = nil
     @State private var blinkTask: Task<Void, Never>?
 
     // バトル演出の視覚状態（withAnimation で駆動）
@@ -123,6 +135,10 @@ struct KennyCharacterView: View {
     private var noseSize: CGFloat   { size * 0.18 }
     private var headSize: CGFloat   { size * 0.30 * partOffsets.headScale }
 
+    private var effectiveJoyPose: Bool {
+        isJoyPose || (playEntrance && entrancePhase >= 1)
+    }
+
     // MARK: - 配置パラメータ（微調整用）
     private let eyeSpread: CGFloat  = 0.25   // 目の左右間隔
     private let armOverlap: CGFloat = 0.10   // 腕の横位置（小=外側に出る）
@@ -132,6 +148,31 @@ struct KennyCharacterView: View {
 
     // MARK: - 横ずらし微調整（0=中央）
     private let faceOffsetX: CGFloat = 0     // 顔パーツ全体の横位置
+
+    private var eyeOffsetForFacing: CGSize {
+        if facing == .left, let lx = partOffsets.leftEyeOffsetX {
+            return CGSize(width: lx, height: partOffsets.leftEyeOffsetY ?? partOffsets.eyes.height)
+        }
+        return partOffsets.eyes
+    }
+    private var eyeSpreadForFacing: CGFloat {
+        if facing == .left, let ls = partOffsets.leftEyeSpread { return ls }
+        return partOffsets.eyeSpread
+    }
+    private var mouthOffsetForFacing: CGSize {
+        if facing == .left, let lx = partOffsets.leftMouthOffsetX {
+            return CGSize(width: lx, height: partOffsets.leftMouthOffsetY ?? mouthOffsetForFacing.height)
+        }
+        return partOffsets.mouth
+    }
+    private var leftEyeScaleForFacing: CGFloat {
+        if facing == .left, let s = partOffsets.leftEyeScaleL { return s }
+        return (debugMoodOffsets ?? partOffsets.mood).leftEyeScale
+    }
+    private var rightEyeScaleForFacing: CGFloat {
+        if facing == .left, let s = partOffsets.leftEyeScaleR { return s }
+        return (debugMoodOffsets ?? partOffsets.mood).rightEyeScale
+    }
     private let armsOffsetX: CGFloat = 0
     private let legsOffsetX: CGFloat = 0
 
@@ -180,17 +221,21 @@ struct KennyCharacterView: View {
     var body: some View {
         ZStack(alignment: .center) {
             legsLayer
-            rightArmLayer          // 右腕: 胴体の後ろ
-            joyRightArmLayer       // 喜びポーズ右腕（通常は非表示）
+            rightArmLayer
+            joyRightArmLayer
             SpriteView(frameName: appearance.body, displayWidth: size * partOffsets.bodyScale, tintColor: appearance.bodyColor)
+                .scaleEffect(x: partOffsets.entranceBodyScaleX, y: partOffsets.entranceBodyScaleY, anchor: .bottom)
                 .opacity(bodyFrame != nil || UIImage(named: appearance.body) != nil ? 1 : 0)
-            leftArmLayer           // 左腕: 胴体の前
-            joyLeftArmLayer        // 喜びポーズ左腕（通常は非表示）
+            leftArmLayer
+            joyLeftArmLayer
             headLayer
             faceLayer
         }
         .frame(width: size + armSize, height: bodyH + legSize * 0.8)
-        .scaleEffect(x: facing == .right ? -1 : 1, y: 1)
+        .shadow(color: outlineColor.opacity(outlineThickness > 0 ? 0.9 : 0), radius: outlineThickness * 0.3, x: 0, y: 0)
+        .shadow(color: outlineColor.opacity(outlineThickness > 0 ? 0.7 : 0), radius: outlineThickness * 0.5, x: 0, y: 0)
+        .shadow(color: outlineColor.opacity(outlineThickness > 0 ? 0.4 : 0), radius: outlineThickness * 0.8, x: 0, y: 0)
+        .scaleEffect(x: facing == .right ? -1 : 1, y: 1)  // 右向きはミラー、左向きは専用オフセット
 
         // ── アイドルアニメーション（withAnimation 駆動、コンテナ全体に適用）──
         .scaleEffect(x: idle.squashX, y: idle.squashY, anchor: .bottom)  // B. Squash & Stretch
@@ -280,6 +325,68 @@ struct KennyCharacterView: View {
                 }
             }
         }
+        .onChange(of: isRunning) { _, running in
+            if running {
+                startRunning()
+            } else {
+                stopRunning()
+            }
+        }
+        .offset(y: runBounce)
+        .onChange(of: playEntrance) { _, playing in
+            if playing {
+                suppressLegIdle = true
+                playEntranceAnimation()
+            } else {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    suppressLegIdle = false
+                }
+            }
+        }
+        .onChange(of: isJoyPose) { _, joy in
+            if joy && !playEntrance {
+                joyWavePhase = 0
+                startJoyWave()
+            } else {
+                joyWavePhase = 0
+            }
+        }
+    }
+
+    private func startRunning() {
+        runTimer?.invalidate()
+        runLegPhase = 1
+        runTimer = Timer.scheduledTimer(withTimeInterval: 0.15, repeats: true) { _ in
+            withAnimation(.easeInOut(duration: 0.14)) {
+                runLegPhase *= -1
+                runBounce = runLegPhase > 0 ? -2 : 0
+            }
+        }
+    }
+
+    private func stopRunning() {
+        runTimer?.invalidate()
+        runTimer = nil
+        withAnimation(.easeOut(duration: 0.2)) {
+            runLegPhase = 0
+            runBounce = 0
+        }
+    }
+
+    private func startJoyWave() {
+        withAnimation(.easeInOut(duration: 0.3)) { joyWavePhase = 1 }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            guard isJoyPose else { return }
+            withAnimation(.easeInOut(duration: 0.3)) { joyWavePhase = 0 }
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+            guard isJoyPose else { return }
+            withAnimation(.easeInOut(duration: 0.3)) { joyWavePhase = 1 }
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
+            guard isJoyPose else { return }
+            withAnimation(.easeInOut(duration: 0.3)) { joyWavePhase = 0 }
+        }
     }
 
     // MARK: - 頭レイヤー（1要素）
@@ -326,7 +433,7 @@ struct KennyCharacterView: View {
                 .degrees(
                     isAttacking
                         ? idle.leftArmAngle + partOffsets.armRotation + (-90)
-                        : idle.leftArmAngle + partOffsets.armRotation + partOffsets.leftArmRotation
+                        : idle.leftArmAngle + partOffsets.armRotation + partOffsets.leftArmRotation + partOffsets.entranceArmRotation
                 ),
                 anchor: .init(x: 0.8, y: 0.15)
             )
@@ -334,7 +441,7 @@ struct KennyCharacterView: View {
                 x: -armX + armsOffsetX + partOffsets.armOffset.width + partOffsets.leftArmOffsetX,
                 y: armYPos + partOffsets.armOffset.height
             )
-            .opacity(appearance.leftArm != nil && !isJoyPose ? 1 : 0)
+            .opacity(appearance.leftArm != nil && !effectiveJoyPose ? 1 : 0)
     }
 
     @ViewBuilder
@@ -347,7 +454,7 @@ struct KennyCharacterView: View {
                 .degrees(
                     isAttacking
                         ? idle.rightArmAngle + partOffsets.armRotation + (-90)
-                        : idle.rightArmAngle + partOffsets.armRotation + partOffsets.rightArmRotation
+                        : idle.rightArmAngle + partOffsets.armRotation + partOffsets.rightArmRotation - partOffsets.entranceArmRotation
                 ),
                 anchor: .init(x: 0.2, y: 0.15)
             )
@@ -355,7 +462,7 @@ struct KennyCharacterView: View {
                 x: armX + armsOffsetX + partOffsets.armOffset.width + partOffsets.rightArmOffsetX,
                 y: armYPos + partOffsets.armOffset.height
             )
-            .opacity(appearance.rightArm != nil && !isJoyPose ? 1 : 0)
+            .opacity(appearance.rightArm != nil && !effectiveJoyPose ? 1 : 0)
     }
 
     // MARK: - 喜びポーズ腕（普段は非表示）
@@ -363,25 +470,29 @@ struct KennyCharacterView: View {
     @ViewBuilder
     private var joyLeftArmLayer: some View {
         let arm = appearance.rightArm ?? "detail_none"
+        let waveY: CGFloat = 10
+        let waveR: CGFloat = -40
         SpriteView(frameName: arm, displayWidth: armSize, tintColor: appearance.limbTint ?? appearance.bodyColor)
-            .rotationEffect(.degrees(partOffsets.joyLeftArmR + partOffsets.armRotation), anchor: .init(x: 0.8, y: 0.15))
+            .rotationEffect(.degrees(partOffsets.joyLeftArmR + partOffsets.armRotation + Double(waveR * joyWavePhase)), anchor: .init(x: 0.8, y: 0.15))
             .offset(
                 x: partOffsets.armOffset.width + partOffsets.joyLeftArmX,
-                y: partOffsets.armOffset.height + bodyY(armYRatio)
+                y: partOffsets.armOffset.height + bodyY(armYRatio) + partOffsets.joyLeftArmY + waveY * joyWavePhase
             )
-            .opacity(isJoyPose ? 1 : 0)
+            .opacity(effectiveJoyPose ? 1 : 0)
     }
 
     @ViewBuilder
     private var joyRightArmLayer: some View {
         let arm = appearance.leftArm ?? "detail_none"
+        let waveY: CGFloat = 10
+        let waveR: CGFloat = 30
         SpriteView(frameName: arm, displayWidth: armSize, flipped: true, tintColor: appearance.limbTint ?? appearance.bodyColor)
-            .rotationEffect(.degrees(partOffsets.joyRightArmR + partOffsets.armRotation), anchor: .init(x: 0.2, y: 0.15))
+            .rotationEffect(.degrees(partOffsets.joyRightArmR + partOffsets.armRotation + Double(waveR * joyWavePhase)), anchor: .init(x: 0.2, y: 0.15))
             .offset(
                 x: partOffsets.armOffset.width + partOffsets.joyRightArmX,
-                y: partOffsets.armOffset.height + bodyY(armYRatio)
+                y: partOffsets.armOffset.height + bodyY(armYRatio) + partOffsets.joyRightArmY + waveY * joyWavePhase
             )
-            .opacity(isJoyPose ? 1 : 0)
+            .opacity(effectiveJoyPose ? 1 : 0)
     }
 
     // MARK: - 顔レイヤー
@@ -431,12 +542,12 @@ struct KennyCharacterView: View {
     // ── 目（SwiftUI目 + スプライト目）（4要素）──
     @ViewBuilder
     private var eyeLayer: some View {
-        let eyeY = bodyY(appearance.eyeOffsetY) - eyeLiftPx
+        let eyeY = bodyY(appearance.eyeOffsetY) - eyeLiftPx + entranceEyeYOffset
         let eyeVisible = !(idleMood == .squint || idleMood == .sleepy) && !isHurt
         CharacterEyeView(
             style: appearance.eyeStyle ?? .neutral,
             size: eyeSize,
-            spread: eyeSize * eyeSpread + partOffsets.eyeSpread * 0.6,
+            spread: eyeSize * eyeSpread + eyeSpreadForFacing * 0.6,
             browMood: appearance.browMood,
             animated: appearance.eyeAnimated,
             isAttacking: isAttacking,
@@ -444,41 +555,39 @@ struct KennyCharacterView: View {
             isDefeated: isDefeated,
             idleBlinking: idle.blinkPhase,
             idleEyeShiftX: idle.eyeShiftX,
-            leftEyeScale: (debugMoodOffsets ?? partOffsets.mood).leftEyeScale,
-            rightEyeScale: (debugMoodOffsets ?? partOffsets.mood).rightEyeScale
+            leftEyeScale: leftEyeScaleForFacing,
+            rightEyeScale: rightEyeScaleForFacing
         )
         .offset(
-            x: faceOffsetX + partOffsets.eyes.width,
-            y: eyeY + partOffsets.eyes.height
+            x: faceOffsetX + eyeOffsetForFacing.width,
+            y: eyeY + eyeOffsetForFacing.height
         )
         .opacity(appearance.eyeStyle != nil && eyeVisible ? 1 : 0)
         let spriteEyeName = appearance.eyes
         let seh = spriteFrameHeight(spriteEyeName, displayWidth: eyeSize)
         let spriteEyeY = bodyY(appearance.eyeOffsetY) - seh / 2 - eyeLiftPx
-        let spriteEyeSpread = eyeSize * eyeSpread + partOffsets.eyeSpread
+        let spriteEyeSpread = eyeSize * eyeSpread + eyeSpreadForFacing
         let spriteEyeVisible = appearance.eyeStyle == nil && eyeVisible && spriteFrames[spriteEyeName] != nil
         SpriteView(frameName: spriteEyeName, displayWidth: eyeSize, flipped: true)
             .offset(
-                x: -spriteEyeSpread + faceOffsetX + partOffsets.eyes.width,
-                y: spriteEyeY + partOffsets.eyes.height
+                x: -spriteEyeSpread + faceOffsetX + eyeOffsetForFacing.width,
+                y: spriteEyeY + eyeOffsetForFacing.height
             )
             .opacity(spriteEyeVisible ? 1 : 0)
         SpriteView(frameName: spriteEyeName, displayWidth: eyeSize)
             .offset(
-                x: spriteEyeSpread + faceOffsetX + partOffsets.eyes.width,
-                y: spriteEyeY + partOffsets.eyes.height
+                x: spriteEyeSpread + faceOffsetX + eyeOffsetForFacing.width,
+                y: spriteEyeY + eyeOffsetForFacing.height
             )
             .opacity(spriteEyeVisible ? 1 : 0)
 
-        // 不正解時の驚き目（SlimeView と同じ: 白目+小黒目+ハイライト）
-        // ★ 白目どうしが重ならないように、最低でも eyeSize 分の間隔を確保
         let hurtEyeSpread = max(spriteEyeSpread, eyeSize * 0.65)
         hurtSurprisedEye(isLeft: true,
-                          x: -hurtEyeSpread + faceOffsetX + partOffsets.eyes.width,
-                          y: eyeY + partOffsets.eyes.height)
+                          x: -hurtEyeSpread + faceOffsetX + eyeOffsetForFacing.width,
+                          y: eyeY + eyeOffsetForFacing.height)
         hurtSurprisedEye(isLeft: false,
-                          x: hurtEyeSpread + faceOffsetX + partOffsets.eyes.width,
-                          y: eyeY + partOffsets.eyes.height)
+                          x: hurtEyeSpread + faceOffsetX + eyeOffsetForFacing.width,
+                          y: eyeY + eyeOffsetForFacing.height)
     }
 
     @ViewBuilder
@@ -514,17 +623,17 @@ struct KennyCharacterView: View {
         let mh = spriteFrameHeight(appearance.mouth, displayWidth: mouthSize)
         SpriteView(frameName: appearance.mouth, displayWidth: mouthSize)
             .offset(
-                x: faceOffsetX + partOffsets.mouth.width,
-                y: bodyY(appearance.mouthOffsetY) - mh / 2 + partOffsets.mouth.height
+                x: faceOffsetX + mouthOffsetForFacing.width,
+                y: bodyY(appearance.mouthOffsetY) - mh / 2 + mouthOffsetForFacing.height
             )
-            .opacity(!partOffsets.useProgrammaticMouth && !isHurt && !isJoyPose && spriteFrames[appearance.mouth] != nil && idleMood != .smirk ? 1 : 0)
+            .opacity(!partOffsets.useProgrammaticMouth && !isHurt && !effectiveJoyPose && spriteFrames[appearance.mouth] != nil && idleMood != .smirk ? 1 : 0)
         // プログラミック口（カーブ可、にっこり笑顔も描ける）
-        SmileShape(curve: isJoyPose ? 2.5 : partOffsets.pmouthCurve)
-            .stroke(Color(white: 0.2), style: StrokeStyle(lineWidth: max(2, size * (isJoyPose ? 0.08 : partOffsets.pmouthH) * 0.5), lineCap: .round, lineJoin: .round))
-            .frame(width: size * (isJoyPose ? 0.22 : partOffsets.pmouthW), height: size * (isJoyPose ? 0.08 : partOffsets.pmouthH))
+        SmileShape(curve: effectiveJoyPose ? 2.5 : partOffsets.pmouthCurve)
+            .stroke(Color(white: 0.2), style: StrokeStyle(lineWidth: max(2, size * (effectiveJoyPose ? 0.08 : partOffsets.pmouthH) * 0.5), lineCap: .round, lineJoin: .round))
+            .frame(width: size * (effectiveJoyPose ? 0.22 : partOffsets.pmouthW), height: size * (effectiveJoyPose ? 0.08 : partOffsets.pmouthH))
             .offset(
-                x: faceOffsetX + partOffsets.mouth.width + partOffsets.pmouthOffsetX,
-                y: bodyY(appearance.mouthOffsetY) + partOffsets.mouth.height + partOffsets.pmouthOffsetY
+                x: faceOffsetX + mouthOffsetForFacing.width + partOffsets.pmouthOffsetX,
+                y: bodyY(appearance.mouthOffsetY) + mouthOffsetForFacing.height + partOffsets.pmouthOffsetY
             )
             .opacity(partOffsets.useProgrammaticMouth && !isHurt && idleMood != .smirk ? 1 : 0)
         // 喜びポーズ時のスプライト口（useProgrammaticMouth=falseのボディ用）
@@ -532,17 +641,17 @@ struct KennyCharacterView: View {
             .stroke(Color(white: 0.2), style: StrokeStyle(lineWidth: max(2, size * 0.08 * 0.5), lineCap: .round, lineJoin: .round))
             .frame(width: size * 0.22, height: size * 0.08)
             .offset(
-                x: faceOffsetX + partOffsets.mouth.width,
-                y: bodyY(appearance.mouthOffsetY) + partOffsets.mouth.height
+                x: faceOffsetX + mouthOffsetForFacing.width,
+                y: bodyY(appearance.mouthOffsetY) + mouthOffsetForFacing.height
             )
-            .opacity(isJoyPose && !partOffsets.useProgrammaticMouth ? 1 : 0)
+            .opacity(effectiveJoyPose && !partOffsets.useProgrammaticMouth ? 1 : 0)
         // 不正解時の驚いた口（小さな丸）
         Circle()
             .fill(Color(white: 0.2))
             .frame(width: size * 0.10, height: size * 0.10)
             .offset(
-                x: faceOffsetX + partOffsets.mouth.width + partOffsets.pmouthOffsetX,
-                y: bodyY(appearance.mouthOffsetY) + partOffsets.mouth.height + partOffsets.pmouthOffsetY
+                x: faceOffsetX + mouthOffsetForFacing.width + partOffsets.pmouthOffsetX,
+                y: bodyY(appearance.mouthOffsetY) + mouthOffsetForFacing.height + partOffsets.pmouthOffsetY
             )
             .opacity(isHurt ? 1 : 0)
     }
@@ -562,7 +671,7 @@ struct KennyCharacterView: View {
     @ViewBuilder
     private var moodOverlayLayer: some View {
         let m = debugMoodOffsets ?? partOffsets.mood
-        let eyeY = bodyY(appearance.eyeOffsetY) - eyeLiftPx
+        let eyeY = bodyY(appearance.eyeOffsetY) - eyeLiftPx + entranceEyeYOffset
         let mouthY = bodyY(appearance.mouthOffsetY)
         let showBlush = moodVisible && (idleMood == .blush || idleMood == .smirk)
         let showSmirk = moodVisible && idleMood == .smirk
@@ -591,7 +700,7 @@ struct KennyCharacterView: View {
         SmirkShape()
             .stroke(Color.black.opacity(0.6), lineWidth: 1.5)
             .frame(width: size * m.smirkW, height: size * m.smirkH)
-            .offset(x: faceOffsetX + partOffsets.mouth.width + size * m.smirkX, y: mouthY + size * m.smirkY)
+            .offset(x: faceOffsetX + mouthOffsetForFacing.width + size * m.smirkX, y: mouthY + size * m.smirkY)
             .opacity(showSmirk ? 1 : 0)
 
         // ジト目 左
@@ -670,23 +779,27 @@ struct KennyCharacterView: View {
         let legY = bodyY(1.0) - legH * (0.5 - legOverlap)
         let spread = legSize * legSpread + partOffsets.legSpread
 
+        let skew = partOffsets.legSkew + entranceLegSkew
+        let extraSpread = partOffsets.entranceLegSpread + entranceLegSpread
         SpriteView(frameName: legs, displayWidth: legSize, flipped: true, tintColor: appearance.limbTint ?? appearance.bodyColor)
+            .transformEffect(CGAffineTransform(a: 1, b: 0, c: -skew, d: 1, tx: 0, ty: 0))
             .rotationEffect(
-                .degrees(idle.leftLegAngle + partOffsets.legRotation),
+                .degrees(isRunning ? Double(runLegPhase * 25) : ((playEntrance || suppressLegIdle) ? 0 : idle.leftLegAngle) + Double(partOffsets.legRotation)),
                 anchor: .init(x: 0.5, y: 0.1)
             )
             .offset(
-                x: -spread + legsOffsetX + partOffsets.legOffset.width,
+                x: -spread - extraSpread + legsOffsetX + partOffsets.legOffset.width,
                 y: legY + partOffsets.legOffset.height
             )
             .opacity(hasLegs ? 1 : 0)
         SpriteView(frameName: legs, displayWidth: legSize, tintColor: appearance.limbTint ?? appearance.bodyColor)
+            .transformEffect(CGAffineTransform(a: 1, b: 0, c: skew, d: 1, tx: 0, ty: 0))
             .rotationEffect(
-                .degrees(idle.rightLegAngle + partOffsets.legRotation),
+                .degrees(isRunning ? Double(-runLegPhase * 25) : ((playEntrance || suppressLegIdle) ? 0 : idle.rightLegAngle) + Double(partOffsets.legRotation)),
                 anchor: .init(x: 0.5, y: 0.1)
             )
             .offset(
-                x: spread + legsOffsetX + partOffsets.legOffset.width,
+                x: spread + extraSpread + legsOffsetX + partOffsets.legOffset.width,
                 y: legY + partOffsets.legOffset.height
             )
             .opacity(hasLegs ? 1 : 0)
@@ -738,44 +851,79 @@ struct KennyCharacterView: View {
 
     // MARK: - 登場演出（リザルト画面用）
 
+    @State private var entranceLegSkew: CGFloat = 0
+    @State private var entranceLegSpread: CGFloat = 0
+    @State private var entranceEyeYOffset: CGFloat = 0
+
     private func playEntranceAnimation() {
-        // 初期状態: 少し下に隠れた状態（サイズ・回転は固定）
         idle.entranceOpacity = 0
-        idle.entranceOffsetY = 25
+        idle.entranceOffsetY = -120
+        entrancePhase = 0
+        entranceLegSkew = 0
+        entranceLegSpread = 0
+        entranceEyeYOffset = 0
 
         Task { @MainActor in
-            // ① 登場: 下からスッと現れる
-            try? await Task.sleep(for: .milliseconds(60))
-            withAnimation(.easeOut(duration: 0.3)) {
+            // Phase 1: 落下 → 着地（潰れ + 腕77° + 足シアー）
+            try? await Task.sleep(for: .milliseconds(100))
+            withAnimation(.easeIn(duration: 0.2)) {
                 idle.entranceOpacity = 1
                 idle.entranceOffsetY = 0
+                idle.squashX = 1.15; idle.squashY = 0.85
+                idle.leftArmAngle = 77; idle.rightArmAngle = -77
+                entranceLegSkew = 0.12
+                entranceLegSpread = -8
+                entranceEyeYOffset = -15
             }
 
-            // ② 両腕を外側に開いて「やったー！」ポーズ + 軽くジャンプ
+            // Phase 2a: 伸び上がり（腕 77° → -14°）+ 目上移動
             try? await Task.sleep(for: .milliseconds(300))
-            withAnimation(.spring(response: 0.3, dampingFraction: 0.5)) {
-                idle.leftArmAngle  =  12   // 正=左外側へ開く
-                idle.rightArmAngle = -12   // 負=右外側へ開く
-                idle.leftLegAngle  =   4
-                idle.rightLegAngle =  -4
-                idle.bounceOffset  =  -6
+            withAnimation(.easeOut(duration: 0.25)) {
+                idle.squashX = 0.95; idle.squashY = 1.1
+                idle.leftArmAngle = -14; idle.rightArmAngle = 14
+                entranceEyeYOffset = -31
             }
 
-            // ③ 着地してポーズを見せる
-            try? await Task.sleep(for: .milliseconds(350))
-            withAnimation(.spring(response: 0.25, dampingFraction: 0.55)) {
-                idle.bounceOffset  = 0
-                idle.leftLegAngle  = 0
-                idle.rightLegAngle = 0
+            // Phase 2b: 腕バウンス（-14° → 34°）
+            try? await Task.sleep(for: .milliseconds(250))
+            withAnimation(.easeInOut(duration: 0.15)) {
+                idle.leftArmAngle = 34; idle.rightArmAngle = -34
+                entranceEyeYOffset = -10
             }
 
-            // ④ ポーズをキープ
-            try? await Task.sleep(for: .milliseconds(400))
+            // Phase 2c: 腕落ち着き（34° → 4°）+ 目戻る
+            try? await Task.sleep(for: .milliseconds(180))
+            withAnimation(.easeOut(duration: 0.2)) {
+                idle.leftArmAngle = 4; idle.rightArmAngle = -4
+                idle.squashX = 1.0; idle.squashY = 1.0
+                entranceEyeYOffset = 0
+            }
 
-            // ⑤ 腕を下ろしてリザルト用アイドルへ
+            // Phase 3: 構え（足シアー + 足開き）
+            try? await Task.sleep(for: .milliseconds(250))
+            withAnimation(.easeInOut(duration: 0.25)) {
+                idle.leftArmAngle = 6; idle.rightArmAngle = -6
+                entranceLegSkew = 0.19
+                entranceLegSpread = -11.9
+            }
+
+            // Phase 4a: 足開き + 腕上げ
+            try? await Task.sleep(for: .milliseconds(300))
+            withAnimation(.easeInOut(duration: 0.25)) {
+                idle.leftArmAngle = 51; idle.rightArmAngle = -51
+                entranceLegSkew = 0.39
+                entranceLegSpread = -8.7
+            }
+
+            // Phase 4b: 喜び腕に切替
+            try? await Task.sleep(for: .milliseconds(300))
+            entrancePhase = 1
+
+            // Phase 5: 完了 → リザルトアイドルへ
+            try? await Task.sleep(for: .milliseconds(500))
             withAnimation(.easeOut(duration: 0.3)) {
-                idle.leftArmAngle  = 0
-                idle.rightArmAngle = 0
+                idle.leftArmAngle = 0; idle.rightArmAngle = 0
+                entranceLegSkew = 0; entranceLegSpread = 0
             }
             try? await Task.sleep(for: .milliseconds(300))
             startResultIdleAnimations()

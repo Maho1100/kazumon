@@ -494,13 +494,6 @@ final class GameViewModel {
             }
         }
 
-        // コンボ5ごとに喜びポーズ
-        if combo > 0 && combo % 5 == 0 {
-            isJoyPose = true
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-                self?.isJoyPose = false
-            }
-        }
 
         // コンボ5ごとにおうえんボイス再生
         if combo > 0 && combo % 5 == 0 && DataStore.hasParentVoiceRecording() {
@@ -646,11 +639,19 @@ final class GameViewModel {
                 earnedItems.append(item)
                 DataStore.addItem(item)
             }
-        }
-
-        let defeatWait = currentMonster.isBoss ? 1.2 : 0.4
-        scheduleTransition(after: defeatWait) { [weak self] in
-            self?.advanceFloor()
+            isJoyPose = true
+            let totalWait = 2.8 // 喜び1.5s + 走り退場0.7s + 余裕0.6s
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) { [weak self] in
+                self?.isJoyPose = false
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + totalWait) { [weak self] in
+                self?.advanceFloor()
+            }
+        } else {
+            let defeatWait = 0.4
+            scheduleTransition(after: defeatWait) { [weak self] in
+                self?.advanceFloor()
+            }
         }
     }
 

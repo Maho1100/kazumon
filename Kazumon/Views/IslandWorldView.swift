@@ -380,6 +380,7 @@ struct IslandWorldView: View {
             startWanderingSlimes()
             // 宝箱の位置と状態
             chestPos = DataStore.loadTreasureChestPosition()
+            chestOpened = DataStore.isTreasureChestOpenedToday()
             // デイリーミッション全クリア状態
             dailyMissionFullyComplete = DataStore.isDailyMissionFullyComplete()
             // まちがいおに登場チェック
@@ -731,14 +732,28 @@ struct IslandWorldView: View {
             .offset(x: -w * 0.50)
             #endif
 
-            // 右下: キャラクター（大きく表示）
-            KennyCharacterView(
-                appearance: CharacterAppearanceFactory.appearance(for: DataStore.loadPlayerData().level),
-                size: 160,
-                idleMood: charMood
-            )
-            .id(DataStore.loadSelectedBodyColor() + DataStore.loadSelectedDetailType())
-            .scaleEffect(charTapped ? 1.3 : 1.0)
+            // 右下: キャラクター（大きく表示）+ 吹き出し
+            ZStack {
+                KennyCharacterView(
+                    appearance: CharacterAppearanceFactory.appearance(for: DataStore.loadPlayerData().level),
+                    size: 160,
+                    facing: .right,
+                    idleMood: charMood
+                )
+                .id(DataStore.loadSelectedBodyColor() + DataStore.loadSelectedDetailType())
+                .scaleEffect(charTapped ? 1.3 : 1.0)
+
+                Text(bubbleDisplayText)
+                    .font(.zenMaru(13, weight: .bold))
+                    .foregroundColor(.black)
+                    .lineLimit(1)
+                    .fixedSize(horizontal: true, vertical: false)
+                    .padding(.horizontal, 10).padding(.vertical, 5)
+                    .background(RoundedRectangle(cornerRadius: 12).fill(Color.white)
+                        .shadow(color: .black.opacity(0.15), radius: 3, y: 2))
+                    .offset(x: -80, y: -110)
+                    .opacity(isBubbleVisible ? 1 : 0)
+            }
             .onTapGesture {
                 handleCharTap()
             }
@@ -975,19 +990,6 @@ struct IslandWorldView: View {
             .frame(height: 75)
             .scaleEffect(x: volcanoScale, y: volcanoScale * volcanoStretch, anchor: .bottom)
             .position(x: w * 0.82, y: islandCenterY - islandH * 0.35 + 12)
-
-        // 火口の赤い光（山頂から漏れる）
-        Circle()
-            .fill(
-                RadialGradient(colors: [
-                    Color.orange.opacity(0.9),
-                    Color.red.opacity(0.5),
-                    Color.red.opacity(0)
-                ], center: .center, startRadius: 2, endRadius: 18)
-            )
-            .frame(width: 30, height: 18)
-            .position(x: w * 0.82, y: islandCenterY - islandH * 0.35 - 5)
-            .blendMode(.plusLighter)
 
         // 火山の赤い光の波紋（脈動して広がる）
         Circle()
@@ -1370,9 +1372,16 @@ struct IslandWorldView: View {
             (-0.148, -0.04, 0.089),  // kisekae (左)
             (0.0,   -0.20, 0.089),   // koukan (上)
         ]
-        return shopHotspots.contains { hx, hy, r in
-            hypot(x - hx, y - hy) < r
+        if shopHotspots.contains(where: { hx, hy, r in hypot(x - hx, y - hy) < r }) {
+            return true
         }
+        // メニューボタンエリア（島の左半分）を除外
+        if x < -0.15 && y > -0.10 { return true }
+        // キャラクターエリア（島の右側中央〜下）を除外
+        if x > 0.05 && y > -0.05 { return true }
+        // 島の端すぎる位置を除外（見切れ防止）
+        if hypot(x, y) > 0.35 { return true }
+        return false
     }
 
     /// IDで該当スライムのインデックスを取得
@@ -2006,46 +2015,37 @@ struct IslandWorldView: View {
                 .shadow(color: .black.opacity(0.25), radius: 3, y: 1).padding(.top, 12)
 
             HStack(alignment: .top) {
-                if let profile = DataStore.activeProfile() {
-                    Button { HapticsManager.tap(); showProfileSwitcher = true } label: { profileCard(profile: profile) }.buttonStyle(.plain)
-                }
-                Spacer()
-                // 家族ランキング閲覧ボタン（家族構成セットアップ済みの場合のみ表示）
-                if DataStore.isFamilySetupDone() {
-                    Button {
-                        HapticsManager.tap(); SoundManager.shared.playTap()
-                        gameVM.familyScoreUpdated = false
-                        gameVM.showFamilyRanking = true
-                    } label: {
-                        Image(systemName: "trophy.fill")
-                            .font(.system(size: 20, weight: .bold))
-                            .foregroundStyle(.yellow)
-                            .frame(width: 44, height: 44)
-                            .background(Circle().fill(Color.black.opacity(0.3)))
-                            .contentShape(Rectangle())
+                VStack(alignment: .leading, spacing: 6) {
+                    if let profile = DataStore.activeProfile() {
+                        Button { HapticsManager.tap(); showProfileSwitcher = true } label: { profileCard(profile: profile) }.buttonStyle(.plain)
                     }
                 }
-                Button { HapticsManager.tap(); SoundManager.shared.playTap(); showSettings = true } label: {
-                    Image(systemName: "gearshape.fill").font(.system(size: 22, weight: .bold)).foregroundStyle(.white)
-                        .frame(width: 44, height: 44).background(Circle().fill(Color.black.opacity(0.3))).contentShape(Rectangle())
-                }
-            }.padding(.horizontal, 20).padding(.top, 8)
-
-            // ストリーク + プレイ残数 + デイリーミッション
-            HStack {
-                VStack(alignment: .leading, spacing: 4) {
-                    streakBadge()
+                Spacer()
+                VStack(alignment: .trailing, spacing: 6) {
+                    HStack(spacing: 8) {
+                        if DataStore.isFamilySetupDone() {
+                            Button {
+                                HapticsManager.tap(); SoundManager.shared.playTap()
+                                gameVM.familyScoreUpdated = false
+                                gameVM.showFamilyRanking = true
+                            } label: {
+                                Image(systemName: "trophy.fill")
+                                    .font(.system(size: 20, weight: .bold))
+                                    .foregroundStyle(.yellow)
+                                    .frame(width: 44, height: 44)
+                                    .background(Circle().fill(Color.black.opacity(0.3)))
+                                    .contentShape(Rectangle())
+                            }
+                        }
+                        Button { HapticsManager.tap(); SoundManager.shared.playTap(); showSettings = true } label: {
+                            Image(systemName: "gearshape.fill").font(.system(size: 22, weight: .bold)).foregroundStyle(.white)
+                                .frame(width: 44, height: 44).background(Circle().fill(Color.black.opacity(0.3))).contentShape(Rectangle())
+                        }
+                    }
+                    dailyMissionBadge()
                     playsRemainingBadge()
                 }
-                Spacer()
-                VStack(alignment: .trailing, spacing: 4) {
-                    dailyMissionBadge()
-                    weeklyChallengeLabel()
-                    bpRankBadge()
-                }
-            }
-            .padding(.horizontal, 20).padding(.top, 12)
-            .allowsHitTesting(false)
+            }.padding(.horizontal, 20).padding(.top, 8)
 
             Spacer()
 

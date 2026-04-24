@@ -51,8 +51,10 @@ struct CharacterPartOffsets {
 
     // 喜びポーズ腕
     var joyLeftArmX:        CGFloat = -65
+    var joyLeftArmY:        CGFloat = 0
     var joyLeftArmR:        CGFloat = -170
     var joyRightArmX:       CGFloat = 63
+    var joyRightArmY:       CGFloat = 0
     var joyRightArmR:       CGFloat = 170
 
     // 足
@@ -72,10 +74,29 @@ struct CharacterPartOffsets {
     var pmouthOffsetY: CGFloat = 0   // 口の追加Y位置オフセット（pt）
     var pmouthCurve:   CGFloat = 0   // 口のカーブ(にっこり度): 0=直線、+で笑顔カーブ
 
+    // 左向き時のオフセット（nilなら正面値を使用）
+    var leftEyeOffsetX:     CGFloat? = nil
+    var leftEyeOffsetY:     CGFloat? = nil
+    var leftEyeSpread:      CGFloat? = nil
+    var leftEyeScaleL:      CGFloat? = nil
+    var leftEyeScaleR:      CGFloat? = nil
+    var leftMouthOffsetX:   CGFloat? = nil
+    var leftMouthOffsetY:   CGFloat? = nil
+
+    // 登場アニメ用（デバッグで調整）
+    var legSkew: CGFloat = 0           // 足のシアー変形量（左は負、右は正で外向き）
+    var entranceLegSpread: CGFloat = 0 // 登場時の足の追加開き
+    var entranceBodyScaleX: CGFloat = 1.0
+    var entranceBodyScaleY: CGFloat = 1.0
+    var entranceArmRotation: CGFloat = 0
+
     // MARK: - bodyごとの固定値
 
     static func forBody(_ bodyName: String) -> CharacterPartOffsets {
-        registry[bodyName] ?? CharacterPartOffsets()
+        if let direct = registry[bodyName] { return direct }
+        let base = bodyName.replacingOccurrences(of: "body_base_", with: "body_blue")
+        if let fallback = registry[base] { return fallback }
+        return CharacterPartOffsets()
     }
 
     static func isRegistered(_ bodyName: String) -> Bool {
@@ -112,13 +133,15 @@ struct CharacterPartOffsets {
             rightArmRotation: 0,
             leftArmOffsetX:   0,
             rightArmOffsetX:  0,
-            legOffset:       CGSize(width: -2, height: -102),
+            joyLeftArmX: -60, joyLeftArmY: 5, joyLeftArmR: -255,
+            joyRightArmX: 63, joyRightArmY: 5, joyRightArmR: 210,
+            legOffset:       CGSize(width: -2, height: -13),
             legScale:        2.60,
             legRotation:     0,
             legSpread:       -5,
             mood: MoodOverlayOffsets(
-                blushX: 0.32, blushY: 0.30,
-                blushSize: 0.14, blushOpacity: 0.33,
+                blushX: 0.371, blushY: 0.300,
+                blushSize: 0.189, blushOpacity: 0.330,
                 smirkX: 0.019, smirkY: 0.013,
                 smirkW: 0.126, smirkH: 0.040,
                 squintW: 0.83, squintH: 0.05, squintSpread: 2.64,
@@ -130,7 +153,10 @@ struct CharacterPartOffsets {
             pmouthH:         0.05,
             pmouthOffsetX:   2,
             pmouthOffsetY:   -7,
-            pmouthCurve:     1.70
+            pmouthCurve:     1.70,
+            leftEyeOffsetX:  18, leftEyeOffsetY: 12, leftEyeSpread: 1,
+            leftEyeScaleL: 1.15, leftEyeScaleR: 0.95,
+            leftMouthOffsetX: 16, leftMouthOffsetY: 14
         ),
         "body_blueC": CharacterPartOffsets(
             bodyScale:       1.20,
@@ -156,6 +182,8 @@ struct CharacterPartOffsets {
             rightArmRotation: -5,
             leftArmOffsetX:   -10,
             rightArmOffsetX:  12,
+            joyLeftArmX: -70, joyLeftArmR: -185,
+            joyRightArmX: 68, joyRightArmR: 185,
             legOffset:       CGSize(width: 0, height: 32),
             legScale:        1.20,
             legRotation:     0,
@@ -166,8 +194,10 @@ struct CharacterPartOffsets {
             )
         ),
         "body_base_C": CharacterPartOffsets(
-            bodyScale:       1.20,
-            eyes:            CGSize(width: 0, height: 0),
+            bodyScale:       1.35,
+            eyes:            CGSize(width: 0, height: -3),
+            eyeScale:        0.90,
+            eyeSpread:       7,
             mouth:           CGSize(width: 0, height: 0),
             detail:          CGSize(width: -2, height: 20),
             detailRotation:  -50,
@@ -189,13 +219,14 @@ struct CharacterPartOffsets {
             rightArmRotation: -5,
             leftArmOffsetX:   -10,
             rightArmOffsetX:  12,
-            legOffset:       CGSize(width: 0, height: 32),
-            legScale:        1.20,
+            legOffset:       CGSize(width: 0, height: 43),
+            legScale:        1.30,
             legRotation:     0,
             mood: MoodOverlayOffsets(
                 blushX: 0.32, blushY: 0.144,
                 blushSize: 0.14, blushOpacity: 0.33,
-                squintW: 0.83, squintH: 0.04, squintSpread: 2.747
+                squintW: 0.83, squintH: 0.04, squintSpread: 2.133,
+                leftEyeScale: 1.30, rightEyeScale: 1.05
             )
         ),
 

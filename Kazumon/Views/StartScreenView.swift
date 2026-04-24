@@ -50,6 +50,14 @@ struct StartScreenView: View {
 
                 Spacer()
 
+                // ストリーク & 習慣バッジ
+                HStack(spacing: 12) {
+                    streakBadge
+                    weeklyChallengeLabel
+                }
+                .opacity(logoOpacity)
+                .padding(.bottom, 16)
+
                 // 島に行くボタン
                 Button {
                     guard !buttonTapped else { return }
@@ -127,6 +135,50 @@ struct StartScreenView: View {
             withAnimation(.linear(duration: 15).repeatForever(autoreverses: false)) { cloudX1 = 300 }
             withAnimation(.linear(duration: 22).repeatForever(autoreverses: false)) { cloudX2 = 300 }
         }
+    }
+
+    @ViewBuilder
+    private var streakBadge: some View {
+        let player = DataStore.loadPlayerData()
+        let streak = player.streakDays
+        if streak > 0 {
+            VStack(spacing: 2) {
+                HStack(spacing: 4) {
+                    Text("🔥")
+                    Text(String(format: NSLocalizedString("view_title_streak_days", comment: ""), streak))
+                        .font(.zenMaru(13, weight: .black))
+                        .foregroundColor(.white)
+                }
+                if player.bestStreak > streak {
+                    Text(String(format: NSLocalizedString("island_best_streak", comment: ""), player.bestStreak))
+                        .font(.zenMaru(9, weight: .bold))
+                        .foregroundColor(.white.opacity(0.7))
+                }
+            }
+            .padding(.horizontal, 12).padding(.vertical, 8)
+            .background(
+                LinearGradient(colors: [Color.orange, Color.red.opacity(0.8)],
+                               startPoint: .leading, endPoint: .trailing)
+            )
+            .clipShape(Capsule())
+            .shadow(color: .black.opacity(0.3), radius: 3, y: 1)
+        }
+    }
+
+    private var weeklyChallengeLabel: some View {
+        let days = DataStore.loadWeeklyPlayDays()
+        let goal = DataStore.weeklyGoalDays
+        let complete = days >= goal
+        return HStack(spacing: 4) {
+            Text("📆")
+            Text(complete
+                 ? NSLocalizedString("island_weekly_complete", comment: "")
+                 : String(format: NSLocalizedString("island_weekly_progress", comment: ""), days, goal))
+                .font(.zenMaru(11, weight: .bold))
+                .foregroundColor(.white)
+        }
+        .padding(.horizontal, 10).padding(.vertical, 6)
+        .background(Capsule().fill(complete ? Color.green.opacity(0.7) : Color.purple.opacity(0.6)))
     }
 
     // MARK: - 島ミニプレビュー

@@ -91,12 +91,44 @@ struct CharacterLayoutDebugView: View {
     @State private var rightArmOffsetX: CGFloat = 0
     // 喜びポーズ
     @State private var showJoyPose: Bool = false
+    @State private var showDefeated: Bool = false
+    @State private var showHurt: Bool = false
+    @State private var showAttacking: Bool = false
     @State private var joyLeftArmX: CGFloat = -65
+    @State private var joyLeftArmY: CGFloat = 0
     @State private var joyLeftArmR: CGFloat = -170
     @State private var joyRightArmX: CGFloat = 63
+    @State private var joyRightArmY: CGFloat = 0
     @State private var joyRightArmR: CGFloat = 170
     // 向き
     @State private var selectedFacing: KennyCharacterView.Facing = .front
+    // 左向き専用オフセット
+    @State private var leftEyeOX: CGFloat = 0
+    @State private var leftEyeOY: CGFloat = 0
+    @State private var leftEyeOSpread: CGFloat = 0
+    @State private var leftEyeOScaleL: CGFloat = 1.0
+    @State private var leftEyeOScaleR: CGFloat = 1.0
+    @State private var leftMouthOX: CGFloat = 0
+    @State private var leftMouthOY: CGFloat = 0
+
+    // 登場アニメ
+    @State private var showEntrance = false
+    @State private var entranceAnimating = false
+    @State private var entranceOffsetY: CGFloat = 0
+    @State private var timelineValue: CGFloat = 0
+    @State private var timelineScrubbing = false
+    @State private var dbgLegSkew: CGFloat = 0
+    @State private var dbgEntranceLegSpread: CGFloat = 0
+    @State private var dbgEntranceBodyScaleX: CGFloat = 1.0
+    @State private var dbgEntranceBodyScaleY: CGFloat = 1.0
+    @State private var dbgEntranceArmRotation: CGFloat = 0
+    @State private var dbgEntranceUseJoyArms: Bool = false
+    @State private var dbgEntranceJoyArmLX: CGFloat = -65
+    @State private var dbgEntranceJoyArmLY: CGFloat = 0
+    @State private var dbgEntranceJoyArmLR: CGFloat = -170
+    @State private var dbgEntranceJoyArmRX: CGFloat = 63
+    @State private var dbgEntranceJoyArmRY: CGFloat = 0
+    @State private var dbgEntranceJoyArmRR: CGFloat = 170
 
     // 足
     @State private var legOffsetX: CGFloat = 0
@@ -104,6 +136,25 @@ struct CharacterLayoutDebugView: View {
     @State private var legScale:   CGFloat = 1.0
     @State private var legRotation: CGFloat = 0
     @State private var legSpread:  CGFloat = 0
+
+    // 縁取り
+    @State private var dbgOutlineThickness: CGFloat = 3.6
+    @State private var dbgOutlinePadding: CGFloat = 0.6
+    @State private var dbgOutlineColorIdx: Int = 0
+    @State private var dbgBgColorIdx: Int = 0
+    private let outlineColorOptions: [(String, Color)] = [
+        ("黒", .black), ("白", .white), ("黄", .yellow),
+        ("水", .cyan), ("緑", .green), ("赤", .red), ("紫", .purple)
+    ]
+    private let bgColorOptions: [(String, Color)] = [
+        ("暗", Color(white: 0.15)),
+        ("草原", Color(red: 0.72, green: 0.93, blue: 1.0)),
+        ("洞窟", Color(red: 0.50, green: 0.48, blue: 0.45)),
+        ("城", Color(red: 0.55, green: 0.55, blue: 0.80)),
+        ("魔王", Color(red: 0.15, green: 0.13, blue: 0.40)),
+        ("白", .white),
+        ("緑", Color(red: 0.4, green: 0.7, blue: 0.3))
+    ]
 
     // 頭
     @State private var headX: CGFloat = 0
@@ -147,7 +198,8 @@ struct CharacterLayoutDebugView: View {
 
     // ── 敵リスト ──
     private let monsterEntries: [MonsterEntry] = [
-        MonsterEntry(id: "slime",      label: "スライム",       appearance: .slime),
+        MonsterEntry(id: "slime",      label: "スライム(島)",    appearance: .slime),
+        MonsterEntry(id: "enemySlime", label: "スライム(敵)",   appearance: .enemySlime),
         MonsterEntry(id: "bossSlime",  label: "ボススライム",   appearance: .bossSlime),
         MonsterEntry(id: "goblin",     label: "ゴブリン",       appearance: .goblin),
         MonsterEntry(id: "bossGoblin", label: "ボスゴブリン",   appearance: .bossGoblin),
@@ -220,9 +272,9 @@ struct CharacterLayoutDebugView: View {
         o.rightArmRotation = rightArmRotation
         o.leftArmOffsetX = leftArmOffsetX
         o.rightArmOffsetX = rightArmOffsetX
-        o.joyLeftArmX = joyLeftArmX
+        o.joyLeftArmX = joyLeftArmX; o.joyLeftArmY = joyLeftArmY
         o.joyLeftArmR = joyLeftArmR
-        o.joyRightArmX = joyRightArmX
+        o.joyRightArmX = joyRightArmX; o.joyRightArmY = joyRightArmY
         o.joyRightArmR = joyRightArmR
         // 足
         o.legOffset = CGSize(width: legOffsetX, height: legOffsetY)
@@ -236,6 +288,30 @@ struct CharacterLayoutDebugView: View {
         o.pmouthW = pmouthW; o.pmouthH = pmouthH
         o.pmouthOffsetX = pmouthOffsetX; o.pmouthOffsetY = pmouthOffsetY
         o.pmouthCurve = pmouthCurve
+        // 左向き
+        o.leftEyeOffsetX = leftEyeOX
+        o.leftEyeOffsetY = leftEyeOY
+        o.leftEyeSpread = leftEyeOSpread
+        o.leftEyeScaleL = leftEyeOScaleL
+        o.leftEyeScaleR = leftEyeOScaleR
+        o.leftMouthOffsetX = leftMouthOX
+        o.leftMouthOffsetY = leftMouthOY
+        // 登場アニメ
+        if showEntrance {
+            o.legSkew = dbgLegSkew
+            o.entranceLegSpread = dbgEntranceLegSpread
+            o.entranceBodyScaleX = dbgEntranceBodyScaleX
+            o.entranceBodyScaleY = dbgEntranceBodyScaleY
+            o.entranceArmRotation = dbgEntranceArmRotation
+            if dbgEntranceUseJoyArms {
+                o.joyLeftArmX = dbgEntranceJoyArmLX
+                o.joyLeftArmY = dbgEntranceJoyArmLY
+                o.joyLeftArmR = dbgEntranceJoyArmLR
+                o.joyRightArmX = dbgEntranceJoyArmRX
+                o.joyRightArmY = dbgEntranceJoyArmRY
+                o.joyRightArmR = dbgEntranceJoyArmRR
+            }
+        }
         return o
     }
 
@@ -250,17 +326,25 @@ struct CharacterLayoutDebugView: View {
 
                     // ── キャラクタープレビュー ──
                     ZStack {
-                        Color(white: 0.15)
+                        bgColorOptions[dbgBgColorIdx].1
                             .clipShape(RoundedRectangle(cornerRadius: 16))
                         KennyCharacterView(
                             appearance: appearance,
                             size: 100,
-                            isJoyPose: showJoyPose,
+                            isAttacking: showAttacking,
+                            isHurt: showHurt,
+                            isDefeated: showDefeated,
+                            playEntrance: showEntrance,
+                            isJoyPose: showJoyPose || (showEntrance && dbgEntranceUseJoyArms),
                             facing: selectedFacing,
                             idleMood: selectedMood,
+                            outlineThickness: dbgOutlineThickness,
+                            outlineColor: outlineColorOptions[dbgOutlineColorIdx].1,
+                            outlinePadding: dbgOutlinePadding,
                             debugPartOffsets: currentOffsets,
                             debugMoodOffsets: currentMoodOffsets
                         )
+                        .offset(y: entranceOffsetY)
                         .padding(.vertical, 16)
                     }
                     .frame(height: 200)
@@ -433,9 +517,92 @@ struct CharacterLayoutDebugView: View {
                                 shineRow()
                                 programMouthRow()
                             }
+                            // ── 左向き専用オフセット ──
+                            Group {
+                                Divider()
+                                Text("← 左向き専用").font(.caption.bold()).foregroundColor(.purple)
+                                offsetRow(label: "eyes", x: $leftEyeOX, y: $leftEyeOY, color: .purple)
+                                HStack(spacing: 8) {
+                                    Text("距離").font(.caption2).foregroundColor(.purple)
+                                    Button { leftEyeOSpread -= step } label: { Image(systemName: "minus.circle.fill").font(.title3).foregroundColor(.purple.opacity(0.7)) }
+                                    Text("\(leftEyeOSpread, specifier: "%+.1f")").font(.system(size: 13, design: .monospaced)).frame(width: 44)
+                                    Button { leftEyeOSpread += step } label: { Image(systemName: "plus.circle.fill").font(.title3).foregroundColor(.purple.opacity(0.7)) }
+                                }
+                                HStack(spacing: 8) {
+                                    Text("左目").font(.caption2).foregroundColor(.purple)
+                                    Button { leftEyeOScaleL -= 0.05 } label: { Image(systemName: "minus.circle.fill").font(.title3).foregroundColor(.purple.opacity(0.7)) }
+                                    Text("\(leftEyeOScaleL, specifier: "%.2f")").font(.system(size: 12, design: .monospaced)).frame(width: 40)
+                                    Button { leftEyeOScaleL += 0.05 } label: { Image(systemName: "plus.circle.fill").font(.title3).foregroundColor(.purple.opacity(0.7)) }
+                                    Spacer()
+                                    Text("右目").font(.caption2).foregroundColor(.purple)
+                                    Button { leftEyeOScaleR -= 0.05 } label: { Image(systemName: "minus.circle.fill").font(.title3).foregroundColor(.purple.opacity(0.7)) }
+                                    Text("\(leftEyeOScaleR, specifier: "%.2f")").font(.system(size: 12, design: .monospaced)).frame(width: 40)
+                                    Button { leftEyeOScaleR += 0.05 } label: { Image(systemName: "plus.circle.fill").font(.title3).foregroundColor(.purple.opacity(0.7)) }
+                                }
+                                offsetRow(label: "mouth", x: $leftMouthOX, y: $leftMouthOY, color: .purple)
+                            }
                             Group {
                                 armOffsetRow()
                                 legOffsetRow()
+                            }
+
+                            // ── 縁取り ──
+                            Divider().padding(.vertical, 4)
+                            VStack(alignment: .leading, spacing: 6) {
+                                Text("縁取り").font(.caption.bold()).foregroundColor(.mint)
+                                HStack {
+                                    Text("太さ").font(.caption2).foregroundColor(.mint).frame(width: 40, alignment: .leading)
+                                    Slider(value: $dbgOutlineThickness, in: 0...8).tint(.mint)
+                                    Text("\(dbgOutlineThickness, specifier: "%.1f")").font(.system(size: 11, design: .monospaced)).frame(width: 30)
+                                }
+                                HStack {
+                                    Text("領域").font(.caption2).foregroundColor(.mint).frame(width: 40, alignment: .leading)
+                                    Slider(value: $dbgOutlinePadding, in: 0...1.5).tint(.mint.opacity(0.6))
+                                    Text("\(dbgOutlinePadding, specifier: "%.2f")").font(.system(size: 11, design: .monospaced)).frame(width: 40)
+                                }
+                                HStack {
+                                    Text("色").font(.caption2).foregroundColor(.mint).frame(width: 30, alignment: .leading)
+                                    ForEach(0..<outlineColorOptions.count, id: \.self) { i in
+                                        Button {
+                                            dbgOutlineColorIdx = i
+                                        } label: {
+                                            Text(outlineColorOptions[i].0)
+                                                .font(.system(size: 10, weight: .bold))
+                                                .foregroundColor(dbgOutlineColorIdx == i ? .white : .primary)
+                                                .padding(.horizontal, 8).padding(.vertical, 4)
+                                                .background(
+                                                    Capsule().fill(dbgOutlineColorIdx == i ? outlineColorOptions[i].1 : Color.gray.opacity(0.2))
+                                                )
+                                        }
+                                    }
+                                }
+                                HStack {
+                                    Text("背景").font(.caption2).foregroundColor(.gray).frame(width: 30, alignment: .leading)
+                                    ForEach(0..<bgColorOptions.count, id: \.self) { i in
+                                        Button {
+                                            dbgBgColorIdx = i
+                                        } label: {
+                                            Circle()
+                                                .fill(bgColorOptions[i].1)
+                                                .frame(width: 24, height: 24)
+                                                .overlay(
+                                                    Circle().stroke(dbgBgColorIdx == i ? Color.white : Color.clear, lineWidth: 2)
+                                                )
+                                        }
+                                    }
+                                }
+                            }
+
+                            // ── バトル状態 ──
+                            Divider().padding(.vertical, 4)
+                            VStack(alignment: .leading, spacing: 6) {
+                                Text("バトル状態").font(.caption.bold()).foregroundColor(.red)
+                                HStack(spacing: 16) {
+                                    Toggle("攻撃", isOn: $showAttacking).font(.caption2).tint(.orange)
+                                    Toggle("被弾", isOn: $showHurt).font(.caption2).tint(.red)
+                                    Toggle("敗北", isOn: $showDefeated).font(.caption2).tint(.gray)
+                                }
+                                .toggleStyle(.button)
                             }
 
                             // ── 喜びポーズ ──
@@ -464,6 +631,12 @@ struct CharacterLayoutDebugView: View {
                                             Text("\(joyLeftArmR, specifier: "%.0f")°").font(.system(size: 13, design: .monospaced)).frame(width: 50)
                                             Button { joyLeftArmR += rStep } label: { Image(systemName: "plus.circle.fill").foregroundColor(.purple.opacity(0.7)) }
                                         }
+                                        HStack {
+                                            Text("Y").font(.caption2)
+                                            Button { joyLeftArmY -= step } label: { Image(systemName: "minus.circle.fill").foregroundColor(.purple.opacity(0.7)) }
+                                            Text("\(joyLeftArmY, specifier: "%.0f")").font(.system(size: 13, design: .monospaced)).frame(width: 44)
+                                            Button { joyLeftArmY += step } label: { Image(systemName: "plus.circle.fill").foregroundColor(.purple.opacity(0.7)) }
+                                        }
                                         Text("右腕(裏)").font(.caption2).foregroundColor(.purple)
                                         HStack {
                                             Text("X").font(.caption2)
@@ -475,6 +648,141 @@ struct CharacterLayoutDebugView: View {
                                             Button { joyRightArmR -= rStep } label: { Image(systemName: "minus.circle.fill").foregroundColor(.purple.opacity(0.7)) }
                                             Text("\(joyRightArmR, specifier: "%.0f")°").font(.system(size: 13, design: .monospaced)).frame(width: 50)
                                             Button { joyRightArmR += rStep } label: { Image(systemName: "plus.circle.fill").foregroundColor(.purple.opacity(0.7)) }
+                                        }
+                                        HStack {
+                                            Text("Y").font(.caption2)
+                                            Button { joyRightArmY -= step } label: { Image(systemName: "minus.circle.fill").foregroundColor(.purple.opacity(0.7)) }
+                                            Text("\(joyRightArmY, specifier: "%.0f")").font(.system(size: 13, design: .monospaced)).frame(width: 44)
+                                            Button { joyRightArmY += step } label: { Image(systemName: "plus.circle.fill").foregroundColor(.purple.opacity(0.7)) }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        .padding(.horizontal, 20)
+
+                        Divider().padding(.horizontal, 20)
+
+                        // ── 登場アニメ調整 ──
+                        VStack(alignment: .leading, spacing: 8) {
+                            HStack {
+                                Text("登場ポーズ").font(.caption.bold()).foregroundColor(.red)
+                                Spacer()
+                                Toggle("", isOn: $showEntrance).labelsHidden()
+                            }
+                            if showEntrance {
+                                VStack(spacing: 6) {
+                                    HStack {
+                                        Text("足シアー").font(.caption2).foregroundColor(.red).frame(width: 60, alignment: .leading)
+                                        Slider(value: $dbgLegSkew, in: -1.0...1.0).tint(.red)
+                                        Text("\(dbgLegSkew, specifier: "%.2f")").font(.system(size: 11, design: .monospaced)).frame(width: 40)
+                                    }
+                                    HStack {
+                                        Text("足開き").font(.caption2).foregroundColor(.red).frame(width: 60, alignment: .leading)
+                                        Slider(value: $dbgEntranceLegSpread, in: -20...40).tint(.red)
+                                        Text("\(dbgEntranceLegSpread, specifier: "%.1f")").font(.system(size: 11, design: .monospaced)).frame(width: 40)
+                                    }
+                                    HStack {
+                                        Text("体X").font(.caption2).foregroundColor(.orange).frame(width: 60, alignment: .leading)
+                                        Slider(value: $dbgEntranceBodyScaleX, in: 0.7...1.5).tint(.orange)
+                                        Text("\(dbgEntranceBodyScaleX, specifier: "%.2f")").font(.system(size: 11, design: .monospaced)).frame(width: 40)
+                                    }
+                                    HStack {
+                                        Text("体Y").font(.caption2).foregroundColor(.orange).frame(width: 60, alignment: .leading)
+                                        Slider(value: $dbgEntranceBodyScaleY, in: 0.7...1.5).tint(.orange)
+                                        Text("\(dbgEntranceBodyScaleY, specifier: "%.2f")").font(.system(size: 11, design: .monospaced)).frame(width: 40)
+                                    }
+                                    HStack {
+                                        Text("腕回転").font(.caption2).foregroundColor(.cyan).frame(width: 60, alignment: .leading)
+                                        Slider(value: $dbgEntranceArmRotation, in: -180...180).tint(.cyan)
+                                        Text("\(dbgEntranceArmRotation, specifier: "%.0f")°").font(.system(size: 11, design: .monospaced)).frame(width: 40)
+                                    }
+                                    Divider()
+                                    HStack {
+                                        Text("喜び腕に切替").font(.caption2).foregroundColor(.purple)
+                                        Spacer()
+                                        Toggle("", isOn: $dbgEntranceUseJoyArms).labelsHidden()
+                                    }
+                                    if dbgEntranceUseJoyArms {
+                                        let aStep: CGFloat = 5
+                                        let rStep: CGFloat = 5
+                                        Text("左腕").font(.caption2.bold()).foregroundColor(.purple)
+                                        HStack(spacing: 4) {
+                                            Text("X").font(.caption2).frame(width: 14)
+                                            Button { dbgEntranceJoyArmLX -= aStep } label: { Image(systemName: "minus.circle.fill").foregroundColor(.purple.opacity(0.7)) }
+                                            Text("\(dbgEntranceJoyArmLX, specifier: "%.0f")").font(.system(size: 12, design: .monospaced)).frame(width: 40)
+                                            Button { dbgEntranceJoyArmLX += aStep } label: { Image(systemName: "plus.circle.fill").foregroundColor(.purple.opacity(0.7)) }
+                                            Text("Y").font(.caption2).frame(width: 14)
+                                            Button { dbgEntranceJoyArmLY -= aStep } label: { Image(systemName: "minus.circle.fill").foregroundColor(.purple.opacity(0.7)) }
+                                            Text("\(dbgEntranceJoyArmLY, specifier: "%.0f")").font(.system(size: 12, design: .monospaced)).frame(width: 40)
+                                            Button { dbgEntranceJoyArmLY += aStep } label: { Image(systemName: "plus.circle.fill").foregroundColor(.purple.opacity(0.7)) }
+                                            Text("R").font(.caption2).frame(width: 14)
+                                            Button { dbgEntranceJoyArmLR -= rStep } label: { Image(systemName: "minus.circle.fill").foregroundColor(.purple.opacity(0.7)) }
+                                            Text("\(dbgEntranceJoyArmLR, specifier: "%.0f")°").font(.system(size: 12, design: .monospaced)).frame(width: 44)
+                                            Button { dbgEntranceJoyArmLR += rStep } label: { Image(systemName: "plus.circle.fill").foregroundColor(.purple.opacity(0.7)) }
+                                        }
+                                        Text("右腕").font(.caption2.bold()).foregroundColor(.purple)
+                                        HStack(spacing: 4) {
+                                            Text("X").font(.caption2).frame(width: 14)
+                                            Button { dbgEntranceJoyArmRX -= aStep } label: { Image(systemName: "minus.circle.fill").foregroundColor(.purple.opacity(0.7)) }
+                                            Text("\(dbgEntranceJoyArmRX, specifier: "%.0f")").font(.system(size: 12, design: .monospaced)).frame(width: 40)
+                                            Button { dbgEntranceJoyArmRX += aStep } label: { Image(systemName: "plus.circle.fill").foregroundColor(.purple.opacity(0.7)) }
+                                            Text("Y").font(.caption2).frame(width: 14)
+                                            Button { dbgEntranceJoyArmRY -= aStep } label: { Image(systemName: "minus.circle.fill").foregroundColor(.purple.opacity(0.7)) }
+                                            Text("\(dbgEntranceJoyArmRY, specifier: "%.0f")").font(.system(size: 12, design: .monospaced)).frame(width: 40)
+                                            Button { dbgEntranceJoyArmRY += aStep } label: { Image(systemName: "plus.circle.fill").foregroundColor(.purple.opacity(0.7)) }
+                                            Text("R").font(.caption2).frame(width: 14)
+                                            Button { dbgEntranceJoyArmRR -= rStep } label: { Image(systemName: "minus.circle.fill").foregroundColor(.purple.opacity(0.7)) }
+                                            Text("\(dbgEntranceJoyArmRR, specifier: "%.0f")°").font(.system(size: 12, design: .monospaced)).frame(width: 44)
+                                            Button { dbgEntranceJoyArmRR += rStep } label: { Image(systemName: "plus.circle.fill").foregroundColor(.purple.opacity(0.7)) }
+                                        }
+                                    }
+                                    Divider()
+                                    HStack {
+                                        Button("コピー") {
+                                            var s = "entrance: skew=\(String(format:"%.2f",dbgLegSkew)) legSpread=\(String(format:"%.1f",dbgEntranceLegSpread)) bodyX=\(String(format:"%.2f",dbgEntranceBodyScaleX)) bodyY=\(String(format:"%.2f",dbgEntranceBodyScaleY)) armR=\(String(format:"%.0f",dbgEntranceArmRotation))"
+                                            if dbgEntranceUseJoyArms {
+                                                s += " joyL(X:\(Int(dbgEntranceJoyArmLX)),Y:\(Int(dbgEntranceJoyArmLY)),R:\(Int(dbgEntranceJoyArmLR))) joyR(X:\(Int(dbgEntranceJoyArmRX)),Y:\(Int(dbgEntranceJoyArmRY)),R:\(Int(dbgEntranceJoyArmRR)))"
+                                            }
+                                            print(s)
+                                        }.font(.caption).foregroundColor(.yellow)
+                                        Spacer()
+                                        Button {
+                                            playEntranceAnimation()
+                                        } label: {
+                                            HStack(spacing: 4) {
+                                                Image(systemName: "play.fill")
+                                                Text("再生")
+                                            }
+                                            .font(.caption.bold())
+                                            .foregroundColor(.white)
+                                            .padding(.horizontal, 12).padding(.vertical, 6)
+                                            .background(Capsule().fill(Color.green))
+                                        }
+                                        .disabled(entranceAnimating)
+                                    }
+                                    // タイムラインスクラブバー
+                                    VStack(spacing: 2) {
+                                        HStack(spacing: 4) {
+                                            Image(systemName: "timeline.selection").font(.caption2).foregroundColor(.gray)
+                                            Text("タイムライン").font(.caption2).foregroundColor(.gray)
+                                            Spacer()
+                                            Text("\(Int(timelineValue * 100))%").font(.system(size: 11, design: .monospaced)).foregroundColor(.gray)
+                                        }
+                                        Slider(value: $timelineValue, in: 0...1)
+                                            .tint(.green)
+                                            .onChange(of: timelineValue) { _, val in
+                                                if !entranceAnimating {
+                                                    timelineScrubbing = true
+                                                    applyTimeline(val)
+                                                }
+                                            }
+                                        HStack(spacing: 0) {
+                                            Text("落下").font(.system(size: 8)).foregroundColor(.orange).frame(maxWidth: .infinity)
+                                            Text("着地").font(.system(size: 8)).foregroundColor(.red).frame(maxWidth: .infinity)
+                                            Text("伸び").font(.system(size: 8)).foregroundColor(.cyan).frame(maxWidth: .infinity)
+                                            Text("構え").font(.system(size: 8)).foregroundColor(.blue).frame(maxWidth: .infinity)
+                                            Text("決め").font(.system(size: 8)).foregroundColor(.purple).frame(maxWidth: .infinity)
                                         }
                                     }
                                 }
@@ -1055,6 +1363,140 @@ struct CharacterLayoutDebugView: View {
 
     // MARK: - オフセット読み込み / リセット
 
+    private func lerpKeyframes(_ t: CGFloat, _ keyframes: [(CGFloat, CGFloat)]) -> CGFloat {
+        guard !keyframes.isEmpty else { return 0 }
+        if t <= keyframes.first!.0 { return keyframes.first!.1 }
+        if t >= keyframes.last!.0 { return keyframes.last!.1 }
+        for i in 0..<keyframes.count - 1 {
+            let (t0, v0) = keyframes[i]
+            let (t1, v1) = keyframes[i + 1]
+            if t >= t0 && t <= t1 {
+                let p = (t - t0) / (t1 - t0)
+                return v0 + (v1 - v0) * p
+            }
+        }
+        return keyframes.last!.1
+    }
+
+    private func applyTimeline(_ t: CGFloat) {
+        let s = CharacterPartOffsets.forBody(appearance.body)
+        let defaultEyeY = s.eyes.height
+
+        entranceOffsetY = lerpKeyframes(t, [(0, -120), (0.12, 0), (1, 0)])
+
+        dbgEntranceBodyScaleX = lerpKeyframes(t, [(0, 1.0), (0.12, 1.15), (0.30, 0.95), (0.45, 1.0), (1, 1.0)])
+        dbgEntranceBodyScaleY = lerpKeyframes(t, [(0, 1.0), (0.12, 0.85), (0.30, 1.1), (0.45, 1.0), (1, 1.0)])
+
+        dbgEntranceArmRotation = lerpKeyframes(t, [(0, 0), (0.12, 77), (0.30, -14), (0.38, 34), (0.45, 4), (0.55, 6), (0.70, 51), (1, 51)])
+
+        dbgLegSkew = lerpKeyframes(t, [(0, 0), (0.12, 0.12), (0.55, 0.19), (0.70, 0.39), (1, 0.39)])
+        dbgEntranceLegSpread = lerpKeyframes(t, [(0, 0), (0.12, -8), (0.55, -11.9), (0.70, -8.7), (1, -8.7)])
+
+        eyesY = lerpKeyframes(t, [(0, defaultEyeY), (0.18, 11), (0.28, -5.3), (0.38, 16), (0.51, defaultEyeY), (1, defaultEyeY)])
+
+        let joySwitch: CGFloat = 0.75
+        if t >= joySwitch && !dbgEntranceUseJoyArms {
+            dbgEntranceJoyArmLX = -60; dbgEntranceJoyArmLY = 5; dbgEntranceJoyArmLR = -255
+            dbgEntranceJoyArmRX = 63; dbgEntranceJoyArmRY = 5; dbgEntranceJoyArmRR = 210
+            dbgEntranceUseJoyArms = true
+        } else if t < joySwitch && dbgEntranceUseJoyArms {
+            dbgEntranceUseJoyArms = false
+        }
+    }
+
+    private func playEntranceAnimation() {
+        guard !entranceAnimating else { return }
+        entranceAnimating = true
+
+        // Phase 0: リセット（画面上）
+        dbgLegSkew = 0; dbgEntranceLegSpread = 0
+        dbgEntranceBodyScaleX = 1.0; dbgEntranceBodyScaleY = 1.0
+        dbgEntranceArmRotation = 0; dbgEntranceUseJoyArms = false
+        entranceOffsetY = -120
+
+        // Phase 1: 落下 → 着地（潰れ + 腕77°）
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            withAnimation(.easeIn(duration: 0.2)) {
+                entranceOffsetY = 0
+                dbgEntranceBodyScaleX = 1.15
+                dbgEntranceBodyScaleY = 0.85
+                dbgLegSkew = 0.12
+                dbgEntranceLegSpread = -8
+                dbgEntranceArmRotation = 77
+            }
+        }
+
+        // Phase 2a: 伸び上がり（腕 77° → -14°）
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+            withAnimation(.easeOut(duration: 0.25)) {
+                dbgEntranceBodyScaleX = 0.95
+                dbgEntranceBodyScaleY = 1.1
+                dbgEntranceArmRotation = -14
+            }
+        }
+
+        // Phase 2b: 腕バウンス（-14° → 34°）
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+            withAnimation(.easeInOut(duration: 0.15)) {
+                dbgEntranceArmRotation = 34
+            }
+        }
+
+        // Phase 2c: 腕落ち着き（34° → 4°）
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.9) {
+            withAnimation(.easeOut(duration: 0.2)) {
+                dbgEntranceArmRotation = 4
+                dbgEntranceBodyScaleX = 1.0
+                dbgEntranceBodyScaleY = 1.0
+            }
+        }
+
+        // Phase 3: 構え（足シアー 0.19、足開き -11.9、腕 6°）
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.15) {
+            withAnimation(.easeInOut(duration: 0.25)) {
+                dbgLegSkew = 0.19
+                dbgEntranceLegSpread = -11.9
+                dbgEntranceArmRotation = 6
+            }
+        }
+
+        // Phase 4a: 足開き（skew 0.39、spread -8.7）+ 腕上げ（6° → 51°）
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            withAnimation(.easeInOut(duration: 0.25)) {
+                dbgLegSkew = 0.39
+                dbgEntranceLegSpread = -8.7
+                dbgEntranceArmRotation = 51
+            }
+        }
+
+        // Phase 4b: 喜び腕に切替 + 決めポーズ
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.8) {
+            dbgEntranceJoyArmLX = -60; dbgEntranceJoyArmLY = 5; dbgEntranceJoyArmLR = -255
+            dbgEntranceJoyArmRX = 63; dbgEntranceJoyArmRY = 5; dbgEntranceJoyArmRR = 210
+            dbgEntranceUseJoyArms = true
+            withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
+                dbgEntranceBodyScaleX = 1.0
+                dbgEntranceBodyScaleY = 1.0
+            }
+        }
+
+        // タイムライン連動
+        let totalDuration = 2.5
+        let steps = 50
+        for i in 0...steps {
+            let delay = totalDuration * Double(i) / Double(steps)
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+                guard entranceAnimating else { return }
+                timelineValue = CGFloat(i) / CGFloat(steps)
+            }
+        }
+
+        // Phase 5: 完了
+        DispatchQueue.main.asyncAfter(deadline: .now() + totalDuration + 0.1) {
+            entranceAnimating = false
+        }
+    }
+
     private func loadOffsetsForCurrentBody() {
         let s = CharacterPartOffsets.forBody(appearance.body)
         eyesX       = s.eyes.width;    eyesY       = s.eyes.height
@@ -1073,10 +1515,29 @@ struct CharacterLayoutDebugView: View {
         shineX = s.shineX; shineY = s.shineY
         shineW = s.shineW; shineH = s.shineH
         shineRotation = s.shineRotation; shineOpacity = s.shineOpacity
+        bodyScale = s.bodyScale
+        joyLeftArmX = s.joyLeftArmX; joyLeftArmY = s.joyLeftArmY; joyLeftArmR = s.joyLeftArmR
+        joyRightArmX = s.joyRightArmX; joyRightArmY = s.joyRightArmY; joyRightArmR = s.joyRightArmR
         useProgMouth = s.useProgrammaticMouth
         pmouthW = s.pmouthW; pmouthH = s.pmouthH
         pmouthOffsetX = s.pmouthOffsetX; pmouthOffsetY = s.pmouthOffsetY
         pmouthCurve = s.pmouthCurve
+        moodBlushX = s.mood.blushX; moodBlushY = s.mood.blushY
+        moodBlushSize = s.mood.blushSize; moodBlushOpacity = s.mood.blushOpacity
+        moodSmirkX = s.mood.smirkX; moodSmirkY = s.mood.smirkY
+        moodSmirkW = s.mood.smirkW; moodSmirkH = s.mood.smirkH
+        moodSquintW = s.mood.squintW; moodSquintH = s.mood.squintH
+        moodSquintSpread = s.mood.squintSpread
+        moodLeftEyeScale = s.mood.leftEyeScale
+        moodRightEyeScale = s.mood.rightEyeScale
+        // 左向き
+        leftEyeOX = s.leftEyeOffsetX ?? 0
+        leftEyeOY = s.leftEyeOffsetY ?? 0
+        leftEyeOSpread = s.leftEyeSpread ?? 0
+        leftEyeOScaleL = s.leftEyeScaleL ?? 1.0
+        leftEyeOScaleR = s.leftEyeScaleR ?? 1.0
+        leftMouthOX = s.leftMouthOffsetX ?? 0
+        leftMouthOY = s.leftMouthOffsetY ?? 0
     }
 
     private func resetOffsets() {
